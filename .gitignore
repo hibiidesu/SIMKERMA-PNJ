@@ -1,0 +1,8 @@
+.htaccess
+.env
+.env.backup
+/.idea
+/.vscode
+/vendor
+/node_modules
+.composer.lock
