@@ -58,6 +58,12 @@
                         <span class="text-capitalize">Unit</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ url()->current() == url('pemimpin/user') ? 'active' : '' }}">
+                    <a href="{{ url('admin/user') }}" class='sidebar-link'>
+                        <i class="fas fa-users"></i>
+                        <span class="text-capitalize">Users</span>
+                    </a>
+                </li>
                 <hr>
                 <li class="sidebar-item {{ url()->current() == url('admin/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
                     <a href="{{ url('admin/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>

@@ -68,6 +68,14 @@ Route::middleware(['isAdmin'])->group(function () {
 
     Route::get('/admin/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
     Route::post('/admin/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
+
+    Route::get('/admin/user', [App\Http\Controllers\UserController::class, 'index']);
+    Route::get('/admin/user/add', [App\Http\Controllers\UserController::class, 'create']);
+    Route::get('/admin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::get('/admin/user/deactivate/{id}', [App\Http\Controllers\UserController::class, 'deactivate']);
+    Route::get('/admin/user/activate/{id}', [App\Http\Controllers\UserController::class, 'activate']);
+    Route::post('/admin/user/store', [App\Http\Controllers\UserController::class, 'store']);
+    Route::post('/admin/user/update', [App\Http\Controllers\UserController::class, 'update']);
 });
 
 //route untuk pemimpin
@@ -78,14 +86,6 @@ Route::middleware(['isPemimpin'])->group(function () {
     Route::get('/pemimpin/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
     Route::get('/pemimpin/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
 
-    Route::get('/pemimpin/user', [App\Http\Controllers\UserController::class, 'index']);
-    Route::get('/pemimpin/user/add', [App\Http\Controllers\UserController::class, 'create']);
-    Route::get('/pemimpin/user/edit/{id}', [App\Http\Controllers\UserController::class, 'edit']);
-    Route::get('/pemimpin/user/deactivate/{id}', [App\Http\Controllers\UserController::class, 'deactivate']);
-    Route::get('/pemimpin/user/activate/{id}', [App\Http\Controllers\UserController::class, 'activate']);
-    Route::post('/pemimpin/user/store', [App\Http\Controllers\UserController::class, 'store']);
-    Route::post('/pemimpin/user/update', [App\Http\Controllers\UserController::class, 'update']);
-
     Route::get('/pemimpin/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
     Route::post('/pemimpin/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
 
@@ -93,4 +93,17 @@ Route::middleware(['isPemimpin'])->group(function () {
     Route::post('/pemimpin/review/tolak', [App\Http\Controllers\ReviewController::class, 'tolak']);
     Route::get('/pemimpin/review/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terima']);
     Route::get('/pemimpin/review/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+});
+
+
+//route untuk legal
+Route::middleware(['isLegal'])->group(function () {
+    Route::get('/legal/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PicHome');
+
+});
+
+Route::middleware(['isPic'])->group(function () {
+    Route::get('/pic/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PicHome');
+
+
 });

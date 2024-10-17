@@ -19,6 +19,10 @@ class RoleController extends Controller
                 return redirect(route('adminHome'));
             } elseif (Auth::User()->role->role_name == 'pemimpin') {
                 return redirect(route('PemimpinHome'));
+            } elseif (Auth::User()->role->role_name == 'legal') {
+                return redirect(route('LegalHome'));
+            } elseif (Auth::User()->role->role_name == 'pic') {
+                return redirect(route('PicHome'));
             }
         }else{
             Auth::logout();

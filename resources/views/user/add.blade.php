@@ -18,7 +18,7 @@
                         </ul>
                     </div>
                 @endif
-                <form class="form form-vertical" method="post" action="{{ url('/pemimpin/user/store') }}">
+                <form class="form form-vertical" method="post" action="{{ url('/admin/user/store') }}">
                     @csrf
                     <div class="form-body">
                         <div class="row">

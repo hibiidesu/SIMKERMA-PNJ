@@ -41,12 +41,6 @@
                         <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaBaru() }}</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/user') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/user') }}" class='sidebar-link'>
-                        <i class="fas fa-users"></i>
-                        <span class="text-capitalize">Users</span>
-                    </a>
-                </li>
                 <hr>
                 <li class="sidebar-item {{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
