@@ -15,8 +15,14 @@
                     @if (Auth::user()->role->role_name == 'admin')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
                             <a href="{{ url('/admin/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
+                            <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/admin/kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
+                        </div>
+                    @elseif (Auth::user()->role->role_name == 'pic')
+                        <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
+                            <a href="{{ url('/pic/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         </div>
                     @endif
+                    
 
                 </div>
                 <p>
@@ -141,6 +147,8 @@
                                 <td class="text-center"><a href="{{ url('/admin/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
                                 <td class="text-center"><a href="{{ url('/pemimpin/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
+                            @elseif (Auth::user()->role->role_name == 'pic')
+                                <td class="text-center"><a href="{{ url('/pic/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
                             @endif
                         </tr>
 

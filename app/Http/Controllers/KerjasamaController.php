@@ -249,6 +249,16 @@ class KerjasamaController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        $delete = Kerjasama::findOrFail($id)->delete();
+        if ($delete) {
+            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');  
+        } else {
+            return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -263,4 +273,6 @@ class KerjasamaController extends Controller
     {
         return Excel::download(new KerjasamaExport($request->all()), 'kerjasama.xlsx');
     }
+
+    
 }

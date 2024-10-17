@@ -18,7 +18,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
+                @if (Auth::user()->role->role_name == 'admin')
+                    <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
+                @elseif (Auth::user()->role->role_name == 'pic')
+                    <form class="form form-vertical" method="post" action="{{ url('/pic/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
+                @endif
                     @csrf
                     <div class="form-body">
                         <div class="row">

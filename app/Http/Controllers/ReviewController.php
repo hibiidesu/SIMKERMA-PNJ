@@ -123,10 +123,19 @@ class ReviewController extends Controller
                     'status' => 'menunggu',
                 ]);
             }
-
-            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+            if (Auth::user()->role->role_name == 'pic') {
+                return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+            }  else { 
+                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+            }
+            
         } else {
-            return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
+            if (Auth::user()->role->role_name == 'pic') {
+                return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
+            } else {
+                return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
+            }
+            
         }
         dd($request->input());
     }
@@ -305,9 +314,19 @@ class ReviewController extends Controller
     {
         $delete = Kerjasama::findOrFail($id)->delete();
         if ($delete) {
-            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
+            if (Auth::user()->role->role_name == 'pic') {
+                return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
+            } else {
+                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
+            }
+            
         } else {
-            return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
+            if (Auth::user()->role->role_name == 'pic') {
+                return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
+            } else {
+                return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
+            }
+            
         }
     }
 }

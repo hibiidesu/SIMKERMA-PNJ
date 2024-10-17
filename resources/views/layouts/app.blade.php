@@ -44,6 +44,10 @@
 
             @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                 @include('layouts.sidebar-pemimpin')
+            @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
+                @include('layouts.sidebar-pic')
+            @elseif (Auth::check() && Auth::user()->role->role_name == 'legal')
+                @include('layouts.sidebar-legal')
             @endif
 
             <div id="main">

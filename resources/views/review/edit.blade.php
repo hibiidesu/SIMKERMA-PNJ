@@ -9,7 +9,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/update') }}" enctype="multipart/form-data">
+                @if (Auth::user()->role->role_name == 'admin')
+                    <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/update') }}" enctype="multipart/form-data">
+                @elseif (Auth::user()->role->role_name == 'pic')
+                    <form class="form form-vertical" method="post" action="{{ url('/pic/pengajuan-kerjasama/update') }}" enctype="multipart/form-data">
+                @endif
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                     <div class="form-body">

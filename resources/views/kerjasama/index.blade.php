@@ -24,12 +24,16 @@
                         <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                         <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pemimpin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
+                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @endif
                 @else
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
                         <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                         <a href="{{ url('pemimpin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
+                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @endif
                 @endif
 
@@ -76,6 +80,8 @@
                                         <a href="{{ url('admin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
                                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                                         <a href="{{ url('pemimpin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
+                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
+                                        <a href="{{ url('pic/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
                                     @endif
                                 @endif
                             </div>
@@ -104,6 +110,8 @@
                             <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
                             <td> <a href="{{ url('/pemimpin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            @elseif (Auth::user()->role->role_name == 'pic')
+                            <td> <a href="{{ url('/pic/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @endif
                             <td>{{ $item->nomor }}</td>
                             <td>

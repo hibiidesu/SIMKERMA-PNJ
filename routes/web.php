@@ -39,6 +39,7 @@ Route::middleware(['isAdmin'])->group(function () {
     Route::get('/admin/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
     Route::get('/admin/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
     Route::get('/admin/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
+    Route::get('/admin/kerjasama/delete/{id}', [App\Http\Controllers\KerjasamaController::class, 'delete']);
 
     Route::get('/admin/jenis-kerjasama', [App\Http\Controllers\JenisKerjasamaController::class, 'index']);
     Route::get('/admin/jenis-kerjasama/add', [App\Http\Controllers\JenisKerjasamaController::class, 'create']);
@@ -104,6 +105,25 @@ Route::middleware(['isLegal'])->group(function () {
 
 Route::middleware(['isPic'])->group(function () {
     Route::get('/pic/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PicHome');
+
+    Route::get('/pic/pengajuan-kerjasama', [App\Http\Controllers\ReviewController::class, 'index']);
+    Route::get('/pic/pengajuan-kerjasama/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+    Route::get('/pic/pengajuan-kerjasama/edit/{id}', [App\Http\Controllers\ReviewController::class, 'edit']);
+    Route::post('/pic/pengajuan-kerjasama/update', [App\Http\Controllers\ReviewController::class, 'update']);
+    Route::get('/pic/pengajuan-kerjasama/delete/{id}', [App\Http\Controllers\ReviewController::class, 'delete']);
+    Route::get('/pic/pengajuan-kerjasama/add', [App\Http\Controllers\ReviewController::class, 'create']);
+    Route::post('/pic/pengajuan-kerjasama/store', [App\Http\Controllers\ReviewController::class, 'store']);
+
+    Route::get('/pic/kerjasama', [App\Http\Controllers\KerjasamaController::class, 'index']);
+    Route::get('/pic/kerjasama/i', [App\Http\Controllers\KerjasamaController::class, 'x']);
+    Route::post('/pic/kerjasama/update', [App\Http\Controllers\KerjasamaController::class, 'update']);
+    Route::get('/pic/kerjasama/edit/{id}', [App\Http\Controllers\KerjasamaController::class, 'edit']);
+    Route::get('/pic/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
+    Route::get('/pic/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
+    Route::get('/pic/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
+
+    Route::get('/pic/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::post('/pic/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
 
 
 });

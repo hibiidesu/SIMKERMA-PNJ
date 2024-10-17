@@ -8,6 +8,8 @@
             <div class="card-header">
                 @if (Auth::user()->role->role_name == 'admin')
                     <a href="{{ url('/admin/pengajuan-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                @elseif (Auth::user()->role->role_name == 'pic')
+                    <a href="{{ url('/pic/pengajuan-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
                 @endif
             </div>
             <div class="card-body">
@@ -42,6 +44,8 @@
                             <td> <a href="{{ url('/admin/pengajuan-kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
                             <td> <a href="{{ url('/pemimpin/review/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            @elseif (Auth::user()->role->role_name == 'pic')
+                            <td> <a href="{{ url('/pic/pengajuan-kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @endif
                             <td>{{ $item->nomor }}</td>
                             <td>{{ $item->created_at }}</td>

@@ -171,6 +171,39 @@
             </div>
         </div>
     </div>
+    @elseif(Auth::user()->role->role_name=="pic" && $data->step != 3 && $data->catatan)
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">Catatan</div>
+            </div>
+            <div class="card-body">
+                <div class="form-body">
+                    <h6>{{ $data->reviewer->name}}</h6>
+                    <p> {{ $data->catatan}} </p>
+                    @if (Auth::user()->role->role_name == 'pic' && $data->step == '2')
+                        <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
+                        <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @elseif(Auth::user()->role->role_name=="pic" && $data->step == 3 && $data->reviewer_id)
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">Direview oleh</div>
+            </div>
+            <div class="card-body">
+                <div class="form-body">
+                    <h6>{{ $data->reviewer->name}}</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     @endif
 </section>
 @endsection
