@@ -6,3 +6,4 @@
 /vendor
 /node_modules
 composer.lock
+/public/surat_kerjasama
