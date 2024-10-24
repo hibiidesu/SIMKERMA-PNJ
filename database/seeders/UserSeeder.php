@@ -26,10 +26,24 @@ class UserSeeder extends Seeder
         ]);
         User::insert([
             'name' => "pemimpin",
-            'email' => "pemimpin@gmail.com",
+            'email' => "pemimpin@gmail.com",    
             'username' => "pemimpin",
             'role_id' => 2,
             'password' => Hash::make("pemimpin123"),
+        ]);
+        User::insert([
+            'name' => "pic",
+            'email' => "pic@gmail.com",
+            'username' => "pic123",
+            'role_id' => 4,
+            'password' => Hash::make("pic123"),
+        ]);
+        User::insert([
+            'name' => "legal",
+            'email' => "legal@gmail.com",
+            'username' => "legal",
+            'role_id' => 3,
+            'password' => Hash::make("legal123"),
         ]);
     }
 }

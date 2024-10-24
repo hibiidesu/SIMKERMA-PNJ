@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\pengajuanBaru;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
@@ -11,6 +12,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class ReviewController extends Controller
@@ -62,6 +65,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate(
             [
                 'kerjasama' => 'required',
@@ -122,6 +126,14 @@ class ReviewController extends Controller
                     'user_id' => $pemimpin->id,
                     'status' => 'menunggu',
                 ]);
+                Mail::to($pemimpin->email)->send(new pengajuanBaru(
+                    $request->kerjasama, 
+                    $request->tanggal_mulai, 
+                    $request->tanggal_selesai, 
+                    $request->kegiatan,
+                    $request->sifat,
+                    $request->pic_pnj,
+                ));
             }
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
@@ -176,17 +188,19 @@ class ReviewController extends Controller
     }
 
     public function tolak(Request $request)
-    {
+    {   
         $request->validate([
             'id' => 'required',
             'catatan' => 'required',
         ]);
-        $update = Kerjasama::findOrFail($request->id)->update([
+        $kerjasama = Kerjasama::findOrFail($request->id);
+        $update = $kerjasama->update([
             'catatan' => $request->catatan,
             'step' => '2',
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
@@ -196,11 +210,14 @@ class ReviewController extends Controller
 
     public function terima($id)
     {
-        $update = Kerjasama::findOrFail($id)->update([
+        $kerjasama = Kerjasama::findOrFail($id);
+        $update = $kerjasama->update([
             'step' => '3',
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            // get user from kerjasama then send the email 
+            mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil diterima');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal diterima');

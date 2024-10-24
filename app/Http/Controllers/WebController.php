@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\pengajuanBaru;
 use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class WebController extends Controller
 {
     public function index()
-    {
-        // $chartBySifat = Kerjasama::chartByJenisKerjasama(1, false);
-        // $chartBySifat = Kerjasama::chartBySifat();
-        // foreach ($chartBySifat as $item) {
-        //     print_r($item->jenis_kerjasama->jenis_kerjasama);
-        //     echo '<br>';
-        //     echo '<br>';
-        // }
-        // dd($sql->toArray());
-
+    {     
+        mail::to('muhammadhusainalghazali@gmail.com')->send(new \App\Mail\terimaPengajuan);
         return view('index');
     }
 
