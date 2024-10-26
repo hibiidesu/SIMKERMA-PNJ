@@ -52,16 +52,32 @@
                         <span class="text-capitalize">perjanjian kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('admin/unit') ? 'active' : '' }}">
-                    <a href="{{ url('admin/unit') }}" class='sidebar-link'>
+                <li class="sidebar-item">
+                    <a href="#unitProdiMenu" class='sidebar-link' data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="unitProdiMenu">
                         <i class="fas fa-sign"></i>
-                        <span class="text-capitalize">Unit</span>
+                        <span class="text-capitalize">Unit & Prodi</span>
                     </a>
+                    <div class="collapse" id="unitProdiMenu">
+                        <ul class="menu ms-3"> <!-- Add margin or padding to nest the items -->
+                            <li class="sidebar-item {{ url()->current() == url('admin/unit') ? 'active' : '' }}">
+                                <a href="{{ url('admin/unit') }}" class='sidebar-link'>
+                                    <i class="fas fa-sign"></i>
+                                    <span class="text-capitalize">Unit</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item {{ url()->current() == url('admin/prodi') ? 'active' : '' }}">
+                                <a href="{{ url('admin/prodi') }}" class='sidebar-link'>
+                                    <i class="fas fa-house-user"></i>
+                                    <span class="text-capitalize">Prodi</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/user') ? 'active' : '' }}">
-                    <a href="{{ url('admin/user') }}" class='sidebar-link'>
-                        <i class="fas fa-users"></i>
-                        <span class="text-capitalize">Users</span>
+                <li class="sidebar-item {{ url()->current() == url('admin/user/') ? 'active' : '' }}">
+                    <a href="{{ url('admin/user/') }}" class='sidebar-link'>
+                        <i class="fas fa-user"></i>
+                        <span class="text-capitalize">User</span>
                     </a>
                 </li>
                 <hr>

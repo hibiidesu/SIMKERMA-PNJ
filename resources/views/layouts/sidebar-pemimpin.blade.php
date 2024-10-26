@@ -34,7 +34,7 @@
                         <span class="text-capitalize">kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/review-kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ url()->current() == url('pemimpin/review') ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/review') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Review kerja sama</span>

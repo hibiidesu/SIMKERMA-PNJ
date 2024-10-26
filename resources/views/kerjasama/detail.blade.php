@@ -17,7 +17,7 @@
                             <a href="{{ url('/admin/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                             <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/admin/kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
                         </div>
-                    @elseif (Auth::user()->role->role_name == 'pic')
+                    @elseif (Auth::user()->role->role_name == 'pic' && $data->user_id == Auth::user()->id)
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
                             <a href="{{ url('/pic/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         </div>
