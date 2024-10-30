@@ -87,6 +87,7 @@
     <script src="{{ asset('admin/vendors/fontawesome/all.min.js') }}"></script>
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/js/mazer.js') }}"></script>
+    <script src="{{ asset('admin/js/extensions/sweetalert2.js') }}"></script>
     <script>
         $("#datatable").DataTable({
             "scrollX": true,

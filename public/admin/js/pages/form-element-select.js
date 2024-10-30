@@ -26,3 +26,6 @@ new Choices(".choices-3", {
 new Choices(".choices-4", {
     removeItemButton: true,
 });
+new Choices(".choices-5", {
+    removeItemButton: true,
+});

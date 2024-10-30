@@ -58,7 +58,7 @@
                         <span class="text-capitalize">Unit & Prodi</span>
                     </a>
                     <div class="collapse" id="unitProdiMenu">
-                        <ul class="menu ms-3"> <!-- Add margin or padding to nest the items -->
+                        <ul class="menu mt-0"> <!-- Add margin or padding to nest the items -->
                             <li class="sidebar-item {{ url()->current() == url('admin/unit') ? 'active' : '' }}">
                                 <a href="{{ url('admin/unit') }}" class='sidebar-link'>
                                     <i class="fas fa-sign"></i>
@@ -69,6 +69,28 @@
                                 <a href="{{ url('admin/prodi') }}" class='sidebar-link'>
                                     <i class="fas fa-house-user"></i>
                                     <span class="text-capitalize">Prodi</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sidebar-item">
+                    <a href="#unitMitraMenu" class='sidebar-link' data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="unitMitraMenu">
+                        <i class="fas fa-folder"></i>
+                        <span class="text-capitalize">Mitra</span>
+                    </a>
+                    <div class="collapse" id="unitMitraMenu">
+                        <ul class="menu mt-0"> <!-- Add margin or padding to nest the items -->
+                            <li class="sidebar-item {{ url()->current() == url('admin/kriteria/kemitraan') ? 'active' : '' }}">
+                                <a href="{{ url('admin/kriteria/kemitraan') }}" class='sidebar-link'>
+                                    {{-- <i class="fas fa-sign"></i> --}}
+                                    <span class="text-capitalize">Kriteria Kemitraan</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item {{ url()->current() == url('admin/kriteria/mitra') ? 'active' : '' }}">
+                                <a href="{{ url('admin/kriteria/mitra') }}" class='sidebar-link'>
+                                    {{-- <i class="fas fa-house-user"></i> --}}
+                                    <span class="text-capitalize">Kriteria Mitra</span>
                                 </a>
                             </li>
                         </ul>

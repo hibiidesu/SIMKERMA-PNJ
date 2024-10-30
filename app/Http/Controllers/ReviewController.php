@@ -6,6 +6,8 @@ use App\Mail\pengajuanBaru;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
+use App\Models\kriteria_kemitraan;
+use App\Models\kriteria_mitra;
 use App\Models\pks;
 use App\Models\Unit;
 use App\Models\User;
@@ -51,6 +53,8 @@ class ReviewController extends Controller
     {
         return view('review/add', [
             'users' => User::where('role_id', '=', '2')->get(),
+            'kriteria_mitra' => kriteria_mitra::all(),
+            'kriteria_kemitraan' => kriteria_kemitraan::all(),
             'unit' => Unit::all(),
             'perjanjian' => pks::all(),
             'jenisKerjasama' => Jenis_kerjasama::all(),
@@ -65,7 +69,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
         $request->validate(
             [
                 'kerjasama' => 'required',
@@ -196,7 +200,7 @@ class ReviewController extends Controller
         $kerjasama = Kerjasama::findOrFail($request->id);
         $update = $kerjasama->update([
             'catatan' => $request->catatan,
-            'step' => '2',
+            'step' => '2', // current_step + 1
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
@@ -212,11 +216,10 @@ class ReviewController extends Controller
     {
         $kerjasama = Kerjasama::findOrFail($id);
         $update = $kerjasama->update([
-            'step' => '3',
+            'step' => '3', // current_step + 2 
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
-            // get user from kerjasama then send the email 
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil diterima');
         } else {
