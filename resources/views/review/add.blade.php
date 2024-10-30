@@ -96,14 +96,19 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Jurusan / Unit <span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Unit<span class="text-danger">*</span></label>
                                     <select class="choices-2 form-select" multiple="multiple" id="jurusan" name="jurusan[]" multiple required>
                                         @foreach ($unit as $item)
                                         <option value="{{ $item->id }}" {{ old('jurusan') &&  in_array($item->id, old('jurusan')) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    {{-- <input type="text" id="jurusan" class="form-control" name="jurusan" required value="{{ old('jurusan') }}"> --}}
                                 </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <label class="mb-2 fw-bold text-capitalize" for="prodi">Prodi</label>
+                                    <select class="choices-3 form-select" multiple="multiple" id="prodi" name="prodi[]" multiple required>
+                                        <option value="">--- isi unit terlebih dahulu</option>
+                                    </select>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
@@ -153,7 +158,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="target_reviewer">Siapa saja yang dapat melakukan review kerja sama ini?</label>
-                                    <select class="choices-3 form-select" multiple="multiple" id="target_reviewer" name="target_reviewer[]" multiple>
+                                    <select class="choices-4 form-select" multiple="multiple" id="target_reviewer" name="target_reviewer[]" multiple>
                                         @foreach ($users as $item)
                                         <option value="{{ $item->id }}" {{ old('target_reviewer') &&  in_array($item->id, old('target_reviewer')) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -171,6 +176,62 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function() {
+        $('#jurusan').change(function() {
+    var selectedUnits = $(this).val(); 
+
+    $('#prodi').empty();
+
+    if (selectedUnits.length > 0) {
+        $.get("{{ url('/admin/prodi/find') }}/" + selectedUnits)
+            .done(function(data) {
+                if (data.length > 0) {
+                    let options = '<option value="">--- Select Prodi ---</option>';
+                    $.each(data, function(key, prodi) {
+                        options += `<option value="${prodi.id}">${prodi.name}</option>`;
+                        console.log(prodi.id + ' ' + prodi.name);
+                    });
+                    $('select#prodi').append(options);
+                } else {
+                    $('select#prodi').append('<option value="">No Prodi available</option>');
+                }
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching data: " + textStatus, errorThrown);
+                $('#prodi').empty().append('<option value="">Error fetching Prodi</option>');
+            });
+    } else {
+        $('#prodi').empty().append('<option value=""> --- Please select a unit first ---</option>');
+    }
+});
+
+    // $.get("{{ url('/api/category') }}/" + $("#unit").val())
+    //                 .done(function({
+    //                     data
+    //                 }) {
+    //                     tempCat = ['Jasa', 'Pelatihan', 'Inovasi', 'Produk']
+    //                     let options = '';
+    //                     $.each(data, function(key, val) {
+    //                         options += `<option value="${val.id}">${val.name}</option>`;
+    //                         $.each(tempCat, function(tKey, tVal) {
+    //                             if (tVal == val.name) {
+    //                                 tempCat[tKey] = ""
+    //                             }
+    //                         })
+    //                     });
+    //                     $.each(tempCat, function(key, val) {
+    //                         if (val != '') {
+    //                             options += `<option value="0">${val}</option>`;
+    //                         }
+    //                     });
+    //                     $('#category-form select#category').append(options)
+    //                 })
+    //                 .fail(function(response) {
+    //                     $('#category-form select, #activity-form select').html(optionDefault)
+    //                 })
+});
+</script>
 @endsection
 
 @section('scripts')

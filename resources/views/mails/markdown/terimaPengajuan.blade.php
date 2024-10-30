@@ -8,7 +8,7 @@
 - Tanggal Pengajuan: {{ $kerjasama->created_at->format('d-m-Y') }}
 - Status: Diterima
 
-@component('mail::button', ['url' => 'http://127.0.0.1:8000/admin/kerjasama/'. $kerjasama->id])
+@component('mail::button', ['url' => env('APP_URL').'/admin/kerjasama/detail/'. $kerjasama->id], 'color::success')
 Lihat Pengajuan
 @endcomponent
 

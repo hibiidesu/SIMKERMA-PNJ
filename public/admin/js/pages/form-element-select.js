@@ -23,3 +23,6 @@ new Choices(".choices-2", {
 new Choices(".choices-3", {
     removeItemButton: true,
 });
+new Choices(".choices-4", {
+    removeItemButton: true,
+});
