@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\kriteria_mitra as km;
+use Illuminate\Database\Seeder;
 
 class KriteriaMitraSeeder extends Seeder
 {
@@ -31,7 +31,6 @@ class KriteriaMitraSeeder extends Seeder
             "Perguruan Tinggi Yang Masuk Dalam Daftar QS200 Berdasarkan Bidang Ilmu (QS200 By Subject)",
         ];
         km::truncate();
-
             foreach($data as $item){
                 km::insert([
                     'kriteria_mitra' => $item

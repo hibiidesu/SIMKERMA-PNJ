@@ -11,6 +11,7 @@ class Kerjasama extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'mitra',
         'kerjasama',
         'tanggal_mulai',
         'tanggal_selesai',
@@ -18,8 +19,11 @@ class Kerjasama extends Model
         'kegiatan',
         'sifat',
         'jenis_kerjasama_id',
+        'kriteria_mitra_id',
+        'kriteria_kemitraan_id',
         'pks',
         'jurusan',
+        'prodi',
         'pic_pnj',
         'alamat_perusahaan',
         'pic_industri',

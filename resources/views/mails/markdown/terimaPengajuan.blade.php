@@ -1,17 +1,32 @@
 @component('mail::message')
 
-# Pengajuan Anda dengan ID {{ $kerjasama->id }} telah diterima. 
+# Pengajuan Anda dengan ID {{ $kerjasama->id }} telah diterima oleh
+@if ($kerjasama->step == '3')
+    Tim Legal
+@elseif ($kerjasama->step == '5')
+    Wadir 4
+@elseif ($kerjasama->step == '7')
+    Direktur !!!
+@endif
+
 **Detail Pengajuan:**
 
 
 - Judul: {{ $kerjasama->kerjasama }}
 - Tanggal Pengajuan: {{ $kerjasama->created_at->format('d-m-Y') }}
-- Status: Diterima
+- Status: @if ($kerjasama->step == '3')
+Diterima Tim Legal (Menunggu review Wadir 4)
+@elseif ($kerjasama->step == '5')
+Diterima Wadir 4 (Menunggu review Direktur)
+@elseif ($kerjasama->step == '7')
+Diterima Direktur
+@endif
 
-@component('mail::button', ['url' => env('APP_URL').'/admin/kerjasama/detail/'. $kerjasama->id], 'color::success')
+@component('mail::button', ['url' => env('APP_URL').'/'.$kerjasama->user->role->role_name.'/kerjasama/detail/'.$kerjasama->id, 'color::success'])
 Lihat Pengajuan
 @endcomponent
 
-Thanks,<br>
+Terima kasih,
+Politeknik Negeri Jakarta<br>
 {{ config('app.name') }}
 @endcomponent

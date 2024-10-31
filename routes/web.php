@@ -18,7 +18,7 @@ Route::get('/chart/sifat-year', [App\Http\Controllers\WebController::class, 'cha
 Route::get('/chart/jenis-year', [App\Http\Controllers\WebController::class, 'chartByJenisYear']);
 Route::get('/chart/memorandum', [App\Http\Controllers\WebController::class, 'chartByMemorandum']);
 Route::get('/chart/jenis-kerjasama', [App\Http\Controllers\WebController::class, 'chartByJenisKerjasama']);
-
+Route::get('/api/prodi/find/{units}', [ProdiController::class, 'getProdiByUnitIDs'])->name('prodi.find');
 Route::get('/about', [App\Http\Controllers\WebController::class, 'index'])->name('about');
 
 
@@ -114,27 +114,57 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
     });
 });
 
+//route untuk direktur
+Route::middleware(['isDirektur'])->prefix('direktur')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('DirekturHome');
+    Route::get('/kerjasama', [App\Http\Controllers\KerjasamaController::class, 'index']);
+    Route::get('/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
+    Route::get('/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
+    Route::get('/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
+
+    Route::get('/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::post('/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
+
+    Route::get('/review', [App\Http\Controllers\ReviewController::class, 'index']);
+    Route::post('/review/tolak', [App\Http\Controllers\ReviewController::class, 'tolakDirektur']);
+    Route::get('/review/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terimaDirektur']);
+    Route::get('/review/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+});
+
+
 //route untuk pemimpin
-Route::middleware(['isPemimpin'])->group(function () {
-    Route::get('/pemimpin/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PemimpinHome');
-    Route::get('/pemimpin/kerjasama', [App\Http\Controllers\KerjasamaController::class, 'index']);
-    Route::get('/pemimpin/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
-    Route::get('/pemimpin/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
-    Route::get('/pemimpin/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
+Route::middleware(['isPemimpin'])->prefix('pemimpin')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PemimpinHome');
+    Route::get('/kerjasama', [App\Http\Controllers\KerjasamaController::class, 'index']);
+    Route::get('/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
+    Route::get('/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
+    Route::get('/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
 
-    Route::get('/pemimpin/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
-    Route::post('/pemimpin/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
+    Route::get('/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::post('/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
 
-    Route::get('/pemimpin/review', [App\Http\Controllers\ReviewController::class, 'index']);
-    Route::post('/pemimpin/review/tolak', [App\Http\Controllers\ReviewController::class, 'tolak']);
-    Route::get('/pemimpin/review/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terima']);
-    Route::get('/pemimpin/review/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+    Route::get('/review', [App\Http\Controllers\ReviewController::class, 'index']);
+    Route::post('/review/tolak', [App\Http\Controllers\ReviewController::class, 'tolakWadir']);
+    Route::get('/review/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terimaWadir']);
+    Route::get('/review/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
 });
 
 
 //route untuk legal
-Route::middleware(['isLegal'])->group(function () {
-    Route::get('/legal/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('PicHome');
+Route::middleware(['isLegal'])->prefix('legal')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('LegalHome');
+    Route::get('/kerjasama', [App\Http\Controllers\KerjasamaController::class, 'index']);
+    Route::get('/kerjasama/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
+    Route::get('/kerjasama/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);
+    Route::get('/kerjasama/export', [App\Http\Controllers\KerjasamaController::class, 'export']);
+
+    Route::get('/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
+    Route::post('/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
+
+    Route::get('/review', [App\Http\Controllers\ReviewController::class, 'index']);
+    Route::post('/review/tolak', [App\Http\Controllers\ReviewController::class, 'tolakLegal']);
+    Route::get('/review/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terimaLegal']);
+    Route::get('/review/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
 });
 
 Route::middleware(['isPic'])->group(function () {

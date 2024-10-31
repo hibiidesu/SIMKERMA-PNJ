@@ -34,7 +34,7 @@ class PersetujuanController extends Controller
         $persetujuan->save();
 
         $kerjasama = $persetujuan->kerjasama;
-        
+
         // Periksa apakah semua pemimpin sudah menyetujui
         $allApproved = $kerjasama->persetujuans()
             ->where('status', '!=', 'disetujui')
@@ -52,7 +52,6 @@ class PersetujuanController extends Controller
             $kerjasama->step = 2; // Ditolak
             $kerjasama->save();
         }
-        // Jika tidak semua menyetujui dan tidak ada yang menolak, biarkan status tetap menunggu
 
         return redirect()->route('pemimpin.persetujuan.index')->with('success', 'Persetujuan berhasil diperbarui');
     }

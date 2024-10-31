@@ -20,6 +20,12 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="mitra">Mitra <span class="text-danger">*</span></label>
+                                    <input type="text" id="mitra" class="form-control" name="mitra" required value="{{ $data->mitra }}">
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Kerja sama <span class="text-danger">*</span></label>
                                     <input type="text" id="kerjasama" class="form-control" name="kerjasama" required value="{{ $data->kerjasama }}">
                                 </div>
@@ -50,7 +56,13 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize">Sifat (Nasional / Internasional) <span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize">Sifat (Lokal / Nasional / Internasional) <span class="text-danger">*</span></label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sifat" id="sifat0" value="Lokal" {{ $data->sifat == 'Lokal' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="sifat0">
+                                            Lokal
+                                        </label>
+                                    </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="sifat" id="sifat1" value="Nasional" required {{ $data->sifat == 'Nasional' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="sifat1">
@@ -150,7 +162,7 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="col-12 mb-2">
+                            {{-- <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="target_reviewer">Siapa saja yang dapat melakukan review kerja sama ini?</label>
                                     <?php
@@ -163,7 +175,7 @@
                                     </select>
                                 </div>
                                 <div class="form-text text-muted">Kosongkan jika semua pemimpin dapat melakukan review kerja sama ini</div><br>
-                            </div>
+                            </div> --}}
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary mb-1">Submit</button>
                             </div>

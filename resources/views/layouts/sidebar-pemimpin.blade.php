@@ -38,7 +38,9 @@
                     <a href="{{ url('pemimpin/review') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Review kerja sama</span>
-                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaBaru() }}</span>
+                        @if (Auth::user()->kerjasamaWadir() != 0)
+                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaWadir() }}</span>
+                        @endif
                     </a>
                 </li>
                 <hr>

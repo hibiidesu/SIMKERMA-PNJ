@@ -48,6 +48,8 @@
                 @include('layouts.sidebar-pic')
             @elseif (Auth::check() && Auth::user()->role->role_name == 'legal')
                 @include('layouts.sidebar-legal')
+            @elseif (Auth::check() && Auth::user()->role->role_name == 'direktur')
+                @include('layouts.sidebar-direktur')
             @endif
 
             <div id="main">

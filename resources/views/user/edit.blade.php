@@ -31,7 +31,7 @@
                 @if (Request::segment(2) == 'my-profile')
                     <form class="form form-vertical" method="post" action="{{ url('/'.Request::segment(1).'/my-profile/update') }}">
                 @else
-                    <form class="form form-vertical" method="post" action="{{ url('/pemimpin/user/update') }}">
+                    <form class="form form-vertical" method="post" action="{{ url('/admin/user/update') }}">
                         <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                 @endif
                     @csrf

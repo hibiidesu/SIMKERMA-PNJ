@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Unit;
 
 class prodi extends Model
 {
@@ -14,7 +15,7 @@ class prodi extends Model
         'unit_id'
     ];
     public function unit(){
-        return $this->belongsTo('App\Models\Unit');
+        return $this->belongsTo(Unit::class);
     }
 
 }
