@@ -13,6 +13,9 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KerjasamaExport;
+use App\Models\kriteria_kemitraan;
+use App\Models\kriteria_mitra;
+use App\Models\prodi;
 
 class KerjasamaController extends Controller
 {
@@ -29,17 +32,54 @@ class KerjasamaController extends Controller
     {
         $unit = [];
         $perjanjian = [];
+        $kriteria_kemitraan = [];
+        $kriteria_mitra = [];
+        $prodi = [];
+        foreach (Kriteria_kemitraan::all() as $item) {
+            $kriteria_kemitraan[$item->id] = $item->kriteria_kemitraan;
+        }
+        foreach (Kriteria_mitra::all() as $item) {
+            $kriteria_mitra[$item->id] = $item->kriteria_mitra;
+        }
         foreach (Unit::all() as $item) {
             $unit[$item->id] = $item->name;
         }
         foreach (pks::all() as $item) {
             $perjanjian[$item->id] = $item->pks;
         }
+        foreach (prodi::all() as $item) {
+            $prodi[$item->id] = $item->name;
+        }
 
         $data = Kerjasama::orderBy('id', 'desc')->where('step', 3);
         if ($request->has('type') && $request->type != 'all') {
             $data = $data->where('jenis_kerjasama_id', ($request->type - 1));
         }
+        if ($request->has('k_mitra') && $request->k_mitra != 'all') {
+            if (is_array($request->k_mitra)) {
+                $data = $data->where(function($query) use ($request) {
+                    foreach ($request->k_mitra as $mitraId) {
+                        $query->orWhereRaw("? = ANY (string_to_array(kriteria_mitra_id, ','))", [$mitraId]);
+                    }
+                });
+            } else {
+                $data = $data->whereRaw("? = ANY (string_to_array(kriteria_mitra_id, ','))", [$request->k_mitra]);
+            }
+        }
+
+        if ($request->has('k_kemitraan') && $request->k_kemitraan != 'all') {
+            if (is_array($request->k_kemitraan)) {
+                $data = $data->where(function($query) use ($request) {
+                    foreach ($request->k_kemitraan as $kemitraanId) {
+                        $query->orWhereRaw("? = ANY (string_to_array(kriteria_kemitraan_id, ','))", [$kemitraanId]);
+                    }
+                });
+            } else {
+                $data = $data->whereRaw("? = ANY (string_to_array(kriteria_kemitraan_id, ','))", [$request->k_kemitraan]);
+            }
+        }
+
+
 
         if ($request->has('sifat') && $request->sifat != 'all') {
             $data = $data->where('sifat', $request->sifat);
@@ -57,9 +97,15 @@ class KerjasamaController extends Controller
                 $data = $data->whereDate('tanggal_selesai', '<', Carbon::now());
             }
         }
+        // TODO : Membuat Data Kerjasama menjadi Expire atau auto tertolak sehingga PIC harus Mengajukan Ulang
 
         return view('kerjasama/index', [
             'unit' => $unit,
+            'prodi' => $prodi,
+            'kriteria_mitra_filter' => kriteria_mitra::all(),
+            'kriteria_kemitraan_filter' => kriteria_kemitraan::all(),
+            'kriteria_kemitraan' => $kriteria_kemitraan,
+            'kriteria_mitra' => $kriteria_mitra,
             'jenisKerjasama' => Jenis_kerjasama::all(),
             'perjanjian' => $perjanjian,
             'data' => $data->get()
@@ -253,7 +299,7 @@ class KerjasamaController extends Controller
     {
         $delete = Kerjasama::findOrFail($id)->delete();
         if ($delete) {
-            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');  
+            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
         } else {
             return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
         }
@@ -273,6 +319,4 @@ class KerjasamaController extends Controller
     {
         return Excel::download(new KerjasamaExport($request->all()), 'kerjasama.xlsx');
     }
-
-    
 }

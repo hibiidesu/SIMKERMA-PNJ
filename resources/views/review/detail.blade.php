@@ -62,6 +62,20 @@
                             @endif
                         </div>
                     </div>
+                    <div class="d-flex">
+                        <div class="fw-bold">Prodi : </div>
+                        <div class="ps-2">
+                            @if($prodi != "")
+                                @foreach ($prodi as $item)
+                                    @if ($loop->index < count($prodi) - 1)
+                                        {{ $item->name }},&nbsp;
+                                    @else
+                                        {{ $item->name }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <p>
                     <strong>Kegiatan:</strong>

@@ -73,6 +73,28 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="type">Kriteria Kemitraan</label>
+                            <div class="mt-md-1">
+                                <select class="form-select" required id="k_kemitraan" name="k_kemitraan">
+                                    <option value="all">Semua</option>
+                                    @foreach ($kriteria_kemitraan_filter as $item)
+                                    <option value="{{ $item->id}}" {{ Request::get('k_kemitraan') == $item->id  ? 'selected' : '' }}>{{ $item->kriteria_kemitraan }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Kriteria Mitra</label>
+                            <div class="mt-md-1">
+                                <select class="form-select" required id="k_mitra" name="k_mitra">
+                                    <option value="all">Semua</option>
+                                    @foreach ($kriteria_mitra_filter as $item)
+                                    <option value="{{ $item->id}}" {{ Request::get('k_mitra') == $item->id ? 'selected' : '' }}>{{ $item->kriteria_mitra }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <div class="mt-md-1">
                                 <button class="btn btn-primary mt-4" type="submit" name="filter" value="true">Terapkan</button>
                                 @if (Request::get('filter'))
@@ -97,9 +119,12 @@
                             <th>Nomor</th>
                             <th>Tanggal Berlaku</th>
                             <th>Sifat</th>
+                            {{-- <th>Kriteria Kemitraan</th>
+                            <th>Kriteria Mitra</th> --}}
                             <th>Jenis Kerja Sama</th>
                             <th>Jenis Perjanjian</th>
                             <th>Unit</th>
+                            <th>Prodi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -138,6 +163,26 @@
                                     <span class="badge bg-primary mt-lg-0 mt-2">{{ $item->sifat }}</span>
                                 @endif
                             </td>
+                            {{-- <td>
+                                @foreach (explode(',', $item->kriteria_kemitraan_id) as $kmt )
+                                @if ($loop->index + 1 < count(explode(',', $item->kriteria_kemitraan_id)))
+                                {{ $kriteria_kemitraan[$kmt].', ' }}
+                                @else
+                                {{ $kriteria_kemitraan[$kmt] }}
+                                @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach (explode(',', $item->kriteria_mitra_id) as $kt)
+                                @if ($loop->index + 1 < count(explode(',', $item->kriteria_mitra_id)))
+                                    {{ $kriteria_mitra[$kt] ?? '' }},
+                                @else
+                                    {{ $kriteria_mitra[$kt] ?? '' }}
+                                @endif
+                            @endforeach
+
+                            </td> --}}
+
                             <td>{{ $item->jenis_kerjasama->jenis_kerjasama }}</td>
                             <td>
                                 @foreach (explode(',', $item->pks) as $x)
@@ -155,6 +200,17 @@
                                         {{ $unit[$x].', ' }}
                                         @else
                                         {{ $unit[$x] }}
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </td>
+                            <td>
+                                @if ($item->prodi)
+                                    @foreach (explode(',', $item->prodi) as $x)
+                                        @if ($loop->index + 1 < count(explode(',', $item->prodi)))
+                                        {{ $prodi[$x].', ' }}
+                                        @else
+                                        {{ $prodi[$x] }}
                                         @endif
                                     @endforeach
                                 @endif

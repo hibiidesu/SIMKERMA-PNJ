@@ -75,6 +75,26 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
+                                    <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
+                                        @foreach ($kriteria_mitra as $item)
+                                        <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
+                                    <select class="choices-2 form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                        @foreach ($kriteria_kemitraan as $item)
+                                        <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="jenis_kerjasama_id">Jenis Kerja sama <span class="text-danger">*</span></label>
                                     <select class="form-select" required id="jenis_kerjasama_id" name="jenis_kerjasama_id">
                                         <option value="">-</option>
@@ -87,7 +107,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" multiple required>
+                                    <select class="choices-3 form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" multiple required>
                                         @foreach ($perjanjian as $item)
                                         <option value="{{ $item->id }}" {{ old('perjanjian') &&  in_array($item->id, old('perjanjian')) ? 'selected' : '' }}>{{ $item->pks }}</option>
                                         @endforeach
@@ -97,7 +117,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="jurusan">Unit<span class="text-danger">*</span></label>
-                                    <select class="choices-2 form-select" multiple="multiple" id="jurusan" name="jurusan[]" multiple required>
+                                    <select class="choices-4 form-select" multiple="multiple" id="jurusan" name="jurusan[]" multiple required>
                                         @foreach ($unit as $item)
                                         <option value="{{ $item->id }}" {{ old('jurusan') &&  in_array($item->id, old('jurusan')) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -105,9 +125,9 @@
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
-                                <label class="mb-2 fw-bold text-capitalize" for="prodi">Prodi</label>
-                                    <select class="choices-3 form-select" multiple="multiple" id="prodi" name="prodi[]" multiple required>
-                                        <option value="">--- isi unit terlebih dahulu</option>
+                                <label class="mb-2 fw-bold text-capitalize" for="prodi" id="prodi_label">Prodi</label>
+                                    <select class="form-select" multiple="multiple" id="prodi" name="prodi[]" multiple required>
+                                        <option value="">--- isi unit terlebih dahulu ---</option>
                                     </select>
                             </div>
                             <div class="col-12 mb-2">
@@ -158,7 +178,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="target_reviewer">Siapa saja yang dapat melakukan review kerja sama ini?</label>
-                                    <select class="choices-4 form-select" multiple="multiple" id="target_reviewer" name="target_reviewer[]" multiple>
+                                    <select class="choices-5 form-select" multiple="multiple" id="target_reviewer" name="target_reviewer[]" multiple>
                                         @foreach ($users as $item)
                                         <option value="{{ $item->id }}" {{ old('target_reviewer') &&  in_array($item->id, old('target_reviewer')) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
@@ -177,60 +197,52 @@
     </div>
 </section>
 <script>
-    $(document).ready(function() {
-        $('#jurusan').change(function() {
-    var selectedUnits = $(this).val(); 
-
-    $('#prodi').empty();
-
-    if (selectedUnits.length > 0) {
-        $.get("{{ url('/admin/prodi/find') }}/" + selectedUnits)
-            .done(function(data) {
-                if (data.length > 0) {
-                    let options = '<option value="">--- Select Prodi ---</option>';
-                    $.each(data, function(key, prodi) {
-                        options += `<option value="${prodi.id}">${prodi.name}</option>`;
-                        console.log(prodi.id + ' ' + prodi.name);
-                    });
-                    $('select#prodi').append(options);
-                } else {
-                    $('select#prodi').append('<option value="">No Prodi available</option>');
-                }
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                console.error("Error fetching data: " + textStatus, errorThrown);
-                $('#prodi').empty().append('<option value="">Error fetching Prodi</option>');
-            });
-    } else {
-        $('#prodi').empty().append('<option value=""> --- Please select a unit first ---</option>');
-    }
+   $(document).ready(function() {
+    $('#prodi').hide();
+    $('#prodi_label').hide();
+    let prodiChoices;
+    $('#jurusan').change(function() {
+        var selectedUnits = $(this).val();
+        $('#prodi').empty().hide();
+        $('#prodi_label').hide();
+        if (selectedUnits.length > 0) {
+            $.get("{{ url('/admin/prodi/find') }}/" + selectedUnits)
+                .done(function(data) {
+                    if (data.length > 0) {
+                        let options = '';
+                        $.each(data, function(key, prodi) {
+                            options += `<option value="${prodi.id}">${prodi.name}</option>`;
+                            console.log(prodi.id + ' ' + prodi.name);
+                        });
+                        $('#prodi_label').show();
+                        $('#prodi').append(options).show();
+                        if (typeof Choices !== 'undefined') {
+                            if (prodiChoices) prodiChoices.destroy(); 
+                            prodiChoices = new Choices('#prodi', {
+                                removeItemButton: true,
+                            });
+                        }
+                    } else {
+                        prodiChoices.destroy()
+                        $('#prodi').empty().hide();
+                        $('#prodi_label').hide();
+                    }
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    prodiChoices.destroy()
+                    console.error("Error fetching data:", textStatus, errorThrown);
+                    $('#prodi').empty().hide();
+                    $('#prodi_label').hide();
+                });
+        } else {
+            prodiChoices.destroy()
+            $('#prodi').empty().hide();
+            $('#prodi_label').hide();
+        }
+    });
 });
 
-    // $.get("{{ url('/api/category') }}/" + $("#unit").val())
-    //                 .done(function({
-    //                     data
-    //                 }) {
-    //                     tempCat = ['Jasa', 'Pelatihan', 'Inovasi', 'Produk']
-    //                     let options = '';
-    //                     $.each(data, function(key, val) {
-    //                         options += `<option value="${val.id}">${val.name}</option>`;
-    //                         $.each(tempCat, function(tKey, tVal) {
-    //                             if (tVal == val.name) {
-    //                                 tempCat[tKey] = ""
-    //                             }
-    //                         })
-    //                     });
-    //                     $.each(tempCat, function(key, val) {
-    //                         if (val != '') {
-    //                             options += `<option value="0">${val}</option>`;
-    //                         }
-    //                     });
-    //                     $('#category-form select#category').append(options)
-    //                 })
-    //                 .fail(function(response) {
-    //                     $('#category-form select, #activity-form select').html(optionDefault)
-    //                 })
-});
+
 </script>
 @endsection
 

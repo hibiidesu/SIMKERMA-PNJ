@@ -14,6 +14,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
+use App\Models\prodi;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -69,7 +70,8 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        
+        // dd($request);
         $request->validate(
             [
                 'kerjasama' => 'required',
@@ -77,6 +79,8 @@ class ReviewController extends Controller
                 'tanggal_selesai' => 'required|date|after:tanggal_mulai',
                 'nomor' => 'required',
                 'sifat' => 'required',
+                'kriteria_kemitraan_id' => 'required',
+                'kriteria_mitra_id' => 'required',
                 'jenis_kerjasama_id' => 'required',
                 'perjanjian' => 'required',
                 'jurusan' => 'required',
@@ -107,10 +111,13 @@ class ReviewController extends Controller
                 'nomor' => $request->nomor,
                 'kegiatan' => $request->kegiatan,
                 'sifat' => $request->sifat,
+                'kriteria_kemitraan_id' => implode(',', $request->kriteria_kemitraan_id),
+                'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
                 'user_id' => Auth::user()->id,
                 'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
                 'pks' => implode(',', $request->perjanjian),
                 'jurusan' => implode(',', $request->jurusan),
+                'prodi' => implode(',', $request->prodi),
                 'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                 'pic_pnj' => $request->pic_pnj,
                 'alamat_perusahaan' => $request->alamat_perusahaan,
@@ -131,9 +138,9 @@ class ReviewController extends Controller
                     'status' => 'menunggu',
                 ]);
                 Mail::to($pemimpin->email)->send(new pengajuanBaru(
-                    $request->kerjasama, 
-                    $request->tanggal_mulai, 
-                    $request->tanggal_selesai, 
+                    $request->kerjasama,
+                    $request->tanggal_mulai,
+                    $request->tanggal_selesai,
                     $request->kegiatan,
                     $request->sifat,
                     $request->pic_pnj,
@@ -141,17 +148,17 @@ class ReviewController extends Controller
             }
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
-            }  else { 
+            }  else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
             }
-            
+
         } else {
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
             }
-            
+
         }
         dd($request->input());
     }
@@ -172,12 +179,18 @@ class ReviewController extends Controller
         }
         if ($data) {
             $unit = "";
+            $prodi = "";
+            if ($data->prodi!= '') {
+                $prodi = prodi::whereIn('id', explode(',', $data->prodi))->get();
+            }
             if ($data->jurusan != '') {
                 $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
+
             }
             $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
 
             return view('review/detail', [
+                'prodi' => $prodi,
                 'unit' => $unit,
                 'perjanjian' => $perjanjian,
                 'data' => $data,
@@ -192,7 +205,7 @@ class ReviewController extends Controller
     }
 
     public function tolak(Request $request)
-    {   
+    {
         $request->validate([
             'id' => 'required',
             'catatan' => 'required',
@@ -216,7 +229,7 @@ class ReviewController extends Controller
     {
         $kerjasama = Kerjasama::findOrFail($id);
         $update = $kerjasama->update([
-            'step' => '3', // current_step + 2 
+            'step' => '3', // current_step + 2
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
@@ -339,14 +352,14 @@ class ReviewController extends Controller
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
             }
-            
+
         } else {
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
             }
-            
+
         }
     }
 }
