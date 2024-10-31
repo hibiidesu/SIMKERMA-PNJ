@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\KriteriaKemitraanController;
+use App\Http\Controllers\KriteriaMitraController;
 use App\Http\Controllers\ProdiController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
@@ -62,6 +64,24 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::get('/add', [ProdiController::class , 'create']);
         Route::post('/store', [ProdiController::class , 'store']);
         Route::get('/find/{id}', [ProdiController::class, 'getProdiByUnitID'])->name('fetch.prodi');
+    });
+    Route::prefix('kriteria')->group(function(){
+        route::prefix('mitra')->group(function(){
+            Route::get('/',[KriteriaMitraController::class, 'index']);
+            Route::get('/add',[KriteriaMitraController::class, 'create']);
+            Route::post('/store',[KriteriaMitraController::class, 'store']);
+            Route::get('/edit/{id}',[KriteriaMitraController::class, 'edit']);
+            Route::post('/update',[KriteriaMitraController::class, 'update']);
+            Route::get('/delete/{id}',[KriteriaMitraController::class, 'delete']);
+        });
+        route::prefix('kemitraan')->group(function(){
+            Route::get('/',[KriteriaKemitraanController::class, 'index']);
+            Route::get('/add',[KriteriaKemitraanController::class, 'create']);
+            Route::post('/store',[KriteriaKemitraanController::class, 'store']);
+            Route::get('/edit/{id}',[KriteriaKemitraanController::class, 'edit']);
+            Route::post('/update',[KriteriaKemitraanController::class, 'update']);
+            Route::get('/delete/{id}',[KriteriaKemitraanController::class, 'delete']);
+        });
     });
     Route::prefix('perjanjian-kerjasama')->group(function () {
         Route::get('/', [App\Http\Controllers\PKSController::class, 'index']);
