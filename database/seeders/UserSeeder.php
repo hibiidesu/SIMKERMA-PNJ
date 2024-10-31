@@ -19,31 +19,31 @@ class UserSeeder extends Seeder
         User::truncate(); //kosongkan table
         User::insert([
             'name' => "admin",
-            'email' => "admin@gmail.com",
-            'username' => "admin",
+            'email' => "muhammad.husain.al.ghazali.tik22@mhsw.pnj.ac.id",
+            'username' => "admin123",
             'role_id' => 1,
             'password' => Hash::make("admin123"),
         ]);
         User::insert([
             'name' => "pemimpin",
-            'email' => "pemimpin@gmail.com",    
-            'username' => "pemimpin",
+            'email' => "nabil.falih.khairullah.tik21@mhsw.pnj.ac.id",
+            'username' => "pemimpin123",
             'role_id' => 2,
             'password' => Hash::make("pemimpin123"),
         ]);
         User::insert([
+            'name' => "legal",
+            'email' => "farhan.dwi.oktavian.tik21@mhsw.pnj.ac.id",
+            'username' => "legal123",
+            'role_id' => 3,
+            'password' => Hash::make("legal123"),
+        ]);
+        User::insert([
             'name' => "pic",
-            'email' => "pic@gmail.com",
+            'email' => "muhammad.rajiful.haq.gea.tik22@mhsw.pnj.ac.id",
             'username' => "pic123",
             'role_id' => 4,
             'password' => Hash::make("pic123"),
-        ]);
-        User::insert([
-            'name' => "legal",
-            'email' => "legal@gmail.com",
-            'username' => "legal",
-            'role_id' => 3,
-            'password' => Hash::make("legal123"),
         ]);
     }
 }
