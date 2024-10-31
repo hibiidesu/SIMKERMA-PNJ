@@ -108,6 +108,16 @@ class ReviewController extends Controller
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
 
+        } else {
+            return view('review/add', [
+                'users' => User::where('role_id', '=', '4')->get(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
+                'unit' => Unit::all(),
+                'prodi' => Prodi::all(),
+                'perjanjian' => pks::all(),
+                'jenisKerjasama' => Jenis_kerjasama::all(),
+            ]);
         }
 
     }
@@ -188,19 +198,12 @@ class ReviewController extends Controller
                     'user_id' => $legal->id,
                     'status' => 'menunggu',
                 ]);
-                Mail::to($legal->email)->send(new pengajuanBaru(
-                    $request->kerjasama,
-                    $request->tanggal_mulai,
-                    $request->tanggal_selesai,
-                    $request->kegiatan,
-                    $request->sifat,
-                    $request->pic_pnj,
-                ));
+                Mail::to($legal->email)->send(new pengajuanBaru($kerjasama, 'legal'));
             }
             if (Auth::user()->role->role_name == 'pic') {
-                return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+                return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
             }  else {
-                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
             }
 
         } else {
@@ -349,6 +352,15 @@ class ReviewController extends Controller
         if ($update) {
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
+            $PemimpinUsers = User::where('role_id', 2)->get();
+            foreach ($PemimpinUsers as $i) {
+                Persetujuan::create([
+                    'kerjasama_id' => $kerjasama->id,
+                    'user_id' => $i->id,
+                    'status' => 'menunggu',
+                ]);
+                Mail::to($i->email)->send(new pengajuanBaru($kerjasama, 'pemimpin'));
+            }
             return redirect('/legal/review')->with('success', 'Data berhasil diterima');
         } else {
             return redirect('/legal/review')->with('error', 'Data gagal diterima');
@@ -365,6 +377,15 @@ class ReviewController extends Controller
         if ($update) {
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
+            $DirekturUsers = User::where('role_id', 5)->get();
+            foreach ($DirekturUsers as $i) {
+                Persetujuan::create([
+                    'kerjasama_id' => $kerjasama->id,
+                    'user_id' => $i->id,
+                    'status' => 'menunggu',
+                ]);
+                Mail::to($i->email)->send(new pengajuanBaru($kerjasama, 'direktur'));
+            }
             return redirect('/pemimpin/review')->with('success', 'Data berhasil diterima');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal diterima');

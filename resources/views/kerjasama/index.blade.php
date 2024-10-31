@@ -56,7 +56,7 @@
                             <div class="mt-md-1">
                                 <select name="sifat" id="sifat" class="form-select">
                                     <option value="all" {{ Request::get('sifat') == 'all' ? 'selected' : '' }}>Semua</option>
-                                    <option value="Lokal" {{ Request::get('sifat') == 'Lokal' ? 'selected' : '' }}>Lokals</option>
+                                    <option value="Lokal" {{ Request::get('sifat') == 'Lokal' ? 'selected' : '' }}>Lokal</option>
                                     <option value="Nasional" {{ Request::get('sifat') == 'Nasional' ? 'selected' : '' }}>Nasional</option>
                                     <option value="Internasional" {{ Request::get('sifat') == 'Internasional' ? 'selected' : '' }}>Internasional</option>
                                 </select>
@@ -118,6 +118,8 @@
                             <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
                             <td> <a href="{{ url('/pemimpin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            @elseif (Auth::user()->role->role_name == 'direktur')
+                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pic')
                             <td> <a href="{{ url('/pic/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @endif
