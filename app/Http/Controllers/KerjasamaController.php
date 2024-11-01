@@ -13,6 +13,8 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KerjasamaExport;
+
+
 use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
 use App\Models\prodi;
@@ -31,6 +33,7 @@ class KerjasamaController extends Controller
     public function index(Request $request)
     {
         $unit = [];
+        $prodi = [];
         $perjanjian = [];
         $kriteria_kemitraan = [];
         $kriteria_mitra = [];
@@ -51,7 +54,11 @@ class KerjasamaController extends Controller
             $prodi[$item->id] = $item->name;
         }
 
-        $data = Kerjasama::orderBy('id', 'desc')->where('step', 3);
+        foreach (prodi::all() as $item) {
+            $prodi[$item->id] = $item->name;
+        }
+
+        $data = Kerjasama::orderBy('id', 'desc')->where('step', 7);
         if ($request->has('type') && $request->type != 'all') {
             $data = $data->where('jenis_kerjasama_id', ($request->type - 1));
         }
@@ -133,8 +140,12 @@ class KerjasamaController extends Controller
         if ($data->jurusan != '') {
             $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
         }
+        if ($data->prodi != '') {
+            $prodi = prodi::whereIn('id', explode(',', $data->prodi))->get();
+        }
         return view('kerjasama/detail', [
             'unit' => $unit,
+            'prodi' => $prodi,
             'perjanjian' => $perjanjian,
             'data' => $data,
         ]);
@@ -147,9 +158,12 @@ class KerjasamaController extends Controller
         if ($data->jurusan != '') {
             $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
         }
-
+        if ($data->prodi != '') {
+            $prodi = prodi::whereIn('id', explode(',', $data->prodi))->get();
+        }
         return view('kerjasama/repo', [
             'unit' => $unit,
+            'prodi' => $prodi,
             'perjanjian' => $perjanjian,
             'data' => $data,
         ]);
@@ -165,6 +179,7 @@ class KerjasamaController extends Controller
     {
         return view('kerjasama/edit', [
             'unit' => Unit::all(),
+            'prodi' => prodi::all(),
             'perjanjian' => pks::all(),
             'data' => Kerjasama::findOrFail($id),
             'jenisKerjasama' => Jenis_kerjasama::all(),
@@ -183,6 +198,7 @@ class KerjasamaController extends Controller
         $request->validate(
             [
                 'id' => 'required',
+                'mitra' => 'required',
                 'kerjasama' => 'required',
                 'tanggal_mulai' => 'required|date',
                 'tanggal_selesai' => 'required|date|after:tanggal_mulai',
@@ -190,8 +206,11 @@ class KerjasamaController extends Controller
                 'kegiatan' => 'nullable',
                 'sifat' => 'required',
                 'jenis_kerjasama_id' => 'required',
+                'kriteria_mitra_id' => 'required',
+                'kriteria_kemitraan_id' => 'required',
                 'perjanjian' => 'required',
                 'jurusan' => 'required',
+                'prodi' => 'required',
                 'pic_pnj' => 'required',
                 'alamat_perusahaan' => 'required',
                 'pic_industri' => 'required',
@@ -200,7 +219,7 @@ class KerjasamaController extends Controller
                 // 'email' => 'required|email',
                 'file' => 'file|mimes:pdf,doc,docx',
             ],
-            ['telp_industri.regex' => 'format nomer telpon tidak valid']
+            ['telp_industri.regex' => 'Format nomer telpon tidak valid']
         );
 
         if ($request->telp_industri) {
@@ -213,6 +232,7 @@ class KerjasamaController extends Controller
         //buat jadi repo
         $kerjasama = Kerjasama::findOrFail($request->id);
         $repo = Repository::create([
+            'mitra' => $kerjasama->mitra,
             'kerjasama' => $kerjasama->kerjasama,
             'kerjasama_id' => $kerjasama->id,
             'user_id' => Auth::user()->id,
@@ -222,8 +242,11 @@ class KerjasamaController extends Controller
             'kegiatan' => $kerjasama->kegiatan,
             'sifat' => $kerjasama->sifat,
             'jenis_kerjasama_id' => $kerjasama->jenis_kerjasama_id,
+            'kriteria_mitra_id' => $kerjasama->kriteria_mitra_id,
+            'kriteria_kemitraan_id' => $kerjasama->kriteria_kemitraan_id,
             'pks' => $kerjasama->pks,
             'jurusan' => $kerjasama->jurusan,
+            'prodi' => $kerjasama->prodi,
             'pic_pnj' => $kerjasama->pic_pnj,
             'alamat_perusahaan' => $kerjasama->alamat_perusahaan,
             'pic_industri' => $kerjasama->pic_industri,
@@ -239,6 +262,7 @@ class KerjasamaController extends Controller
                 $move = Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
                 if ($move) {
                     $update = Kerjasama::findOrFail($request->id)->update([
+                        'mitra' => $request->mitra,
                         'kerjasama' => $request->kerjasama,
                         'tanggal_mulai' => $request->tanggal_mulai,
                         'tanggal_selesai' => $request->tanggal_selesai,
@@ -246,8 +270,11 @@ class KerjasamaController extends Controller
                         'kegiatan' => $request->kegiatan,
                         'sifat' => $request->sifat,
                         'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
+                        'kriteria_mitra_id' => $request->kriteria_mitra_id,
+                        'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
                         'pks' => implode(',', $request->perjanjian),
                         'jurusan' => implode(',', $request->jurusan),
+                        'prodi' => implode(',', $request->prodi),
                         'pic_pnj' => $request->pic_pnj,
                         'alamat_perusahaan' => $request->alamat_perusahaan,
                         'pic_industri' => $request->pic_industri,
@@ -267,6 +294,7 @@ class KerjasamaController extends Controller
                 }
             } else {
                 $update = Kerjasama::findOrFail($request->id)->update([
+                    'mitra' => $request->mitra,
                     'kerjasama' => $request->kerjasama,
                     'tanggal_mulai' => $request->tanggal_mulai,
                     'tanggal_selesai' => $request->tanggal_selesai,
@@ -274,8 +302,11 @@ class KerjasamaController extends Controller
                     'kegiatan' => $request->kegiatan,
                     'sifat' => $request->sifat,
                     'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
+                    'kriteria_mitra_id' => $request->kriteria_mitra_id,
+                    'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
                     'pks' => implode(',', $request->perjanjian),
                     'jurusan' => implode(',', $request->jurusan),
+                    'prodi' => implode(',', $request->prodi),
                     'pic_pnj' => $request->pic_pnj,
                     'alamat_perusahaan' => $request->alamat_perusahaan,
                     'pic_industri' => $request->pic_industri,

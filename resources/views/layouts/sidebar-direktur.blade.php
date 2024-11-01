@@ -22,30 +22,30 @@
             <ul class="menu">
                 {{-- <li class="sidebar-title">Menu</li> --}}
 
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/dashboard') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/dashboard') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ url()->current() == url('direktur/dashboard') ? 'active' : '' }}">
+                    <a href="{{ url('direktur/dashboard') }}" class='sidebar-link'>
                         <i class="fas fa-th-large"></i>
                         <span class="text-capitalize">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/kerjasama') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/kerjasama') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ url()->current() == url('direktur/kerjasama') ? 'active' : '' }}">
+                    <a href="{{ url('direktur/kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-handshake"></i>
                         <span class="text-capitalize">kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/review') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/review') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ url()->current() == url('direktur/review') ? 'active' : '' }}">
+                    <a href="{{ url('direktur/review') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Review kerja sama</span>
-                        @if (Auth::user()->kerjasamaWadir() != 0)
-                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaWadir() }}</span>
+                        @if (Auth::user()->kerjasamaDirektur() != 0)
+                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaDirektur() }}</span>
                         @endif
                     </a>
                 </li>
                 <hr>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
+                <li class="sidebar-item {{ url()->current() == url('direktur/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
+                    <a href="{{ url('direktur/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
                         <i class="fas fa-user"></i>
                         <span class="text-capitalize">My Profile</span>
                     </a>

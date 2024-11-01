@@ -9,7 +9,7 @@
                     <div class="order-md-0 order-1 col-12 col-md-8">
                         <h4>{{ $data->kerjasama }}</h4>
                         <p>
-                            <span>{{ $data->nomor }}</span>
+                            <span>{{ $data->mitra }} - {{ $data->nomor }}</span>
                         </p>
                     </div>
 
@@ -29,6 +29,8 @@
                         <span class="fw-bold fs-6 badge bg-info text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @elseif ($data->sifat == 'Internasional')
                         <span class="fw-bold fs-6 badge bg-warning text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
+                    @elseif ($data->sifat == 'Lokal')
+                        <span class="fw-bold fs-6 badge bg-success text-light mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @endif
                 </p>
                 <div class="my-3">
@@ -63,7 +65,9 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="fw-bold">Prodi : </div>
+
+                        <div class="fw-bold">Prodi:</div>
+
                         <div class="ps-2">
                             @if($prodi != "")
                                 @foreach ($prodi as $item)
@@ -154,7 +158,7 @@
             </div>
         </div>
     </div>
-    @elseif(Auth::user()->role->role_name=="admin" && $data->step != 3 && $data->catatan)
+    @elseif(Auth::user()->role->role_name=="admin" && $data->step != 7 && $data->catatan)
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
@@ -164,7 +168,7 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
-                    @if (Auth::user()->role->role_name == 'admin' && $data->step == '2')
+                    @if (Auth::user()->role->role_name == 'admin' && ($data->step == '2' || $data->step == '4' || $data->step == '6'))
                         <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
                     @endif
@@ -172,7 +176,7 @@
             </div>
         </div>
     </div>
-    @elseif(Auth::user()->role->role_name=="admin" && $data->step == 3 && $data->reviewer_id)
+    @elseif(Auth::user()->role->role_name=="admin" && $data->step == 7 && $data->reviewer_id)
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
@@ -185,7 +189,7 @@
             </div>
         </div>
     </div>
-    @elseif(Auth::user()->role->role_name=="pic" && $data->step != 3 && $data->catatan)
+    @elseif(Auth::user()->role->role_name=="pic" && $data->step != 7 && $data->catatan)
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
@@ -195,7 +199,7 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
-                    @if (Auth::user()->role->role_name == 'pic' && $data->step == '2')
+                    @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6'))
                         <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
                     @endif
@@ -203,7 +207,7 @@
             </div>
         </div>
     </div>
-    @elseif(Auth::user()->role->role_name=="pic" && $data->step == 3 && $data->reviewer_id)
+    @elseif(Auth::user()->role->role_name=="pic" && $data->step == 7 && $data->reviewer_id)
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
@@ -213,6 +217,64 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                 </div>
+            </div>
+        </div>
+    </div>
+    @elseif (Auth::user()->role->role_name=="legal")
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">Action</div>
+            </div>
+            <div class="card-body">
+                <form class="form form-vertical" method="post" action="{{ url('/legal/review/tolak') }}" >
+                    @csrf
+                    <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="catatan">Catatan <span class="text-danger">*</span></label>
+                                    <textarea name="catatan" id="catatan" cols="30" class="form-control" rows="3" required></textarea>
+                                    <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="{{ url('/legal/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
+                                <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @elseif (Auth::user()->role->role_name=="direktur")
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">Action</div>
+            </div>
+            <div class="card-body">
+                <form class="form form-vertical" method="post" action="{{ url('/direktur/review/tolak') }}" >
+                    @csrf
+                    <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="catatan">Catatan <span class="text-danger">*</span></label>
+                                    <textarea name="catatan" id="catatan" cols="30" class="form-control" rows="3" required></textarea>
+                                    <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
+                                </div>
+                            </div>
+                            <div class="col-12 d-flex justify-content-end">
+                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
+                                <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

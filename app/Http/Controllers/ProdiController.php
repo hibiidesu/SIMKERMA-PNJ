@@ -13,28 +13,41 @@ class ProdiController extends Controller
     {
         $this->middleware('auth');
     }
-    public function getProdiByUnitID($id)
+    public function getProdiByUnitIDs($units)
     {
-        $prodiByUnit = prodi::where('unit_id', $id)->get();
-        
-        if ($prodiByUnit->isEmpty()) {
-            return response()->json(['message' => 'No data found'], 404);
+        try {
+            $unit_ids = explode(',', $units);
+
+            $prodis = Prodi::whereIn('unit_id', $unit_ids)
+                ->select('id', 'name')
+                ->get();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => $prodis
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error in getProdiByUnitIDs: ' . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mengambil data'
+            ], 500);
         }
-    
-        return response()->json($prodiByUnit);
     }
-    
-    public function index(){
+
+    public function index()
+    {
         $prodi = prodi::with('unit')->get();
 
-        return view('prodi/index',['prodi'=> $prodi]);
-
+        return view('prodi/index', ['prodi' => $prodi]);
     }
-    public function create(){
+    public function create()
+    {
         $unit = Unit::all();
-        return view('prodi/add', ['unit'=> $unit]);
+        return view('prodi/add', ['unit' => $unit]);
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'required|string',
             'unit_id' => 'required'
@@ -43,21 +56,13 @@ class ProdiController extends Controller
             'name' => $request->name,
             'unit_id' => $request->unit_id
         ]);
-        if($insert){
+        if ($insert) {
             return redirect('admin/prodi')->with('success', 'Data Prodi Berhasil ditambahkan');
-            
         } else {
             return redirect('admin/prodi')->with('error', 'Data Prodi gagal ditambahkan');
         }
-
     }
-    public function edit($id){
-
-    }
-    public function update(Request $request, prodi $prodi){
-
-    }
-    public function delete($id){
-
-    }
+    public function edit($id) {}
+    public function update(Request $request, prodi $prodi) {}
+    public function delete($id) {}
 }

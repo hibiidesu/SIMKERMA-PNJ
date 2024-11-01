@@ -19,36 +19,21 @@ class pengajuanBaru extends Mailable
      * @return void
      */
     public $kerjasama;
-    public $tanggal_mulai;
-    public $tanggal_selesai;
-    public $kegiatan;
-    public $sifat;
-    public $pic_pnj;
+    public $path;
 
-
-    public function __construct($kerjasama, $tanggal_mulai, $tanggal_selesai, $kegiatan, $sifat, $pic_pnj)
+    public function __construct($kerjasama, $path)
     {
         $this->kerjasama = $kerjasama;
-        $this->tanggal_mulai = $tanggal_mulai;
-        $this->tanggal_selesai = $tanggal_selesai;
-        $this->kegiatan = $kegiatan;
-        $this->sifat = $sifat;
-        $this->pic_pnj = $pic_pnj;
+        $this->path = $path;
     }
 
     public function build()
     {
-        $tanggal_pengajuan = Carbon::now();
-        return $this->subject('Pengajuan Kerjasama Baru')
-                    ->markdown('mails.markdown.pengajuanBaru')  
+        return $this->subject('Ada Pengajuan Kerjasama Baru Menunggu Untuk Di review')
+                    ->markdown('mails.markdown.pengajuanBaru')
                     ->with([
                         'kerjasama' => $this->kerjasama,
-                        'tanggal_mulai' => $this->tanggal_mulai,
-                        'tanggal_selesai' => $this->tanggal_selesai,
-                        'kegiatan' => $this->kegiatan,
-                        'sifat' => $this->sifat,
-                        'tanggal_pengajuan' => $tanggal_pengajuan,
-                        'pic_pnj' =>$this->pic_pnj,
+                        'path' => $this->path,
                     ]);
     }
 }

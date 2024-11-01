@@ -41,6 +41,8 @@
                         <span class="fw-bold fs-6 badge bg-info text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @elseif ($data->sifat == 'Internasional')
                         <span class="fw-bold fs-6 badge bg-warning text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
+                    @elseif ($data->sifat == 'Lokal')
+                        <span class="fw-bold fs-6 badge bg-success text-light mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @endif
                 </p>
                 <div class="my-3">

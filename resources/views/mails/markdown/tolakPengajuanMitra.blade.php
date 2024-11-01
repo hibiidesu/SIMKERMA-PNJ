@@ -28,10 +28,6 @@ Ditolak Direktur
 @endifk <br>
 - Catatan : {{ $kerjasama->catatan }} <br>
 
-@component('mail::button', ['url' => env('APP_URL').'/'.$kerjasama->user->role->role_name.'/review/detail/'.$kerjasama->id, 'color::success'])
-Lihat Pengajuan
-@endcomponent
-
 Terima kasih,<br>
 {{ config('app.name') }} Politeknik Negeri Jakarta
 @endcomponent

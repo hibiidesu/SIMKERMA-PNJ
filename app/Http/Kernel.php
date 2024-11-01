@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'isPemimpin' => \App\Http\Middleware\isPemimpin::class,
         'isLegal' => \App\Http\Middleware\isLegal::class,
         'isPic' => \App\Http\Middleware\isPic::class,
+        'isDirektur' => \App\Http\Middleware\isDirektur::class,
     ];
 }

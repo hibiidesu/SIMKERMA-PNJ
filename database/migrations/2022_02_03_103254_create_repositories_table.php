@@ -15,6 +15,7 @@ class CreateRepositoriesTable extends Migration
     {
         Schema::create('repositories', function (Blueprint $table) {
             $table->id();
+            $table->string("mitra")->nullable();
             $table->integer("kerjasama_id");
             $table->integer("user_id");
             $table->string("kerjasama");
@@ -23,9 +24,12 @@ class CreateRepositoriesTable extends Migration
             $table->string("nomor");
             $table->text("kegiatan");
             $table->string("jenis_kerjasama_id");
+            $table->string("kriteria_mitra_id");
+            $table->string("kriteria_kemitraan_id");
             $table->string("sifat");
             $table->string("pks");
             $table->string("jurusan");
+            $table->string("prodi");
             $table->string("pic_pnj")->nullable();
             $table->text("alamat_perusahaan")->nullable();
             $table->string("pic_industri")->nullable();

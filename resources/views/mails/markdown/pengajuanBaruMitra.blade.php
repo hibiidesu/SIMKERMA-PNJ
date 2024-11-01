@@ -12,10 +12,6 @@
 - PIC PNJ : {{ $kerjasama->pic_pnj }} <br>
 - Status: Menunggu Review Legal<br>
 
-@component('mail::button', ['url' => env('APP_URL').'/'.$path.'/review/detail/'.$kerjasama->id, 'color::success'])
-Lihat Pengajuan
-@endcomponent
-
 Terima kasih,<br>
 {{ config('app.name') }} Politeknik Negeri Jakarta
 @endcomponent

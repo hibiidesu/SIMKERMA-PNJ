@@ -56,6 +56,7 @@
                             <div class="mt-md-1">
                                 <select name="sifat" id="sifat" class="form-select">
                                     <option value="all" {{ Request::get('sifat') == 'all' ? 'selected' : '' }}>Semua</option>
+                                    <option value="Lokal" {{ Request::get('sifat') == 'Lokal' ? 'selected' : '' }}>Lokal</option>
                                     <option value="Nasional" {{ Request::get('sifat') == 'Nasional' ? 'selected' : '' }}>Nasional</option>
                                     <option value="Internasional" {{ Request::get('sifat') == 'Internasional' ? 'selected' : '' }}>Internasional</option>
                                 </select>
@@ -102,6 +103,10 @@
                                         <a href="{{ url('admin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
                                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                                         <a href="{{ url('pemimpin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
+                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'legal')
+                                        <a href="{{ url('legal/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
+                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'direktur')
+                                        <a href="{{ url('direktur/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
                                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
                                         <a href="{{ url('pic/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
                                     @endif
@@ -115,7 +120,8 @@
                     <thead>
                         <tr>
                             <th width="3%">No</th>
-                            <th>Name</th>
+                            <th>Nama Mitra</th>
+                            <th>Kerjasama</th>
                             <th>Nomor</th>
                             <th>Tanggal Berlaku</th>
                             <th>Sifat</th>
@@ -131,10 +137,13 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $item->mitra }}</td>
                             @if (Auth::user()->role->role_name == 'admin')
                             <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
                             <td> <a href="{{ url('/pemimpin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            @elseif (Auth::user()->role->role_name == 'direktur')
+                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pic')
                             <td> <a href="{{ url('/pic/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @endif

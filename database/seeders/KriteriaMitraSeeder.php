@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\kriteria_mitra as km;
+use Illuminate\Database\Seeder;
 
 class KriteriaMitraSeeder extends Seeder
 {
@@ -16,22 +16,21 @@ class KriteriaMitraSeeder extends Seeder
     {
         //
         $data = [
-            "perusahaan multinasional",
-            "perusahaan nasional berstandar tinggi",
-            "perusahaan teknoiogi global",
-            "perusahaan rintisan (startup compang) teknologi",
-            "organisasi nirlaba kelas dunia",
-            "institusi/organisasi multilateral",
-            "perguruan tinggi, fakultas, atau program studi dalam bidang yang relevan",
-            "instansi pemerintah, BUMN, dan/ atau BUMD",
-            "rumah sakit",
+            "Perusahaan Multinasional",
+            "Perusahaan Nasional Berstandar Tinggi",
+            "Perusahaan Teknoiogi Global",
+            "Perusahaan Rintisan (Startup Compang) Teknologi",
+            "Organisasi Nirlaba Kelas Dunia",
+            "Institusi/Organisasi Multilateral",
+            "Perguruan Tinggi, Fakultas, atau Program Studi Dalam Bidang yang Relevan",
+            "Instansi Pemerintah, BUMN, dan/atau BUMD",
+            "Rumah Sakit",
             "UMKM",
-            "lembaga riset pemerintah, swasta, nasional, maupun internasional",
-            "lembaga kebudayaan berskala nasional/ bereputasi",
-            "perguruan tinggi yang masuk dalam daftar QS200 berdasarkan bidang ilmu (QS200 by subject)",
+            "Lembaga Riset Pemerintah, Swasta, Nasional, Maupun Internasional",
+            "Lembaga Kebudayaan Berskala Nasional/Bereputasi",
+            "Perguruan Tinggi Yang Masuk Dalam Daftar QS200 Berdasarkan Bidang Ilmu (QS200 By Subject)",
         ];
         km::truncate();
-
             foreach($data as $item){
                 km::insert([
                     'kriteria_mitra' => $item
