@@ -146,6 +146,8 @@
                                     <span class="badge bg-info text-dark mt-lg-0 mt-2">{{ $item->sifat }}</span>
                                 @elseif ($item->sifat == 'Internasional')
                                     <span class="badge bg-primary mt-lg-0 mt-2">{{ $item->sifat }}</span>
+                                @elseif ($item->sifat == 'Lokal')
+                                    <span class="badge bg-success text-light mt-lg-0 mt-2">{{ $item->sifat }}</span>
                                 @endif
                             </td>
                             <td>{{ $item->jenis_kerjasama->jenis_kerjasama }}</td>

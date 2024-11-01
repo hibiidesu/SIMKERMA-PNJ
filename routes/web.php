@@ -37,7 +37,7 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
     Route::prefix('kerjasama')->group(function () {
         Route::get('/', [App\Http\Controllers\KerjasamaController::class, 'index']);
         Route::get('/i', [App\Http\Controllers\KerjasamaController::class, 'x']);
-        Route::post('/', [App\Http\Controllers\KerjasamaController::class, 'update']);
+        Route::post('/update', [App\Http\Controllers\KerjasamaController::class, 'update']);
         Route::get('/edit/{id}', [App\Http\Controllers\KerjasamaController::class, 'edit']);
         Route::get('/detail/{id}', [App\Http\Controllers\KerjasamaController::class, 'show']);
         Route::get('/repo/{id}', [App\Http\Controllers\KerjasamaController::class, 'showRepo']);

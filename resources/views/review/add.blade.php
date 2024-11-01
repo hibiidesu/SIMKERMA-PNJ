@@ -132,8 +132,7 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria
-                                        Mitra<span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan<span class="text-danger">*</span></label>
                                     <select class="form-select" required id="kriteria_kemitraan_id"
                                         name="kriteria_kemitraan_id">
                                         <option value="">-</option>

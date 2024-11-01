@@ -278,6 +278,7 @@ class KerjasamaController extends Controller
         } else {
             echo "gagal membuat repository";
         }
+        dd($request);
     }
 
     public function delete($id)
