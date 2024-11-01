@@ -10,8 +10,7 @@ use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
 use App\Models\pks;
 use App\Models\Unit;
-use App\Models\User;
-use App\Models\Prodi;
+use App\Models\User;;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
@@ -163,6 +162,7 @@ class ReviewController extends Controller
                 'telp_industri' => 'regex:/^([0-9\s\-\+\(\)]*)$/',
             ]);
         }
+        $prodi = $request->has('prodi') ? $request->prodi : [];
         $file = $request->file('file');
         $nama_file = time() . "_" . $file->getClientOriginalName();
         $move = Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
@@ -170,7 +170,7 @@ class ReviewController extends Controller
             $kerjasama = Kerjasama::create([
                 'mitra' => $request->mitra,
                 'kerjasama' => $request->kerjasama,
-                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_mulai' => $request->taSnggal_mulai,
                 'tanggal_selesai' => $request->tanggal_selesai,
                 'nomor' => $request->nomor,
                 'kegiatan' => $request->kegiatan,
@@ -183,7 +183,7 @@ class ReviewController extends Controller
                 'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
                 'pks' => implode(',', $request->perjanjian),
                 'jurusan' => implode(',', $request->jurusan),
-                'prodi' => implode(',', $request->prodi),
+                'prodi' => implode(',', $prodi),
                 'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                 'pic_pnj' => $request->pic_pnj,
                 'alamat_perusahaan' => $request->alamat_perusahaan,
@@ -443,6 +443,8 @@ class ReviewController extends Controller
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
                 'data' => Kerjasama::findOrFail($id),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
 
@@ -452,6 +454,8 @@ class ReviewController extends Controller
                 'perjanjian' => pks::all(),
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
@@ -462,6 +466,21 @@ class ReviewController extends Controller
                 'perjanjian' => pks::all(),
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
+                'data' => Kerjasama::findOrFail($id),
+                'jenisKerjasama' => Jenis_kerjasama::all(),
+            ]);
+
+        }
+         else if (Auth::user()->role_id == 1) {
+            return view('review/edit', [
+                'users' => User::where('role_id', '=', '1')->get(),
+                'perjanjian' => pks::all(),
+                'unit' => Unit::all(),
+                'prodi' => Prodi::all(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
@@ -471,6 +490,7 @@ class ReviewController extends Controller
 
     public function update(Request $request, Kerjasama $kerjasama)
     {
+
         $request->validate(
             [
                 'id' => 'required',
@@ -498,6 +518,7 @@ class ReviewController extends Controller
                 'telp_industri' => 'regex:/^([0-9\s\-\+\(\)]*)$/',
             ]);
         }
+        $prodi = $request->has('prodi') ? $request->prodi : [];
         $file = $request->file('file');
         if ($file) {
             $nama_file = time() . "_" . $file->getClientOriginalName();
@@ -517,7 +538,7 @@ class ReviewController extends Controller
                     'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
                     'pks' => implode(',', $request->perjanjian),
                     'jurusan' => implode(',', $request->jurusan),
-                    'prodi' => implode(',', $request->prodi),
+                    'prodi' => implode(',', $prodi),
                     'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                     'pic_pnj' => $request->pic_pnj,
                     'alamat_perusahaan' => $request->alamat_perusahaan,
@@ -551,7 +572,7 @@ class ReviewController extends Controller
                 'pks' => implode(',', $request->perjanjian),
                 'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                 'jurusan' => implode(',', $request->jurusan),
-                'prodi' => implode(',', $request->prodi),
+                'prodi' => implode(',', $prodi),
                 'pic_pnj' => $request->pic_pnj,
                 'alamat_perusahaan' => $request->alamat_perusahaan,
                 'pic_industri' => $request->pic_industri,

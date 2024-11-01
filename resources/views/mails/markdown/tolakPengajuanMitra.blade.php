@@ -7,6 +7,8 @@
     **Wadir 4**
 @elseif ($kerjasama->step == '6')
     **Direktur**
+@elseif ($kerjasama->step == '0')
+    **Sistem**
 @endif
 <br>
 Silahkan Tinjau Ulang Pengajuan anda.
@@ -25,7 +27,9 @@ Ditolak Tim Legal
 Ditolak Wadir 4
 @elseif ($kerjasama->step == '6')
 Ditolak Direktur
-@endifk <br>
+@elseif ($kerjasama->step == '0')
+Kadaluarsa
+@endif <br>
 - Catatan : {{ $kerjasama->catatan }} <br>
 
 Terima kasih,<br>

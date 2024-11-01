@@ -104,8 +104,6 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
 
-                                   
-
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
                                     <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
                                         @foreach ($kriteria_mitra as $item)
@@ -155,7 +153,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
 
-                                    
+
 
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
                                     <select class="choices-3 form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" multiple required>
@@ -257,7 +255,7 @@
                                 </div>
                             </div>
                             <hr>
-                           
+
                             <div class="col-12 d-flex justify-content-end">
                                 <button type="submit" class="btn btn-primary mb-1">Submit</button>
                             </div>
