@@ -18,6 +18,8 @@ class Kerjasama extends Model
         'nomor',
         'kegiatan',
         'sifat',
+        'kriteria_kemitraan_id',
+        'kriteria_mitra_id',
         'jenis_kerjasama_id',
         'kriteria_mitra_id',
         'kriteria_kemitraan_id',

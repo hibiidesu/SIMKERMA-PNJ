@@ -15,6 +15,7 @@ use App\Models\Prodi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
+use App\Models\prodi;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -138,6 +139,8 @@ class ReviewController extends Controller
                 'tanggal_selesai' => 'required|date|after:tanggal_mulai',
                 'nomor' => 'required',
                 'sifat' => 'required',
+                'kriteria_kemitraan_id' => 'required',
+                'kriteria_mitra_id' => 'required',
                 'jenis_kerjasama_id' => 'required',
                 'kriteria_mitra_id' => 'required',
                 'kriteria_kemitraan_id' => 'required',
@@ -172,6 +175,8 @@ class ReviewController extends Controller
                 'nomor' => $request->nomor,
                 'kegiatan' => $request->kegiatan,
                 'sifat' => $request->sifat,
+                'kriteria_kemitraan_id' => implode(',', $request->kriteria_kemitraan_id),
+                'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
                 'user_id' => Auth::user()->id,
                 'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
                 'kriteria_mitra_id' => $request->kriteria_mitra_id,
@@ -198,12 +203,27 @@ class ReviewController extends Controller
                     'user_id' => $legal->id,
                     'status' => 'menunggu',
                 ]);
+
                 Mail::to($legal->email)->send(new pengajuanBaru($kerjasama, 'legal'));
             }
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
             }  else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
+
+                Mail::to($pemimpin->email)->send(new pengajuanBaru(
+                    $request->kerjasama,
+                    $request->tanggal_mulai,
+                    $request->tanggal_selesai,
+                    $request->kegiatan,
+                    $request->sifat,
+                    $request->pic_pnj,
+                ));
+            }
+            if (Auth::user()->role->role_name == 'pic') {
+                return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
+            }  else {
+                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
             }
 
         } else {
@@ -253,8 +273,10 @@ class ReviewController extends Controller
         if ($data) {
             $unit = "";
             $prodi = "";
+
             if ($data->jurusan != '') {
                 $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
+
             }
             if ($data->prodi != '') {
                 $prodi = Prodi::whereIn('id', explode(',', $data->prodi))->get();
@@ -262,6 +284,7 @@ class ReviewController extends Controller
             $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
 
             return view('review/detail', [
+                'prodi' => $prodi,
                 'unit' => $unit,
                 'prodi' => $prodi,
                 'perjanjian' => $perjanjian,
@@ -322,6 +345,7 @@ class ReviewController extends Controller
     }
 
     public function tolakDirektur(Request $request)
+
     {
         $request->validate([
             'id' => 'required',

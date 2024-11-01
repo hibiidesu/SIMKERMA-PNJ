@@ -65,7 +65,9 @@
                         </div>
                     </div>
                     <div class="d-flex">
+
                         <div class="fw-bold">Prodi:</div>
+
                         <div class="ps-2">
                             @if($prodi != "")
                                 @foreach ($prodi as $item)
