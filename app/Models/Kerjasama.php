@@ -44,6 +44,9 @@ class Kerjasama extends Model
     {
         return $this->hasMany('App\Models\Repository')->orderBy('created_at', 'desc');
     }
+    public function log_persetujuan(){
+        return $this ->hasMany('App\Models\log_persetujuan')->orderBy('created_at', 'desc');
+    }
     public function jenis_kerjasama()
     {
         return $this->belongsTo('App\Models\Jenis_kerjasama', 'jenis_kerjasama_id');

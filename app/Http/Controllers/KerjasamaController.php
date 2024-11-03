@@ -137,6 +137,7 @@ class KerjasamaController extends Controller
         $data = Kerjasama::findOrFail($id);
         $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
         $unit = "";
+        $prodi = "";
         if ($data->jurusan != '') {
             $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
         }
@@ -155,6 +156,7 @@ class KerjasamaController extends Controller
         $data = Repository::findOrFail($id);
         $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
         $unit = "";
+        $prodi= "";
         if ($data->jurusan != '') {
             $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
         }

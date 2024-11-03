@@ -138,20 +138,6 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria
-                                        Mitra<span class="text-danger">*</span></label>
-                                    <select class="form-select" required id="kriteria_mitra_id" name="kriteria_mitra_id">
-                                        <option value="">-</option>
-                                        @foreach ($kriteria_mitra as $item)
-                                            <option value="{{ $item->id }}"
-                                                {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>
-                                                {{ $item->kriteria_mitra }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
 
 
 
@@ -171,7 +157,7 @@
 
                                     <label class="mb-2 fw-bold text-capitalize" for="jurusan">Unit<span
                                             class="text-danger">*</span></label>
-                                    <select class="choices-2 form-select" multiple="multiple" id="jurusan"
+                                    <select class="choices-4 form-select" multiple="multiple" id="jurusan"
                                         name="jurusan[]" multiple required>
 
                                         @foreach ($unit as $item)
@@ -191,10 +177,6 @@
                                     <small class="text-muted">Memuat data prodi...</small>
                                 </div>
 
-                                <label class="mb-2 fw-bold text-capitalize" for="prodi" id="prodi_label">Prodi</label>
-                                    <select class="form-select" multiple="multiple" id="prodi" name="prodi[]" multiple required>
-                                        <option value="">--- isi unit terlebih dahulu ---</option>
-                                    </select>
 
                             </div>
                             <div class="col-12 mb-2">

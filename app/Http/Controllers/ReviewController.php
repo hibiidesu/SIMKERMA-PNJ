@@ -8,6 +8,7 @@ use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
 use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
+use App\Models\log_persetujuan;
 use App\Models\pks;
 use App\Models\Unit;
 use App\Models\User;;
@@ -145,7 +146,6 @@ class ReviewController extends Controller
                 'kriteria_kemitraan_id' => 'required',
                 'perjanjian' => 'required',
                 'jurusan' => 'required',
-                'prodi' => 'required',
                 'pic_pnj' => 'required',
                 'alamat_perusahaan' => 'required',
                 'pic_industri' => 'required',
@@ -179,8 +179,6 @@ class ReviewController extends Controller
                 'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
                 'user_id' => Auth::user()->id,
                 'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                'kriteria_mitra_id' => $request->kriteria_mitra_id,
-                'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
                 'pks' => implode(',', $request->perjanjian),
                 'jurusan' => implode(',', $request->jurusan),
                 'prodi' => implode(',', $prodi),
@@ -316,6 +314,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 2
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
@@ -336,6 +340,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 4
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
@@ -358,6 +368,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 6
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
@@ -374,6 +390,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 3
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
             $PemimpinUsers = User::where('role_id', 2)->get();
@@ -399,6 +421,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 5
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
             $DirekturUsers = User::where('role_id', 5)->get();
@@ -424,6 +452,12 @@ class ReviewController extends Controller
             'reviewer_id' => Auth::user()->id,
         ]);
         if ($update) {
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::user()->id,
+                'role_id' => Auth::user()->role_id,
+                'step' => 7
+            ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
             return redirect('/direktur/review')->with('success', 'Data berhasil diterima');
@@ -546,6 +580,7 @@ class ReviewController extends Controller
                     'jabatan_pic_industri' => $request->jabatan_pic_industri,
                     'telp_industri' => $request->telp_industri,
                     'email' => $request->email,
+                    'catatan' => null,
                     'file' => $nama_file,
                     'step' => 1,
                 ]);
@@ -579,6 +614,7 @@ class ReviewController extends Controller
                 'jabatan_pic_industri' => $request->jabatan_pic_industri,
                 'telp_industri' => $request->telp_industri,
                 'email' => $request->email,
+                'catatan' => null,
                 'step' => 1,
             ]);
             if ($update) {

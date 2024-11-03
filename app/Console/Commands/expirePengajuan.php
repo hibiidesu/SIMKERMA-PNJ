@@ -57,7 +57,7 @@ class expirePengajuan extends Command
                 ->send(new tolakPengajuanMitra($kerjasama,$kerjasama->catatan));
         }
 
-        $this->info('Expired Kerjasama processed and notifications sent.');
+        $this->info('Mengubah Kerjasama Menjadi Expired dan Mengirimkan Email Pada PIC.');
     }
 
 }
