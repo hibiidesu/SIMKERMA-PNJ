@@ -20,7 +20,8 @@ Route::get('/chart/memorandum', [App\Http\Controllers\WebController::class, 'cha
 Route::get('/chart/jenis-kerjasama', [App\Http\Controllers\WebController::class, 'chartByJenisKerjasama']);
 Route::get('/api/prodi/find/{units}', [ProdiController::class, 'getProdiByUnitIDs'])->name('prodi.find');
 Route::get('/about', [App\Http\Controllers\WebController::class, 'index'])->name('about');
-
+Route::get('/api/track/{id}',[App\Http\Controllers\v1\trackerApi::class, 'getKerjasama'])->name('track.kerjasama');
+Route::get('/trackpengajuan',[App\Http\Controllers\WebController::class, 'trackingPengajuan'])->name('tracking');
 
 
 
