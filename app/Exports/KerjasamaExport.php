@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use App\Models\Unit;
-use App\Models\prodi;
 use App\Models\Kerjasama;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -53,41 +52,35 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                 }
             }
         }
+        // @foreach (explode(',', $item->jurusan) as $x)
+        //     @if ($loop->index + 1 < count(explode(',', $item->jurusan))) { {
+        //         $unit[$x] . ', '
+
+        // }}
+        // @else  {{
+        //         $unit[$x]
+
+        //     }}
+        // @endif
+        // @endforeach
 
         foreach ($kerjasama->get() as $data) {
             $jurusan = "";
-            $prodi = "";
-            $k_mitra = "";
-            $k_kemitraan = "";
-            $index_jurusan = 1;
+            $index = 1;
             if ($data->jurusan != null) {
                 foreach (explode(',', $data->jurusan) as $y) {
-                    if ($index_jurusan < count(explode(',', $data->jurusan))) {
+                    if ($index < count(explode(',', $data->jurusan))) {
                         $jurusan .= Unit::find($y)->name . ',';
                     } else {
                         $jurusan .= Unit::find($y)->name;
                     }
-                    $index_jurusan++;
+                    $index++;
                 }
             }
-
-            $index_prodi = 1;
-            if ($data->prodi != null) {
-                foreach (explode(',', $data->prodi) as $y) {
-                    if ($index_prodi < count(explode(',', $data->prodi))) {
-                        $prodi .= prodi::find($y)->name . ',';
-                    } else {
-                        $prodi .= prodi::find($y)->name;
-                    }
-                    $index_prodi++;
-                }
-            }
-
             $temp = [
                 $x + 1,
-                $data->mitra,
                 $data->kerjasama,
-                $data->sifat, $jurusan, $prodi,
+                $data->sifat, $jurusan,
                 $data->kegiatan,
                 $data->jenis_kerjasama->jenis_kerjasama,
                 $data->tanggal_mulai,
@@ -103,7 +96,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
     }
     public function headings(): array
     {
-        return ["No.",  "Mitra", "Judul", "Sifat", "Unit", "Prodi", "Kegiatan", "Jenis Kerja Sama", "Tanggal Mulai", "Tanggal Berakhir", "No SK/MOU", "Bukti"];
+        return ["No.",  "Nama Mitra", "Sifat", "Unit", "Kegiatan", "Jenis Kerja Sama", "Tanggal Mulai", "Tanggal Berakhir", "No SK/MOU", "Bukti"];
     }
     public function styles(Worksheet $sheet)
     {

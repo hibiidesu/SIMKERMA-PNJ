@@ -59,7 +59,9 @@
                                 {{ $item->user->username }}
                             </td>
                             <td>
-                                @if ($item->step == '1')
+                                @if ($item->step == '0')
+                                <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak System</span>
+                                @elseif ($item->step == '1')
                                     <span class="badge bg-warning text-dark mt-lg-0 mt-2">Menunggu Review Legal</span>
                                 @elseif ($item->step == '2')
                                     @if ($item->catatan)
@@ -85,6 +87,7 @@
                                     @endif
                                 @elseif ($item->step == '7')
                                     <span class="badge bg-success text-white mt-lg-0 mt-2">Diterima</span>
+
                                 @endif
                             </td>
 

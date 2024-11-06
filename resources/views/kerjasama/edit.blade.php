@@ -24,8 +24,6 @@
                                     <input type="text" id="kerjasama" class="form-control" name="kerjasama" required value="{{ $data->kerjasama }}">
                                 </div>
                             </div>
-                            <input type="hidden" name="kriteria_mitra" value="{{ $data->kriteria_mitra }}">
-                            <input type="hidden" name="kriteria_kemitraan" value="{{ $data->kriteria_kemitraan }}">
                             <div class="col-6 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="tanggal_mulai">tanggal mulai <span class="text-danger">*</span></label>
@@ -52,13 +50,7 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="sifat">Sifat (Lokal / Nasional / Internasional) <span class="text-danger">*</span></label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sifat" id="sifat0" value="Lokal" {{ $data->sifat == 'Lokal' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="sifat0">
-                                            Lokal
-                                        </label>
-                                    </div>
+                                    <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Sifat (Nasional / Internasional) <span class="text-danger">*</span></label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="sifat" id="sifat1" value="Nasional" required {{ $data->sifat == 'Nasional' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="sifat1">
@@ -108,21 +100,6 @@
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodedUnit) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label class="mb-2 fw-bold text-capitalize" for="prodi">Prodi</label>
-                                <?php
-                                        $explodedProdi = explode(',', $data->prodi);
-                                ?>
-                                <select id="prodi" name="prodi[]" multiple required>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodedProdi) ? 'selected' : '' }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div id="prodi-loading" style="display: none;">
-                                    <small class="text-muted">Memuat data prodi...</small>
-
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -182,82 +159,9 @@
         </div>
     </div>
 </section>
-<script>
-    $(document).ready(function() {
-        // Inisialisasi Choices.js untuk prodi
-        const prodiElement = document.getElementById('prodi');
-        const prodiChoice = new Choices(prodiElement, {
-            removeItemButton: true,
-            searchEnabled: true
-        });
-
-        // Handler untuk perubahan unit
-        $('#jurusan').on('change', function() {
-            const selectedUnits = $(this).val();
-
-            prodiChoice.clearStore();
-            prodiChoice.setChoices([{
-                value: '',
-                label: '--- Memuat data prodi... ---',
-                disabled: true
-            }]);
-
-            if (selectedUnits && selectedUnits.length > 0) {
-                $.ajax({
-                    url: `/api/prodi/find/${selectedUnits.join(',')}`,
-                    method: 'GET',
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('#prodi-loading').show();
-                    },
-                    success: function(response) {
-                        if (response.status === 'success' && response.data.length > 0) {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices(
-                                response.data.map(prodi => ({
-                                    value: prodi.id.toString(),
-                                    label: prodi.name
-                                })),
-                                'value',
-                                'label',
-                                false
-                            );
-                        } else {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices([{
-                                value: '',
-                                label: 'Tidak ada prodi tersedia',
-                                disabled: true
-                            }]);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('Error:', xhr);
-                        prodiChoice.clearStore();
-                        prodiChoice.setChoices([{
-                            value: '',
-                            label: 'Terjadi kesalahan saat mengambil data',
-                            disabled: true
-                        }]);
-                    },
-                    complete: function() {
-                        $('#prodi-loading').hide();
-                    }
-                });
-            } else {
-                prodiChoice.clearStore();
-                prodiChoice.setChoices([{
-                    value: '',
-                    disabled: true
-                }]);
-            }
-        });
-    });
-</script>
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/vendors/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/choices.js/choices.min.js') }}"></script>
 <script src="{{ asset('admin/js/pages/form-element-select.js') }}"></script>
 @endsection

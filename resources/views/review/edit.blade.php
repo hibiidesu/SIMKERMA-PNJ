@@ -89,12 +89,33 @@
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
+                                <div class="form-group">
+
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
+                                    <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
+                                        @foreach ($kriteria_mitra as $item)
+                                        <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
+                                    <select class="choices-2 form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                        @foreach ($kriteria_kemitraan as $item)
+                                        <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-2">
                                 <?php
                                     $explodedPKS = explode(',', $data->pks);
                                 ?>
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" required>
+                                    <select class="choices-3 form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" required>
                                         @foreach ($perjanjian as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodedPKS) ? 'selected' : '' }}>{{ $item->pks }}</option>
                                         @endforeach
@@ -107,26 +128,11 @@
                                     <?php
                                         $explodedUnit = explode(',', $data->jurusan);
                                     ?>
-                                    <select class="choices-2 form-select" multiple="multiple" id="jurusan" name="jurusan[]" required>
+                                    <select class="choices-4 form-select" multiple="multiple" id="jurusan" name="jurusan[]" required>
                                         @foreach ($unit as $item)
-                                            <option value="{{ $item->id }}" {{ in_array($item->id, $explodedUnit) ? 'selected' : '' }}>{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodedUnit) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </div>
-                            </div>
-                            <div class="col-12 mb-2">
-                                <label class="mb-2 fw-bold text-capitalize" for="prodi">Prodi</label>
-                                <?php
-                                        $explodedProdi = explode(',', $data->prodi);
-                                ?>
-                                <select id="prodi" name="prodi[]" multiple required>
-                                    @foreach ($prodi as $item)
-                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodedProdi) ? 'selected' : '' }}>{{ $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div id="prodi-loading" style="display: none;">
-                                    <small class="text-muted">Memuat data prodi...</small>
-
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -201,82 +207,9 @@
         </div>
     </div>
 </section>
-<script>
-    $(document).ready(function() {
-        // Inisialisasi Choices.js untuk prodi
-        const prodiElement = document.getElementById('prodi');
-        const prodiChoice = new Choices(prodiElement, {
-            removeItemButton: true,
-            searchEnabled: true
-        });
-
-        // Handler untuk perubahan unit
-        $('#jurusan').on('change', function() {
-            const selectedUnits = $(this).val();
-
-            prodiChoice.clearStore();
-            prodiChoice.setChoices([{
-                value: '',
-                label: '--- Memuat data prodi... ---',
-                disabled: true
-            }]);
-
-            if (selectedUnits && selectedUnits.length > 0) {
-                $.ajax({
-                    url: `/api/prodi/find/${selectedUnits.join(',')}`,
-                    method: 'GET',
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('#prodi-loading').show();
-                    },
-                    success: function(response) {
-                        if (response.status === 'success' && response.data.length > 0) {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices(
-                                response.data.map(prodi => ({
-                                    value: prodi.id.toString(),
-                                    label: prodi.name
-                                })),
-                                'value',
-                                'label',
-                                false
-                            );
-                        } else {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices([{
-                                value: '',
-                                label: 'Tidak ada prodi tersedia',
-                                disabled: true
-                            }]);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('Error:', xhr);
-                        prodiChoice.clearStore();
-                        prodiChoice.setChoices([{
-                            value: '',
-                            label: 'Terjadi kesalahan saat mengambil data',
-                            disabled: true
-                        }]);
-                    },
-                    complete: function() {
-                        $('#prodi-loading').hide();
-                    }
-                });
-            } else {
-                prodiChoice.clearStore();
-                prodiChoice.setChoices([{
-                    value: '',
-                    disabled: true
-                }]);
-            }
-        });
-    });
-</script>
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/vendors/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/choices.js/choices.min.js') }}"></script>
 <script src="{{ asset('admin/js/pages/form-element-select.js') }}"></script>
 @endsection

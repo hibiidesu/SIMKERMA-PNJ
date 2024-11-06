@@ -124,6 +124,35 @@
         </div>
     </div>
     <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">
+                    Log Persetujuan
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm text-dark w-100" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data->log_persetujuan as $item)
+                        <tr>
+                            <td>{{ $loop->index+ 1 }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y H:m:s') }}</td>
+                            <td>{{ $item->getStep() .' Oleh '. $item->user->name.'('.$item->user->role->role_name.')'   }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
 
         <div class="card shadow-sm">
             <div class="card-header">

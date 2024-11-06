@@ -87,6 +87,7 @@
     <script src="{{ asset('admin/vendors/jquery-datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/fontawesome/all.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/sweetalert2/sweetalert2.all.js') }}"></script>
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/js/mazer.js') }}"></script>
     <script src="{{ asset('admin/js/extensions/sweetalert2.js') }}"></script>

@@ -65,7 +65,9 @@
                         </div>
                     </div>
                     <div class="d-flex">
+
                         <div class="fw-bold">Prodi:</div>
+
                         <div class="ps-2">
                             @if($prodi != "")
                                 @foreach ($prodi as $item)
@@ -127,6 +129,37 @@
             </div>
         </div>
     </div>
+    @if ($data->log_persetujuan)
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">
+                    Log Persetujuan
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm text-dark w-100" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Tanggal</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data->log_persetujuan as $item)
+                        <tr>
+                            <td>{{ $loop->index+ 1 }}</td>
+                            <td>{{ $item->created_at->format('d-m-Y H:m:s') }}</td>
+                            <td>{{ $item->getStep() .' Oleh '. $item->user->name.'('.$item->user->role->role_name.')'   }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    @endif
     @if (Auth::user()->role->role_name=="pemimpin")
     <div class="col-12">
         <div class="card shadow-sm">
@@ -166,7 +199,7 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
-                    @if (Auth::user()->role->role_name == 'admin' && ($data->step == '2' || $data->step == '4' || $data->step == '6'))
+                    @if (Auth::user()->role->role_name == 'admin' )&& ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
                         <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
                     @endif
@@ -197,7 +230,7 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
-                    @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6'))
+                    @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
                         <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
                         <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
                     @endif

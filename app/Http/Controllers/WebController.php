@@ -242,4 +242,7 @@ class WebController extends Controller
             'result' => $sql,
         ]);
     }
+    public function trackingPengajuan(){
+        return view('tracking.index');
+    }
 }
