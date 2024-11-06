@@ -4,21 +4,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-
     image: simkerma-pnj
     container_name: simkerma-pnj-app
     restart: unless-stopped
     working_dir: /var/www
     volumes:
       - ./:/var/www
-       - /entrypoint.sh:/entrypoint.sh
     ports:
       - "8000:80"
     networks:
       - simkerma-network
-    entrypoint: ["/bin/sh", "-c", "/entrypoint.sh"]
-    tty: true
-    stdin_open: true
 
   db:
     image: postgres:13
