@@ -42,7 +42,7 @@
             const trackerId = $('#tracker_id').val();
 
             $.ajax({
-                 url: '{{ url("api/track") }}/' + trackerId,
+                 url: `/api/prodi/find/${trackerId}`  ,
                  type: 'GET',
                 success: function(response) {
         if (response.message === "success") {
@@ -67,7 +67,7 @@
     error: function(xhr, status, error) {
         Swal.fire({
             'title': status.toUpperCase(),
-            'text': error.toUpperCase(),
+            'text': 'Data Tidak Di Temukan',
             'icon'  : 'error'
         })
     }

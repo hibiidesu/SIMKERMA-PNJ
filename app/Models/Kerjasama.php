@@ -44,8 +44,9 @@ class Kerjasama extends Model
     {
         return $this->hasMany('App\Models\Repository')->orderBy('created_at', 'desc');
     }
-    public function log_persetujuan(){
-        return $this ->hasMany('App\Models\log_persetujuan')->orderBy('created_at', 'desc');
+    public function log_persetujuan()
+    {
+        return $this->hasMany('App\Models\log_persetujuan')->orderBy('created_at', 'desc');
     }
     public function jenis_kerjasama()
     {
@@ -62,5 +63,13 @@ class Kerjasama extends Model
     public function reviewer()
     {
         return $this->belongsTo('App\Models\User', 'reviewer_id');
+    }
+    public function kriteriaKemitraan()
+    {
+        return $this->belongsTo('App\Models\kriteria_kemitraan');
+    }
+    public function kriteriaMitra()
+    {
+        return $this->belongsTo('App\Models\kriteria_mitra');
     }
 }
