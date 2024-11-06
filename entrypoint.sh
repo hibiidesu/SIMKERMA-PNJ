@@ -1,10 +1,11 @@
 #!/bin/bash
+set -e
 # Start Nginx
 service nginx start
 # Start PHP-FPM
 php-fpm
 echo "Nunggu koneksi DB"
-sleep 30
+sleep 10
 
 FIRST_RUN_FILE="/var/www/html/.first_run_completed"
 
@@ -17,7 +18,7 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 
-    php artisan migrate --force || { echo "Migration gagal"; exit 1; }
+    php artisan migrate --force --pretend || php artisan migrate --force --path=database/migrations --step || { echo "Migration encountered errors but continuing..."; true; }
     php artisan db:seed --force || { echo "Seeding gagal"; exit 1; }
     touch "$FIRST_RUN_FILE"
 

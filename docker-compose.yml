@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      entrypoint: ["/entrypoint.sh"]
     image: simkerma-pnj
     container_name: simkerma-pnj-app
     restart: unless-stopped
