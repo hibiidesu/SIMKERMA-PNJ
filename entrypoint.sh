@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+
+echo "Entrypoint script is running"
+date
+
 # Start Nginx
 service nginx start
 # Start PHP-FPM

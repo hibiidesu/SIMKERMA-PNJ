@@ -36,6 +36,7 @@ RUN chmod -R 775 /var/www
 EXPOSE 80
 
 COPY entrypoint.sh /entrypoint.sh
-RUN chmod 777 /entrypoint.sh
+RUN chmod 775 /entrypoint.sh
+RUN ls -l /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
