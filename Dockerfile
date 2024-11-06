@@ -28,6 +28,7 @@ COPY --chown=www-data:www-data . /var/www
 
 RUN composer install --ignore-platform-reqs
 
+RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
