@@ -15,7 +15,9 @@ services:
       - "8000:80"
     networks:
       - simkerma-network
-    entrypoint: ["/entrypoint.sh"]
+    entrypoint: sh -c "/entrypoint.sh"
+    tty: true
+    stdin_open: true
 
   db:
     image: postgres:13
