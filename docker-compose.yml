@@ -34,7 +34,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - dbdata:/var/lib/postgresql/data
+      - dbdata-simkerma:/var/lib/postgresql/data
     networks:
       - simkerma-network
 
@@ -56,5 +56,5 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
+  dbdata-simkerma:
     driver: local
