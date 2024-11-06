@@ -1,5 +1,8 @@
 #!/bin/bash
-php-fpm &
+# Start Nginx
+service nginx start
+# Start PHP-FPM
+php-fpm
 echo "Nunggu koneksi DB"
 sleep 30
 
