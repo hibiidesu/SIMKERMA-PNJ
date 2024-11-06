@@ -12,3 +12,7 @@ SISTEM INFORMASI KERJA SAMA POLITEKNIK NEGERI JAKARTA (PNJ)
 2. Validasi bertingkat (pic -> legal -> pimpinan)
 3. Notifikasi Email (Reminder)
 4. Tracking
+
+## DOCKER : 
+1. `docker-compose build`
+2. `docker-compose up -d`
