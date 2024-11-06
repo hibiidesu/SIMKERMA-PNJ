@@ -25,7 +25,6 @@ COPY . /var/www
 COPY --chown=www-data:www-data . /var/www
 
 RUN composer install --no-dev --optimize-autoloader
-COPY .env.example .env
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
