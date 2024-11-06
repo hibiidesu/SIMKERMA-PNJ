@@ -7,15 +7,16 @@ date
 # Start Nginx
 service nginx start
 # Start PHP-FPM
-php-fpm
+php-fpm &
 echo "Nunggu koneksi DB"
 sleep 10
 
-FIRST_RUN_FILE="/var/www/html/.first_run_completed"
+FIRST_RUN_FILE="/var/www/.first_run_completed"
 
 if [ ! -f "$FIRST_RUN_FILE" ]; then
     echo "First run! memulai install composer, seeding dan migrate"
     cd /var/www
+    ls /var/www
     composer install --no-dev --optimize-autoloader
 
     chown -R www-data:www-data /var/www
@@ -30,8 +31,9 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
 
 else
     echo "Bukan run pertama kali"
+    ls /var/www
 fi
 
 echo "Service berjalan"
-wait
+wait %1
 trap - ERR
