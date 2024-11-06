@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      entrypoint: ["/entrypoint.sh"]
+
     image: simkerma-pnj
     container_name: simkerma-pnj-app
     restart: unless-stopped
@@ -15,6 +15,7 @@ services:
       - "8000:80"
     networks:
       - simkerma-network
+    entrypoint: ["/entrypoint.sh"]
 
   db:
     image: postgres:13
