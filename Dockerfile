@@ -9,14 +9,15 @@ RUN apt-get update && apt-get install -y \
     unzip \
     libpq-dev \
     libmemcached-dev \
-    zlib1g-dev
+    zlib1g-dev \
+    libzip-dev
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd
 RUN pecl install redis memcached && docker-php-ext-enable redis memcached
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www
 COPY . /var/www
-RUN composer install
+RUN composer install --ignore-platform-reqs
 RUN chown -R www-data:www-data /var/www
 EXPOSE 9000
 RUN php artisan migrate --force
