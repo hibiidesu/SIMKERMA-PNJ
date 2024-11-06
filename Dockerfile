@@ -1,4 +1,5 @@
 FROM php:8.1-fpm
+ENV APP_ENV=${APP_ENV:-production}
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -20,7 +21,6 @@ COPY . /var/www
 RUN composer install --ignore-platform-reqs
 RUN chown -R www-data:www-data /var/www
 EXPOSE 9000
-RUN php artisan migrate --force
-RUN php artisan db:seed --force
-CMD ["php-fpm"]
+RUN chmod +x /var/www/entrypoint.sh
+CMD ["/var/www/entrypoint.sh"]
 

@@ -5,6 +5,8 @@ services:
       context: .
       dockerfile: Dockerfile
     image: simkerma-pnj
+    environment:
+      - APP_ENV=${APP_ENV:-production}
     container_name: simkerma-pnj-app
     restart: unless-stopped
     working_dir: /var/www
