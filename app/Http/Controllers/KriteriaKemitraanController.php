@@ -16,7 +16,7 @@ class KriteriaKemitraanController extends Controller
         $data = kriteria_kemitraan::all();
         return view('kriteria.kemitraan.index',['data' => $data]);
     }
-    
+
     public function create(){
         return view('kriteria.kemitraan.add');
     }
@@ -29,11 +29,11 @@ class KriteriaKemitraanController extends Controller
         ]);
         if($kriteria){
             return redirect('admin/kriteria/kemitraan')->with('success', 'Data Mitra Berhasil ditambahkan');
-            
+
         } else {
             return redirect('admin/kriteria/kemitraan')->with('error', 'Data Mitra gagal ditambahkan');
         }
-        
+
     }
     public function edit($id){
         $data = kriteria_kemitraan::findOrFail($id);
@@ -46,7 +46,7 @@ class KriteriaKemitraanController extends Controller
         ]);
 
         $update = kriteria_kemitraan::findOrFail($request->id)->update([
-            'kriteria_kemitraan' => $request->kriteria_mitra
+            'kriteria_kemitraan' => $request->kriteria_kemitraan
         ]);
         if($update){
             return redirect('/admin/kriteria/kemitraan')->with('success', 'Data berhasil diupdate');
@@ -56,6 +56,12 @@ class KriteriaKemitraanController extends Controller
 
     }
     public function delete($id){
-
+        $find = kriteria_kemitraan::findOrFail($id);
+        $delete = $find->delete();
+        if($delete){
+            return redirect('/admin/kriteria/kemitraan')->with('success', 'Data di hapus');
+        } else {
+            return redirect('/admin/kriteria/kemitraan')->with('error', 'gagal menghapus data');
+        }
     }
 }

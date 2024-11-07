@@ -62,7 +62,35 @@ class ProdiController extends Controller
             return redirect('admin/prodi')->with('error', 'Data Prodi gagal ditambahkan');
         }
     }
-    public function edit($id) {}
-    public function update(Request $request, prodi $prodi) {}
-    public function delete($id) {}
+    public function edit($id) {
+        $prodi = prodi::findOrFail($id);
+        $unit = Unit::all();
+        return view('prodi.edit',['prodi' => $prodi, 'unit' =>$unit]);
+    }
+    public function update(Request $request) {
+        // dd($request);
+        $request->validate([
+            'name' => 'required|string',
+            'unit_id' => 'required'
+        ]);
+
+
+       $update = prodi::where('id',$request->prodi_id)->update([
+        'name' => $request->name,
+        'unit_id' => $request->unit_id
+       ]);
+
+       if($update){
+           return redirect('admin/prodi')->with('success', 'Data Diupdate');
+        } else {
+           return redirect('admin/prodi')->with('error', 'Data  gagal Diupdate');
+
+       }
+    }
+
+    public function delete($id) {
+        $data = prodi::findOrFail($id);
+        $data->delete();
+        return redirect('admin/prodi')->with('success', 'Data Prodi Berhasil dihapus');
+    }
 }

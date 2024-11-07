@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Unit')
+@section('heading', 'Edit Kriteria Mitra')
 
 @section('content')
 <section class="row">

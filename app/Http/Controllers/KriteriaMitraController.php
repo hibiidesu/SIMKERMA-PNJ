@@ -16,7 +16,7 @@ class KriteriaMitraController extends Controller
         $data = KritMit::all();
         return view('kriteria.mitra.index',['data' => $data]);
     }
-    
+
     public function create(){
         return view('kriteria.mitra.add');
     }
@@ -29,11 +29,11 @@ class KriteriaMitraController extends Controller
         ]);
         if($kriteria){
             return redirect('admin/kriteria/mitra')->with('success', 'Data Mitra Berhasil ditambahkan');
-            
+
         } else {
             return redirect('admin/kriteria/mitra')->with('error', 'Data Mitra gagal ditambahkan');
         }
-        
+
     }
     public function edit($id){
         $data = KritMit::findOrFail($id);
@@ -56,6 +56,12 @@ class KriteriaMitraController extends Controller
 
     }
     public function delete($id){
-
+        $find = KritMit::findOrFail($id);
+        $delete = $find->delete();
+        if($delete){
+            return redirect('/admin/kriteria/mitra')->with('success', 'Data di hapus');
+        } else {
+            return redirect('/admin/kriteria/mitra')->with('error', 'gagal menghapus data');
+        }
     }
 }

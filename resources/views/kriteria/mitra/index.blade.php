@@ -37,6 +37,12 @@
                             <td>
                                 <div class="d-flex">
                                     <a href="{{ url('/admin/kriteria/mitra/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <form action="{{ url('/admin/kriteria/mitra/delete/' . $item->id) }}" method="POST" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        {{-- Bug Apabila Data Nomor Sebelas ke atas tidak dapat menggunakan Sweetalert2 --}}
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
