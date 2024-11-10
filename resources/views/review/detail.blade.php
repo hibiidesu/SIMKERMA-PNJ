@@ -199,9 +199,11 @@
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
-                    @if (Auth::user()->role->role_name == 'admin' )&& ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
+                    @if ((Auth::user()->role->role_name == 'admin' )&& ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
+                    <form action="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}">
                         <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
-                        <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
+                        <button class="btn btn-danger delete-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
+                       </form>
                     @endif
                 </div>
             </div>
@@ -231,8 +233,10 @@
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
                     @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
+                       <form action="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}">
                         <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
-                        <a class="btn btn-danger" onclick="return confirm('Anda yakin ingin menghapus pengajuan kerja sama ini?')" href="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}"><i class="fa fa-trash"></i> Hapus</a>
+                        <button class="btn btn-danger delete-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
+                       </form>
                     @endif
                 </div>
             </div>

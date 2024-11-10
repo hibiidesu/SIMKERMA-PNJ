@@ -24,9 +24,6 @@
                     </form>
                 </div>
                 <div id="response" class="mt-3">
-                    <div class="row">
-
-
                     </div>
                 </div>
             </div>
@@ -42,14 +39,13 @@
             const trackerId = $('#tracker_id').val();
 
             $.ajax({
-                 url: `/api/prodi/find/${trackerId}`  ,
+                 url: `/api/track/${trackerId}`  ,
                  type: 'GET',
                 success: function(response) {
         if (response.message === "success") {
             console.log(response.data[0]);
             const data = response.data[0]
             $('#response').empty();
-            $('#response').append("<p>Data:</p>");
             $.each(data, function(key, value) {
                 $('#response').append(`
                     <div class="form-group mb-2">
@@ -61,6 +57,7 @@
 
 
         } else {
+            $('#response').empty()
             $('#response').html("<p class='text-danger'>No data found.</p>");
         }
     },

@@ -91,19 +91,10 @@
     <script src="{{ asset('admin/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin/js/mazer.js') }}"></script>
     <script src="{{ asset('admin/js/extensions/sweetalert2.js') }}"></script>
-
-    <script>
-        $("#datatable").DataTable({
-            "scrollX": true,
-            "lengthMenu": [
-                [10, 50, 75, -1],
-                [10, 50, 75, "All"]
-            ]
-        });
-    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-        const deleteButtons = document.querySelectorAll('.delete-btn');
+        const registerDeleteItemHandler = () =>{
+            const deleteButtons = document.querySelectorAll('.delete-btn');
         deleteButtons.forEach(button => {
             button.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -124,6 +115,18 @@
                     }
                 });
             });
+        });
+        }
+        registerDeleteItemHandler();
+
+        $("#datatable").DataTable({
+            "scrollX": true,
+            "lengthMenu": [
+                [10, 50, 75, -1],
+                [10, 50, 75, "All"]
+            ]
+        }).on('draw.dt', function(){
+            registerDeleteItemHandler();
         });
     });
     </script>

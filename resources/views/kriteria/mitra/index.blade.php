@@ -41,7 +41,7 @@
                                         @csrf
                                         @method('DELETE')
                                         {{-- Bug Apabila Data Nomor Sebelas ke atas tidak dapat menggunakan Sweetalert2 --}}
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger delete-btn">Delete</button>
                                     </form>
                                 </div>
                             </td>

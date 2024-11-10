@@ -40,8 +40,7 @@
                                     <form action="{{ url('/admin/kriteria/kemitraan/delete/' . $item->id) }}" method="POST" class="delete-form">
                                         @csrf
                                         @method('DELETE')
-                                        {{-- Bug Apabila Data Nomor Sebelas ke atas tidak dapat menggunakan Sweetalert2 --}}
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="button" class="btn btn-danger delete-btn">Delete</button>
                                     </form>
                                 </div>
                             </td>
