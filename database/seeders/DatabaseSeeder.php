@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             KriteriaMitraSeeder::class,
-            KriteriaKemitraanSeeder::class
+            KriteriaKemitraanSeeder::class,
+            prodiSeeder::class
         ]);
     }
 }

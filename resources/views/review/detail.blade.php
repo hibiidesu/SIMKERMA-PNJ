@@ -74,7 +74,7 @@
                                     @if ($loop->index < count($prodi) - 1)
                                         {{ $item->name }},&nbsp;
                                     @else
-                                        {{ $item->name }}
+                                    {{ $item->name }}
                                     @endif
                                 @endforeach
                             @endif
