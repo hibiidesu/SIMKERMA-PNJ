@@ -24,7 +24,7 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
 
 
     php artisan migrate --force --pretend || php artisan migrate --force --path=database/migrations --step || { echo "Migration encountered errors but continuing..."; true; }
-    php artisan db:seed --force || { echo "Seeding gagal"; exit 1; }
+    php artisan db:seed
     touch "$FIRST_RUN_FILE"
 
     echo "Selesai"
