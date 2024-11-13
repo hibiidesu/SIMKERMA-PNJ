@@ -170,7 +170,7 @@ class ReviewController extends Controller
             $kerjasama = Kerjasama::create([
                 'mitra' => $request->mitra,
                 'kerjasama' => $request->kerjasama,
-                'tanggal_mulai' => $request->taSnggal_mulai,
+                'tanggal_mulai' => $request->tanggal_mulai,
                 'tanggal_selesai' => $request->tanggal_selesai,
                 'nomor' => $request->nomor,
                 'kegiatan' => $request->kegiatan,

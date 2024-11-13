@@ -25,7 +25,7 @@ Ditolak Tim Legal
 Ditolak Wadir 4
 @elseif ($kerjasama->step == '6')
 Ditolak Direktur
-@endifk <br>
+@endif <br>
 - Catatan : {{ $kerjasama->catatan }} <br>
 
 @component('mail::button', ['url' => env('APP_URL').'/'.$kerjasama->user->role->role_name.'/review/detail/'.$kerjasama->id, 'color::success'])

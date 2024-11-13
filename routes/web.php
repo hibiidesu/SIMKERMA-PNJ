@@ -64,6 +64,9 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::get('/', [ProdiController::class , 'index']);
         Route::get('/add', [ProdiController::class , 'create']);
         Route::post('/store', [ProdiController::class , 'store']);
+        Route::get('/edit/{id}', [ProdiController::class , 'edit']);
+        Route::post('/update', [ProdiController::class , 'update']);
+        Route::delete('delete/{id}',[ProdiController::class, 'delete']);
         Route::get('/find/{id}', [ProdiController::class, 'getProdiByUnitID'])->name('fetch.prodi');
     });
     Route::prefix('kriteria')->group(function(){
@@ -73,7 +76,7 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
             Route::post('/store',[KriteriaMitraController::class, 'store']);
             Route::get('/edit/{id}',[KriteriaMitraController::class, 'edit']);
             Route::post('/update',[KriteriaMitraController::class, 'update']);
-            Route::get('/delete/{id}',[KriteriaMitraController::class, 'delete']);
+            Route::delete('/delete/{id}',[KriteriaMitraController::class, 'delete']);
         });
         route::prefix('kemitraan')->group(function(){
             Route::get('/',[KriteriaKemitraanController::class, 'index']);
@@ -81,7 +84,7 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
             Route::post('/store',[KriteriaKemitraanController::class, 'store']);
             Route::get('/edit/{id}',[KriteriaKemitraanController::class, 'edit']);
             Route::post('/update',[KriteriaKemitraanController::class, 'update']);
-            Route::get('/delete/{id}',[KriteriaKemitraanController::class, 'delete']);
+            Route::delete('/delete/{id}',[KriteriaKemitraanController::class, 'delete']);
         });
     });
     Route::prefix('perjanjian-kerjasama')->group(function () {

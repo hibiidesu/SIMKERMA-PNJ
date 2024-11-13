@@ -37,6 +37,11 @@
                             <td>
                                 <div class="d-flex">
                                     <a href="{{ url('/admin/kriteria/kemitraan/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <form action="{{ url('/admin/kriteria/kemitraan/delete/' . $item->id) }}" method="POST" class="delete-form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger delete-btn">Delete</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>

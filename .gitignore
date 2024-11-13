@@ -1,6 +1,9 @@
 .htaccess
 .env
 .env.backup
+.env.testing
+.phpunit.result.cache
+/tests/reports/
 /.idea
 /.vscode
 /vendor
