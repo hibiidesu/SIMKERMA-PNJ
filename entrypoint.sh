@@ -23,7 +23,7 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 
-    php artisan migrate || { echo "Migration encountered errors but continuing..."; true; }
+    php artisan migrate --force --pretend || php artisan migrate --force --path=database/migrations --step || { echo "Migration encountered errors but continuing..."; true; }
     php artisan db:seed
     touch "$FIRST_RUN_FILE"
 
