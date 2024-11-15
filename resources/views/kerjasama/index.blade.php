@@ -215,11 +215,12 @@
                             </td>
                             <td>
                                 @if ($item->prodi)
-                                    @foreach (explode(',', $item->prodi) as $x)
-                                        @if ($loop->index + 1 < count(explode(',', $item->prodi)))
-                                        {{ $prodi[$x].', ' }}
-                                        @else
-                                        {{ $prodi[$x] }}
+                                    @php
+                                        $prodiArray = explode(',', $item->prodi);
+                                    @endphp
+                                    @foreach ($prodiArray as $index => $x)
+                                        @if (array_key_exists($x, $prodi))
+                                         {{ $prodi[$x] }}{{ $index + 1 < count($prodiArray) ? ', ' : '' }}
                                         @endif
                                     @endforeach
                                 @endif

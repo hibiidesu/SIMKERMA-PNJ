@@ -17,6 +17,7 @@ use App\Exports\KerjasamaExport;
 
 use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
+use App\Models\log_persetujuan;
 use App\Models\prodi;
 
 class KerjasamaController extends Controller

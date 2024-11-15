@@ -520,6 +520,19 @@ class ReviewController extends Controller
             ]);
 
         }
+        else if (Auth::user()->role_id == 4) {
+            return view('review/edit', [
+                'users' => User::where('role_id', '=', '1')->get(),
+                'perjanjian' => pks::all(),
+                'unit' => Unit::all(),
+                'prodi' => Prodi::all(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
+                'data' => Kerjasama::findOrFail($id),
+                'jenisKerjasama' => Jenis_kerjasama::all(),
+            ]);
+
+        }
     }
 
     public function update(Request $request, Kerjasama $kerjasama)
@@ -585,10 +598,13 @@ class ReviewController extends Controller
                     'step' => 1,
                 ]);
                 if ($update) {
-                    return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil diubah');
+                    $redirectRoute = Auth::user()->role_id == 4 ? '/pic/pengajuan-kerjasama' : '/admin/pengajuan-kerjasama';
+                    return redirect($redirectRoute)->with('success', 'Data berhasil diubah');
                 } else {
-                    return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal diubah');
+                    $redirectRoute = Auth::user()->role_id == 4 ? '/pic/pengajuan-kerjasama' : '/admin/pengajuan-kerjasama';
+                    return redirect($redirectRoute)->with('error', 'Data gagal diubah');
                 }
+
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dipindahkan');
             }
@@ -602,12 +618,12 @@ class ReviewController extends Controller
                 'kegiatan' => $request->kegiatan,
                 'sifat' => $request->sifat,
                 'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                'kriteria_mitra_id' => $request->kriteria_mitra_id,
-                'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
-                'pks' => implode(',', $request->perjanjian),
+                'kriteria_mitra_id' => is_array($request->kriteria_mitra_id) ? implode(',',$request->kriteria_mitra_id) : $request->kriteria_mitra_id ,
+                'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',',$request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id ,
+                'pks' => is_array($request->perjanjian) ? implode(',', $request->perjanjian) : $request->perjanjian,
                 'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
-                'jurusan' => implode(',', $request->jurusan),
-                'prodi' => implode(',', $prodi),
+                'jurusan' => is_array($request->jurusan) ? implode(',', $request->jurusan) : $request->jurusan,
+                'prodi' => is_array($prodi) ? implode(',', $prodi) : $prodi,
                 'pic_pnj' => $request->pic_pnj,
                 'alamat_perusahaan' => $request->alamat_perusahaan,
                 'pic_industri' => $request->pic_industri,
@@ -618,9 +634,11 @@ class ReviewController extends Controller
                 'step' => 1,
             ]);
             if ($update) {
-                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil diubah');
+                $redirectRoute = Auth::user()->role_id == 4 ? '/pic/pengajuan-kerjasama' : '/admin/pengajuan-kerjasama';
+                return redirect($redirectRoute)->with('success', 'Data berhasil diubah');
             } else {
-                return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal diubah');
+                $redirectRoute = Auth::user()->role_id == 4 ? '/pic/pengajuan-kerjasama' : '/admin/pengajuan-kerjasama';
+                return redirect($redirectRoute)->with('error', 'Data gagal diubah');
             }
         }
 

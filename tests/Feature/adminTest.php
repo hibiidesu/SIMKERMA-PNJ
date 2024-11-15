@@ -30,8 +30,8 @@ class adminTest extends TestCase
 
     public function test_admin_view_dashboard()
     {
-        $user = User::find(1);
-        $response = $this->actingAs($user)->get('/admin/dashboard');
+        $user = User::find(1);  // cari user
+        $response = $this->actingAs($user)->get('/admin/dashboard'); // acting as itu login jadi user 
         $response->assertStatus(200);
         $response->assertViewIs('home');
     }
