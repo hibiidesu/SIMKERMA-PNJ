@@ -184,6 +184,8 @@ class KerjasamaController extends Controller
             'unit' => Unit::all(),
             'prodi' => prodi::all(),
             'perjanjian' => pks::all(),
+            'kriteria_mitra' => kriteria_mitra::all(),
+            'kriteria_kemitraan' => kriteria_kemitraan::all(),
             'data' => Kerjasama::findOrFail($id),
             'jenisKerjasama' => Jenis_kerjasama::all(),
         ]);

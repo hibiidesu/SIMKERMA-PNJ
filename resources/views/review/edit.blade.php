@@ -90,21 +90,26 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-
+                                    <?php
+                                    $explodeMitra = explode(',', $data->kriteria_mitra_id)
+                                    ?>
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
                                     <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
                                         @foreach ($kriteria_mitra as $item)
-                                        <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
+                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodeMitra)? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
+                                <?php
+                                $explodeKemitraan = explode(',', $data->kriteria_kemitraan_id)
+                                ?>
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
                                     <select class="choices-2 form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
                                         @foreach ($kriteria_kemitraan as $item)
-                                        <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
+                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodeKemitraan)? 'selected' : '' }}>{{ $item->kriteria_kemitraan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
