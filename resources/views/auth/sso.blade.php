@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('styles')
 <link rel="stylesheet" href="{{ asset('admin/css/pages/auth.css') }}">
 @endsection
@@ -22,14 +21,23 @@
                 <br>
                 <br>
                 @if (session('info'))
-                    <div class="alert alert-danger">
-                        <p>{{ session('info')}}</p>
-                    </div>
+                <div class="alert alert-danger">
+                    <p>{{ session('info') }}</p>
+                </div>
                 @endif
-                <h1 class="fw-bold mb-5">Log in.</h1>
-                <form method="POST" action="{{ route('login') }}">
+                <h1 class="fw-bold mb-5">Register</h1>
+                <form method="post">
                     @csrf
                     <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="email" value="{{$data["email"]}}" disabled id="email" class="form-control form-control-xl" placeholder="Email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <div class="form-control-icon">
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                    </div>
+                    <input type="hidden" name="name" value="{{$data["name"]}}">
+                    <input type="hidden" name="email" value="{{$data["email"]}}">
+                    <div class="form-group position-relative has-icon-left mb-4">
+
                         <input id="username" type="text" class="form-control form-control-xl @error('username') is-invalid @enderror" placeholder="Username" name="username" value="{{ old('username') }}" required autofocus>
                         {{-- <input type="text" class="form-control form-control-xl" placeholder="Username"> --}}
                         <div class="form-control-icon">
@@ -53,33 +61,22 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="form-check form-check-lg d-flex align-items-end">
-                        <input class="form-check-input me-2" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                        <label class="form-check-label text-gray-600" for="remember">
-                            Remember Me
-                        </label>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input id="repassword" type="password" class="form-control form-control-xl @error('password') is-invalid @enderror" name="repassword" required autocomplete="current-password" placeholder="Re-Enter Password">
+                        <small id="emailHelp" class="form-text text-muted">Minimum 8 karakter</small>
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Register</button>
                 </form>
-                <a href="{{ route('sso.login') }}"
-                        class="btn btn-success btn-block btn-lg mt-3 d-flex align-items-center text-center justify-content-center">
-                        <div>
-                            <img src="{{ asset('img/logo-pnj.png') }}" alt="Logo" width="28" height="28">
-                        </div>
-                        <div class="ms-2">
-                            Log In / Register with SSO PNJ
-                        </div>
-                    </a>
-                {{-- @if (Route::has('password.request'))
-                <div class="text-center mt-5 text-lg fs-4">
-                    <p><a class="font-bold" href="{{ route('password.request') }}">Forgot password?</a>.</p>
-                </div>
-                @endif --}}
             </div>
         </div>
-        {{-- <div class="col-xl-7 d-none d-xl-block">
-            <div id="auth-right"></div>
-        </div> --}}
     </div>
 </div>
 @endsection

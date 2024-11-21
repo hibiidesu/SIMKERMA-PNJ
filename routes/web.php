@@ -26,6 +26,10 @@ Route::get('/trackpengajuan',[App\Http\Controllers\WebController::class, 'tracki
 
 
 Auth::routes(['register' => false]);
+Route::get('/sso/login', [App\Http\Controllers\auth\ssocontroller::class, 'loginSSO'])->name('sso.login');
+Route::get('/sso/cb', [App\Http\Controllers\auth\ssocontroller::class, 'callbackSSO'])->name('sso.callback');
+Route::post('/sso/cb', [App\Http\Controllers\auth\ssocontroller::class, 'registerSSO'])->name('sso.register');
+
 
 Route::get('/checkrole', [RoleController::class, 'checkRole'])->name('checkrole');
 

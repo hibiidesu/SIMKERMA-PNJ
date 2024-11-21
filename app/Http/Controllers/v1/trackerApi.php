@@ -59,7 +59,6 @@ class trackerApi extends Controller
                     'telp_industri' => $kerjasama->telp_industri,
                     'catatan' => $kerjasama->catatan,
                     'email' => $kerjasama->email,
-                    'reviewer' => $kerjasama->reviewer->name,
                     'file' => asset('surat_kerjasama/' . $kerjasama->file),
                     'step' => $kerjasama->log_persetujuan->map(function ($log) {
                         return [

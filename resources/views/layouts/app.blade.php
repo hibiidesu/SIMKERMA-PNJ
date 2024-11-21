@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    @if (url()->current() != url('/login') && url()->current() != url('/password/reset'))
+    @if (url()->current() != url('/login') && url()->current() != url('/password/reset') && url()->current() != url('/sso/cb'))
         <div id="app">
             @if (Auth::check() && Auth::user()->role->role_name == 'admin')
                 @include('layouts.sidebar-admin')
