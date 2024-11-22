@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Carbon;
 
-class ssocontroller extends Controller
+class SSOController extends Controller
 {
     // tinggal di rubah menggunakan SSO PNJ
     public function loginSSO()
