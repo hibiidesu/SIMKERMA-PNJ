@@ -5,9 +5,14 @@ echo "Entrypoint script is running"
 date
 
 service nginx start
+DB_HOST=${DB_HOST:-db}
+DB_PORT=${DB_PORT:-5432}
+
+echo "DB_HOST: $DB_HOST"
+echo "DB_PORT: $DB_PORT"
 
 echo "Waiting for the database to be ready..."
-while ! nc -z "$DB_HOST" "$DB_PORT"; do
+until nc -zv $DB_HOST $DB_PORT; do
     echo "Still waiting for the database at $DB_HOST:$DB_PORT..."
     sleep 2
 done
