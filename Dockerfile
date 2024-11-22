@@ -14,9 +14,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmemcached-dev \
     zlib1g-dev \
     libzip-dev \
-    netcat \
+    netcat-openbsd \
     nano \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
