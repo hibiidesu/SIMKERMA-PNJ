@@ -7,9 +7,9 @@ date
 service nginx start
 
 echo "Waiting for the database to be ready..."
-until php artisan migrate:status > /dev/null 2>&1; do
+while ! nc -z "$DB_HOST" "$DB_PORT"; do
+    echo "Still waiting for the database at $DB_HOST:$DB_PORT..."
     sleep 2
-    echo "Still waiting for the database..."
 done
 echo "Database is ready!"
 

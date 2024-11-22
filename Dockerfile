@@ -13,7 +13,9 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     libmemcached-dev \
     zlib1g-dev \
-    libzip-dev
+    libzip-dev \
+    netcat \
+    nano
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
