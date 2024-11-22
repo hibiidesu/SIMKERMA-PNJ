@@ -5,9 +5,13 @@ echo "Entrypoint script is running"
 date
 
 service nginx start
-DB_HOST=${DB_HOST:-db}
-DB_PORT=${DB_PORT:-5432}
+export $(grep -v '^#' .env | xargs)
 
+# Validate essential environment variables
+if [[ -z "$DB_HOST" || -z "$DB_PORT" || -z "$DB_USERNAME" || -z "$DB_DATABASE" ]]; then
+    echo "Missing essential database environment variables. Check your .env file."
+    exit 1
+fi
 echo "DB_HOST: $DB_HOST"
 echo "DB_PORT: $DB_PORT"
 
