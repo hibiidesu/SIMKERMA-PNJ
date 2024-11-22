@@ -9,7 +9,7 @@ service nginx start
 # Start PHP-FPM
 php-fpm &
 echo "Nunggu koneksi DB"
-sleep 10
+sleep 20
 
 FIRST_RUN_FILE="/var/www/.first_run_completed"
 
@@ -24,7 +24,7 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
 
 
     php artisan migrate --force --pretend || php artisan migrate --force --path=database/migrations --step || { echo "Migration encountered errors but continuing..."; true; }
-    php artisan db:seed
+    php artisan db:seed --force
     touch "$FIRST_RUN_FILE"
 
     echo "Selesai"

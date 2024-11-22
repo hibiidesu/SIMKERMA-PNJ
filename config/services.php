@@ -39,7 +39,13 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('GOOGLE_CLIENT_REDIRECT'),
+        'redirect' => env('APP_URL') . '/sso/cb',
     ],
+
+    // 'pnj' => [
+    //     'client_id' => env('CLIENT_ID'),
+    //     'client_secret' => env('CLIENT_SECRET'),
+    //     'redirect' => env('REDIRECT_URI')
+    // ],
 
 ];
