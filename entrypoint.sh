@@ -4,36 +4,38 @@ set -e
 echo "Entrypoint script is running"
 date
 
-# Start Nginx
 service nginx start
-# Start PHP-FPM
-php-fpm &
-echo "Nunggu koneksi DB"
-sleep 20
+
+echo "Waiting for the database to be ready..."
+until php artisan migrate:status > /dev/null 2>&1; do
+    sleep 2
+    echo "Still waiting for the database..."
+done
+echo "Database is ready!"
 
 FIRST_RUN_FILE="/var/www/.first_run_completed"
 
 if [ ! -f "$FIRST_RUN_FILE" ]; then
-    echo "First run! memulai install composer, seeding dan migrate"
+    echo "First run! Installing dependencies, migrating, and seeding the database..."
     cd /var/www
-    ls /var/www
+
     composer install --no-dev --optimize-autoloader
 
     chown -R www-data:www-data /var/www
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
+    echo "Running migrations..."
+    php artisan migrate --force
 
-    php artisan migrate --force --pretend || php artisan migrate --force --path=database/migrations --step || { echo "Migration encountered errors but continuing..."; true; }
+    echo "Running seeders..."
     php artisan db:seed --force
+
     touch "$FIRST_RUN_FILE"
 
-    echo "Selesai"
-
+    echo "First-time setup completed!"
 else
-    echo "Bukan run pertama kali"
-    ls /var/www
+    echo "Not the first run. Skipping setup."
 fi
 
-echo "Service berjalan"
-wait %1
-trap - ERR
+# Start PHP-FPM
+php-fpm
