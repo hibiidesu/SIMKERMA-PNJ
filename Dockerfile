@@ -1,7 +1,7 @@
 FROM php:8.1-fpm
 
 # Install dependencies
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     nginx \
     curl \
@@ -15,7 +15,8 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libzip-dev \
     netcat \
-    nano
+    nano \
+    && apt-get clean
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
