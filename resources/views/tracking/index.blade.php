@@ -2,7 +2,7 @@
 @section('heading', 'Track Kerjasama')
 @section('content')
 <section class="row">
-    <div class="col-12">
+    <div class="col-10">
         <div class="card shadow-sm">
             <div class="card-body text-dark">
                 <div class="row">
@@ -14,12 +14,18 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="tracker_id">Cari Pengajuan<span class="text-danger"></span></label>
-                                    <input type="text" id="tracker_id" class="form-control" name="tracker_id" required>
+                                    <input type="text" id="tracker_id" class="form-control" name="tracker_id" required placeholder="Masukan ID Pengajuan cnth 1">
                                 </div>
                             </div>
-                            <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary mb-1">Submit</button>
+                            <div class="row">
+                                <div class="col-6 d-flex justify-content-start">
+                                    <a class="btn btn-info" href="/">Kembali</a>
+                                </div>
+                                <div class="col-6 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary mb-1">Submit</button>
+                                </div>
                             </div>
+
                         </div>
                     </form>
                 </div>

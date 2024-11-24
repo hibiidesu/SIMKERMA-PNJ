@@ -22,9 +22,42 @@
     <img src="{{ asset('img/header.jpg') }}" alt="Header" class="img-responsive w-100" style="max-height: 500px">
 </div>
 <div class="container-xl container-fluid py-md-5 py-4">
+    <div class="row justify-content-md-center">
+        <div class="col-12 mb-3">
+            <h2 class="fw-bold text-center">Data Kerja Sama</h2>
+        </div>
+        <div class="col-lg-12">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header text-center"><strong>Total kerjasama</strong></div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" id="totalKerjasama">0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header text-center"><strong>Total kerjasama yang sedang berlangsung</strong></div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" id="kerjasamaBerlangsung">0</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card text-white bg-info mb-3">
+                        <div class="card-header text-center"><strong>Total kerjasama yang sudah selesai</strong></div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center" id="kerjasamaSelesai">0</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12 mb-3">
-            <h2 class="fw-bold">Data Statistik</h2>
+            <h2 class="fw-bold text-center">Data Statistik</h2>
         </div>
         <div class="col-lg-6 mb-4">
             <div class="card shadow-sm" id="chart-data">
@@ -557,6 +590,33 @@
     });
     $('#chart-by-memorandum #filter').change(function() {
         getDataChartByMemorandum(0);
+    });
+
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    function fetchKerjasamaStats() {
+        fetch('/api/data-kerjasama')
+            .then(response => response.json())
+            .then(data => {
+                animateValue(document.getElementById("totalKerjasama"), 0, data.total, 2000);
+                animateValue(document.getElementById("kerjasamaBerlangsung"), 0, data.berlangsung, 2000);
+                animateValue(document.getElementById("kerjasamaSelesai"), 0, data.selesai, 2000);
+            });
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        fetchKerjasamaStats();
     });
 </script>
 @endsection

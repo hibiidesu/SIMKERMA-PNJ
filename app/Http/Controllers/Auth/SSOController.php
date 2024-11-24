@@ -20,21 +20,28 @@ class SSOController extends Controller
 
     public function callbackSSO()
     {
-        $user = Socialite::driver('google')->user();
+        try {
+            $socialiteUser = Socialite::driver('google')->user();
 
-        if ($user) {
-            $data = $user->user;
-            $userDb = User::where("email", $data['email'])->first();
-            if ($userDb) {
-                Auth::login($userDb);
-                return redirect()->route('checkrole');
+            if ($socialiteUser) {
+                $email = $socialiteUser->getEmail();
+                $userDb = User::where("email", $email)->first();
+
+                if ($userDb) {
+                    Auth::login($userDb);
+                    return redirect()->route('checkrole');
+                } else {
+                    // return view("auth.sso", [
+                    //     "data" => $data,
+                    // ]);
+                    return redirect()->route('login')->with('error', 'Email tidak terdaftar di database, silahkan menghubungi admin untuk mendaftarkan akun anda.');
+                }
             } else {
-                return view("auth.sso", [
-                    "data" => $data,
-                ]);
+                return redirect()->route('login')->with('error', 'Tidak dapat mendapatkan data user Google.');
             }
-        } else {
-            return redirect("/login");
+        } catch (\Exception $e) {
+            \Log::error('SSO Error: ' . $e->getMessage());
+            return redirect()->route('login')->with('error', 'An error occurred during SSO login. Please try again.');
         }
     }
     public function registerSSO(Request $request)
