@@ -29,9 +29,11 @@ class SSOController extends Controller
                 Auth::login($userDb);
                 return redirect()->route('checkrole');
             } else {
-                return view("auth.sso", [
-                    "data" => $data,
-                ]);
+                // return view("auth.sso", [
+                //     "data" => $data,
+                // ]);
+
+                return redirect()->route('login')->with('error', 'Email tidak terdaftar di database, silahkan menghubungi admin untuk mendaftarkan akun anda.');
             }
         } else {
             return redirect("/login");
