@@ -22,8 +22,17 @@
                 <br>
                 <br>
                 @if (session('info'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <h2 class="text-center justify-content-center">Info!</h2>
                         <p>{{ session('info')}}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <h2 class="text-center justify-content-center">Error!</h2>
+                        <p>{{ session('error')}}</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
                 <h1 class="fw-bold mb-5">Log in.</h1>
@@ -67,7 +76,7 @@
                             <img src="{{ asset('img/logo-pnj.png') }}" alt="Logo" width="28" height="28">
                         </div>
                         <div class="ms-2">
-                            Log In / Register with SSO PNJ
+                            Log In with SSO PNJ
                         </div>
                     </a>
                 {{-- @if (Route::has('password.request'))
