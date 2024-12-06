@@ -4783,6 +4783,8 @@ fieldset:disabled .btn {
     color: #fff;
 }
 
+/* Styling umum untuk card */
+
 .card {
     position: relative;
     display: flex;
@@ -4942,7 +4944,8 @@ fieldset:disabled .btn {
     .card-group > .card:not(:first-child) .card-footer {
         border-bottom-left-radius: 0;
     }
-}
+    
+    
 
 .accordion-button {
     position: relative;

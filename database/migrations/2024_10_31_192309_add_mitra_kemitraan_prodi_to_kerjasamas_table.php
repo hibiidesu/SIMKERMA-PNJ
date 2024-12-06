@@ -17,7 +17,7 @@ class AddMitraKemitraanProdiToKerjasamasTable extends Migration
         if (!Schema::hasColumn('kerjasamas', 'prodi')) {
             // $table->string('kriteria_kemitraan_id');
             // $table->string('kriteria_mitra_id');
-            $table->string('prodi')->nullable();
+            // $table->string('prodi')->nullable();
         }
     });
     }
@@ -32,7 +32,7 @@ class AddMitraKemitraanProdiToKerjasamasTable extends Migration
         Schema::table('kerjasamas', function (Blueprint $table) {
             if (Schema::hasColumn('kerjasamas', 'prodi')) {
                 // $table->dropColumn('kriteria_kemitraan');
-                $table->dropColumn('prodi');
+                // $table->dropColumn('prodi');
                 // $table->dropColumn('kriteria_mitra');
             }
         });

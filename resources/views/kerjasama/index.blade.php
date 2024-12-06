@@ -39,10 +39,10 @@
 
                 <form action="" method="get">
                     <h5>Filter:</h5>
-                    <div class="d-flex flex-column flex-md-row gap-md-3">
+                    <div style="display: flex; flex-wrap: nowrap; gap: 20px; justify-content: space-between;">
                         <div class="form-group">
                             <label for="date">Masa Berlaku</label>
-                            <div class="mt-md-1">
+                            <div class="form-group" style="flex: 1 1 15%; min-width: 120px;">
                                 <select name="date" id="date" class="form-select">
                                     <option value="1" {{ Request::get('date') == '1' ? 'selected' : '' }}>Semua</option>
                                     <option value="2" {{ Request::get('date') == '2' ? 'selected' : '' }}>Masih Berlaku</option>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group">
                             <label for="sifat">Sifat</label>
-                            <div class="mt-md-1">
+                            <div class="form-group" style="flex: 1 1 15%; min-width: 120px;">
                                 <select name="sifat" id="sifat" class="form-select">
                                     <option value="all" {{ Request::get('sifat') == 'all' ? 'selected' : '' }}>Semua</option>
                                     <option value="Lokal" {{ Request::get('sifat') == 'Lokal' ? 'selected' : '' }}>Lokal</option>
@@ -63,8 +63,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="type">Jenis Kerja Sama</label>
-                            <div class="mt-md-1">
+                            <label for="type">Jenis kerja sama</label>
+                            <div class="form-group" style="flex: 1 1 15%; min-width: 120px;">
                                 <select class="form-select" required id="type" name="type">
                                     <option value="all">Semua</option>
                                     @foreach ($jenisKerjasama as $item)
@@ -75,7 +75,7 @@
                         </div>
                         <div class="form-group">
                             <label for="type">Kriteria Kemitraan</label>
-                            <div class="mt-md-1">
+                            <div class="form-group" style="flex: 1 1 15%; min-width: 120px;">
                                 <select class="form-select" required id="k_kemitraan" name="k_kemitraan">
                                     <option value="all">Semua</option>
                                     @foreach ($kriteria_kemitraan_filter as $item)
@@ -86,7 +86,7 @@
                         </div>
                         <div class="form-group">
                             <label for="type">Kriteria Mitra</label>
-                            <div class="mt-md-1">
+                            <div class="form-group" style="flex: 1 1 15%; min-width: 120px;">
                                 <select class="form-select" required id="k_mitra" name="k_mitra">
                                     <option value="all">Semua</option>
                                     @foreach ($kriteria_mitra_filter as $item)
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="mt-md-1">
+                        <div class="form-group" style="flex: 1 1 18%; min-width: 150px;">
                                 <button class="btn btn-primary mt-4" type="submit" name="filter" value="true">Terapkan</button>
                                 @if (Request::get('filter'))
                                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')

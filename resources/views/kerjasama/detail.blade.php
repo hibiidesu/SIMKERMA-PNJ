@@ -3,24 +3,22 @@
 @section('content')
 <section class="row">
     <div class="col-12">
-        <div class="card shadow-sm">
+        <div class="card shadow-m">
             <div class="card-body text-dark">
                 <h5 class="text-center page-heading"><span>TIMELINE PENGAJUAN</span></h5>
                 <div class="row">
                     <!-- Tanggal Pengajuan-->
-                    <div class="col-sm">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-center">
-                                    <i class="fas fa-user align" style="font-size:48px;"></i>
-                                </div>
-                                <br>
-                                <p class="text-center"><strong>Tanggal Pengajuan</strong></p>
-                                <p class="text-center">{{ $data->created_at->format('d-m-Y') }}</p>
-                                <p class="text-center">Mengajukan</p>
+                    <div class="col-sm-3 mb-3">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-user" style="font-size:48px; color:#28a745;"></i>
+                            <br><br>
+                            <p class="font-weight">Tanggal Pengajuan</p>
+                            <p class="text-muted">19-11-2024</p>
+                            <span class="badge bg-success">Mengajukan</span>
                             </div>
-                        </div>
                     </div>
+                </div>
 
                     <!-- Tanggal Review Legal (step 3 or 2 for rejection) -->
                     @php
@@ -28,21 +26,17 @@
                         $legalRejection = $data->log_persetujuan->firstWhere('step', 2);
                     @endphp
                     @if($legalReview)
-                        <div class="col-sm">
-                            <div class="card shadow h-auto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fas fa-user align" style="font-size:48px;"></i>
-                                    </div>
-                                    <br>
-                                    <p class="text-center"><strong>Tanggal Review Legal</strong></p>
-                                    <p class="text-center">{{ \Carbon\Carbon::parse($legalReview->created_at)->format('d-m-Y') }}</p>
-                                    <p class="text-center text-dark">
-                                        <span class="bg-success text-white">Diterima</span>
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="col-sm-3 mb-3">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
+                            <br><br>
+                            <p class="font-weight">Tanggal Review legal</p>
+                            <p class="text-muted">20-11-2024</p>
+                            <span class="badge bg-success">Diterima</span>
                         </div>
+                    </div>
+                </div>
                     @elseif($legalRejection)
                         <div class="col-sm">
                             <div class="card shadow h-auto">
@@ -51,7 +45,7 @@
                                         <i class="fas fa-user align" style="font-size:48px;"></i>
                                     </div>
                                     <br>
-                                    <p class="text-center"><strong>Tanggal Review Legal (Ditolak)</strong></p>
+                                    <p class="text-center"><strong>Tanggal Review legal </strong></p>
                                     <p class="text-center">{{ \Carbon\Carbon::parse($legalRejection->created_at)->format('d-m-Y') }}</p>
                                     <p class="text-center">
                                         <span class="bg-danger text-white">Ditolak</span>
@@ -67,84 +61,42 @@
                         $wadirRejection = $data->log_persetujuan->firstWhere('step', 4);
                     @endphp
                     @if($wadirReview)
-                        <div class="col-sm">
-                            <div class="card shadow h-auto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fas fa-user align" style="font-size:48px;"></i>
-                                    </div>
-                                    <br>
-                                    <p class="text-center"><strong>Tanggal Disetujui Wadir</strong></p>
-                                    <p class="text-center">{{ \Carbon\Carbon::parse($wadirReview->created_at)->format('d-m-Y') }}</p>
-                                    <p class="text-center text-dark">
-                                        <span class="bg-success text-white">Diterima</span>
-                                    </p>
-                                </div>
-                            </div>
+                    <div class="col-sm-3 mb-3">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
+                            <br><br>
+                            <p class="font-weight">Tanggal Disetujui Wadir</p>
+                            <p class="text-muted">20-11-2024</p>
+                            <span class="badge bg-success">Diterima</span>
                         </div>
+                    </div>
+                </div>
                     @elseif($wadirRejection)
-                        <div class="col-sm">
-                            <div class="card shadow h-auto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fas fa-user align" style="font-size:48px;"></i>
-                                    </div>
-                                    <br>
-                                    <p class="text-center"><strong>Tanggal Review Wadir (Ditolak)</strong></p>
-                                    <p class="text-center">{{ \Carbon\Carbon::parse($wadirRejection->created_at)->format('d-m-Y') }}</p>
-                                    <p class="text-center">
-                                        <span class="bg-danger text-white">Ditolak</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     @endif
 
                     <!-- Tanggal Diterima Direktur (step 7 or 6 for rejection) -->
-                    @php
-                        $direkturReview = $data->log_persetujuan->firstWhere('step', 7);
-                        $direkturRejection = $data->log_persetujuan->firstWhere('step', 6);
-                    @endphp
-                    @if($direkturReview)
-                        <div class="col-sm">
-                            <div class="card shadow h-auto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fas fa-user align" style="font-size:48px;"></i>
-                                    </div>
-                                    <br>
-                                    <p class="text-center"><strong>Tanggal Diterima Direktur</strong></p>
-                                    <p class="text-center">{{ \Carbon\Carbon::parse($direkturReview->created_at)->format('d-m-Y') }}</p>
-                                    <p class="text-center text-dark">
-                                        <span class="bg-success text-white">Diterima</span>
-                                    </p>
-                                </div>
+                           @php
+                           $direkturReview = $data->log_persetujuan->firstWhere('step', 7);
+                            $direkturRejection = $data->log_persetujuan->firstWhere('step', 6);
+                           @endphp
+                           @if($direkturReview)
+                           <div class="col-sm-3 mb-3">
+                    <div class="card shadow-lg border-0">
+                        <div class="card-body text-center">
+                            <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
+                            <br><br>
+                            <p class="font-weight">Tanggal Diterima Direktur</p>
+                            <p class="text-muted">20-11-2024</p>
+                            <span class="badge bg-success">Diterima</span>
                             </div>
+                          </div>
                         </div>
-                    @elseif($direkturRejection)
-                        <div class="col-sm">
-                            <div class="card shadow h-auto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-center">
-                                        <i class="fas fa-user align" style="font-size:48px;"></i>
-                                    </div>
-                                    <br>
-                                    <p class="text-center"><strong>Tanggal Review Direktur (Ditolak)</strong></p>
-                                    <p class="text-center">{{ \Carbon\Carbon::parse($direkturRejection->created_at)->format('d-m-Y') }}</p>
-                                    <p class="text-center">
-                                        <span class="bg-danger text-white">Ditolak</span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </div>
+                   @elseif($direkturRejection)
+               @endif
 
     <div class="col-12">
-        <div class="card shadow-sm">
+        <div class="card shadow-lg">
             <div class="card-body text-dark">
                 <div class="row">
                     <div class="order-md-0 order-1 col-12 col-md-8">
