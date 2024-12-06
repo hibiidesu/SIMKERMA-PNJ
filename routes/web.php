@@ -120,6 +120,13 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/store', [App\Http\Controllers\UserController::class, 'store']);
         Route::post('/update', [App\Http\Controllers\UserController::class, 'update']);
     });
+    Route::prefix('template')->group(function(){
+        Route::get('/', [App\Http\Controllers\templateSuratController::class, 'index']);
+        Route::get('/add', [App\Http\Controllers\templateSuratController::class, 'create']);
+        Route::get('/edit/{id}', [App\Http\Controllers\templateSuratController::class, 'edit']);
+        Route::post('/store', [App\Http\Controllers\templateSuratController::class, 'store']);
+        Route::post('/update', [App\Http\Controllers\templateSuratController::class, 'update']);
+    });
 });
 
 //route untuk direktur

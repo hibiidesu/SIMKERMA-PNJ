@@ -42,10 +42,10 @@ return [
         'redirect' => env('APP_URL') . '/sso/cb',
     ],
 
-    // 'pnj' => [
-    //     'client_id' => env('CLIENT_ID'),
-    //     'client_secret' => env('CLIENT_SECRET'),
-    //     'redirect' => env('REDIRECT_URI')
-    // ],
+    'pnj' => [
+        'client_id' => env('PNJ_CLIENT_ID'),
+        'client_secret' => env('PNJ_CLIENT_SECRET'),
+        'redirect' => env('PNJ_REDIRECT_URI')
+    ],
 
 ];
