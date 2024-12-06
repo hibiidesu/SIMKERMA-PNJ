@@ -15,13 +15,13 @@ class SSOController extends Controller
     // tinggal di rubah menggunakan SSO PNJ
     public function loginSSO()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('pnj')->redirect();
     }
 
     public function callbackSSO()
     {
         try {
-            $socialiteUser = Socialite::driver('google')->user();
+            $socialiteUser = Socialite::driver('pnj')->user();
 
             if ($socialiteUser) {
                 $email = $socialiteUser->getEmail();
@@ -31,9 +31,9 @@ class SSOController extends Controller
                     Auth::login($userDb);
                     return redirect()->route('checkrole');
                 } else {
-                    // return view("auth.sso", [
-                    //     "data" => $data,
-                    // ]);
+                    return view("auth.sso", [
+                        "data" => $socialiteUser,
+                    ]);
                     return redirect()->route('login')->with('error', 'Email tidak terdaftar di database, silahkan menghubungi admin untuk mendaftarkan akun anda.');
                 }
             } else {
