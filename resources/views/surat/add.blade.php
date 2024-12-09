@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <form class="form form-vertical" method="post" action="{{ url('/admin/unit/store') }}">
+                <form class="form form-vertical" method="post" action="{{ url('/admin/template/store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-body">
                         @if ($errors->any())
@@ -29,8 +29,8 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="nama_surat">File Surat <span class="text-danger">*</span></label>
-                                    <input type="file" id="nama_surat" class="form-control" name="nama_surat" required autofocus>
+                                    <label class="mb-2 fw-bold text-capitalize" for="template_surat">File Surat <span class="text-danger">*</span></label>
+                                    <input type="file" id="template_surat" class="form-control" name="template_surat" required>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">

@@ -45,6 +45,10 @@ return [
             'driver' => 'local',
             'root'   => public_path() . '/surat_kerjasama',
         ],
+        'template_surat'=> [
+            'driver' => 'local',
+            'root' => public_path() . '/template_surat',
+        ],
 
         's3' => [
             'driver' => 's3',
