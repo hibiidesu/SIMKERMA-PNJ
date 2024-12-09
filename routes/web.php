@@ -123,9 +123,9 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
     Route::prefix('template')->group(function(){
         Route::get('/', [App\Http\Controllers\templateSuratController::class, 'index']);
         Route::get('/add', [App\Http\Controllers\templateSuratController::class, 'create']);
-        Route::get('/edit/{id}', [App\Http\Controllers\templateSuratController::class, 'edit']);
-        Route::post('/store', [App\Http\Controllers\templateSuratController::class, 'store']);
-        Route::post('/update', [App\Http\Controllers\templateSuratController::class, 'update']);
+        Route::get('/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
+        Route::get('/delete/{id}',[App\Http\Controllers\templateSuratController::class, 'destroy']);
+
     });
 });
 
@@ -203,4 +203,9 @@ Route::middleware(['isPic'])->group(function () {
 
     Route::get('/pic/my-profile/{id}', [App\Http\Controllers\UserController::class, 'edit']);
     Route::post('/pic/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
+
+
+        Route::get('/pic/template', [App\Http\Controllers\templateSuratController::class, 'index']);
+        Route::get('/pic/template/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
+
 });
