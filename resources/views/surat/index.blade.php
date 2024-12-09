@@ -33,10 +33,16 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $item->name }}</td>
+                            {{-- href to asset surat to download --}}
+                            <td>{{ $item->nama_surat }}</td>
                             <td>
+                                @if(Auth::user()->role_id == 1)
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url('/admin/template/delete/'. $item->id) }}" class="btn btn-danger">Delete</a>
+                                </div>
+                                @endif
                                 <div class="d-flex">
-                                    <a href="{{ url('/admin/unit/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('/admin/template/download/'. $item->id) }}" class="btn btn-info">Download</a>
                                 </div>
                             </td>
                         </tr>
