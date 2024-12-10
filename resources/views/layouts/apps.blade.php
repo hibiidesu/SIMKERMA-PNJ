@@ -7,7 +7,7 @@
     <meta name="keywords" content="Sistem Informasi Kerja Sama Politeknik Negeri Jakarta" />
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Kerja Sama Politeknik Negeri Jakarta [TEST]</title>
+    <title>Kerja Sama Politeknik Negeri Jakarta</title>
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -30,7 +30,7 @@
                         <div>
                             <img src="{{ asset('img/logo-pnj.png') }}" alt="logo" width="55">
                         </div>
-                        <div class="text-info h2 fw-bolder ps-2 mt-2" style="font-family: 'Viga'">SIMKERMA [TEST]</div>
+                        <div class="text-info h2 fw-bolder ps-2 mt-2" style="font-family: 'Viga'">{{ config('app.name') }}</div>
                     </div>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

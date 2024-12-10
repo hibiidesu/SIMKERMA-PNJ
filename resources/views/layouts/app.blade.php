@@ -7,7 +7,7 @@
     <meta name="description" content="Sistem Kerja Sama (SIMKERMA) PNJ menyajikan data historis kerja sama Politeknik Negeri Jakarta" />
     <meta name="keywords" content="Sistem Informasi Kerja Sama Politeknik Negeri Jakarta" />
     <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
-    <title>Kerja Sama Politeknik Negeri Jakarta [TEST]</title>
+    <title>Sistem Informasi Kerja Sama - Politeknik Negeri Jakarta</title>
     <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Viga" rel="stylesheet">

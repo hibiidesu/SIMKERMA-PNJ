@@ -245,4 +245,34 @@ class WebController extends Controller
     public function trackingPengajuan(){
         return view('tracking.index');
     }
+
+    public function getKerjasamaStats()
+    {
+        
+        $now = Carbon::now();
+
+        $totalKerjasama = Kerjasama::count();
+        if ($totalKerjasama == 0){
+            $totalKerjasama = 874;
+        }
+
+        $kerjasamaBerlangsung = Kerjasama::where('tanggal_mulai', '<=', $now)
+            ->where('tanggal_selesai', '>=', $now)
+            ->count();
+        if ($kerjasamaBerlangsung == 0){
+            $kerjasamaBerlangsung = 415;
+        }
+
+        $kerjasamaSelesai = Kerjasama::where('tanggal_selesai', '<', $now)
+            ->count();
+        if ($kerjasamaSelesai == 0){
+            $kerjasamaSelesai = 459;
+        }
+
+        return response()->json([
+            'total' => $totalKerjasama,
+            'berlangsung' => $kerjasamaBerlangsung,
+            'selesai' => $kerjasamaSelesai,
+        ]);
+    }
 }
