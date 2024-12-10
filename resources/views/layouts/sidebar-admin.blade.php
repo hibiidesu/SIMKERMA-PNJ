@@ -52,6 +52,12 @@
                         <span class="text-capitalize">perjanjian kerja sama</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ url()->current() == url('admin/template/') ? 'active' : '' }}">
+                    <a href="{{ url('admin/template/') }}" class='sidebar-link'>
+                        <i class="fas fa-clipboard"></i>
+                        <span class="text-capitalize">Template</span>
+                    </a>
+                </li>
                 <li class="sidebar-item">
                     <a href="#unitProdiMenu" class='sidebar-link' data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="unitProdiMenu">
                         <i class="fas fa-sign"></i>

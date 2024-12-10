@@ -41,7 +41,12 @@
                         <span class="text-capitalize">pengajuan kerja sama</span>
                     </a>
                 </li>
-
+                <li class="sidebar-item {{ url()->current() == url('pic/template/') ? 'active' : '' }}">
+                    <a href="{{ url('pic/template/') }}" class='sidebar-link'>
+                        <i class="fas fa-clipboard"></i>
+                        <span class="text-capitalize">Template</span>
+                    </a>
+                </li>
                 <hr>
                 <li class="sidebar-item {{ url()->current() == url('pic/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
                     <a href="{{ url('pic/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>

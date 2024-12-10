@@ -402,7 +402,7 @@
                 <div class="card-title fw-bold text-dark">Action</div>
             </div>
             <div class="card-body">
-                <form class="form form-vertical" method="post" action="{{ url('/legal/review/tolak') }}" >
+                <form class="form form-vertical" method="post" action="{{ url('/legal/review/tolak') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                     <div class="form-group">
@@ -411,6 +411,9 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="catatan">Catatan <span class="text-danger">*</span></label>
                                     <textarea name="catatan" id="catatan" cols="30" class="form-control" rows="3" required></textarea>
+                                    <br>
+                                    <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Perbaikan <span class="text-danger">*</span></label>
+                                    <input type="file" name="dokumen" id="dokumen" class="form-control">
                                     <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
                                 </div>
                             </div>
