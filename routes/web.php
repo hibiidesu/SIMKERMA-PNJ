@@ -123,6 +123,7 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
     Route::prefix('template')->group(function(){
         Route::get('/', [App\Http\Controllers\templateSuratController::class, 'index']);
         Route::get('/add', [App\Http\Controllers\templateSuratController::class, 'create']);
+        Route::post('/store', [App\Http\Controllers\templateSuratController::class, 'store']);
         Route::get('/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
         Route::get('/delete/{id}',[App\Http\Controllers\templateSuratController::class, 'destroy']);
 

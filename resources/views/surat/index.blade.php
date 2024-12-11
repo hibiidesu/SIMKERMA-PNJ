@@ -6,7 +6,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
+                @if(Auth::user()->role_id == 1)
                 <a href="{{ url('/admin/template/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                @endif
             </div>
             <div class="card-body">
             <div class="message form">
@@ -33,16 +35,14 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            {{-- href to asset surat to download --}}
-                            <td>{{ $item->nama_surat }}</td>
+                            {{-- href to asset surat tos download --}}
+                            <td><a  target="_blank" rel="noopener noreferrer" href="{{ url('template_surat/'.$item->template_surat) }}">{{ $item->nama_surat }}</a></td>
                             <td>
                                 @if(Auth::user()->role_id == 1)
-                                <div class="d-flex gap-2">
-                                    <a href="{{ url('/admin/template/delete/'. $item->id) }}" class="btn btn-danger">Delete</a>
-                                </div>
+
                                 @endif
                                 <div class="d-flex">
-                                    <a href="{{ url('/admin/template/download/'. $item->id) }}" class="btn btn-info">Download</a>
+                                    <a href="{{ url('/admin/template/download/'. $item->id) }}" class="btn btn-success">Download</a>
                                 </div>
                             </td>
                         </tr>
@@ -54,3 +54,4 @@
     </div>
 </section>
 @endsection
+@section('scripts')

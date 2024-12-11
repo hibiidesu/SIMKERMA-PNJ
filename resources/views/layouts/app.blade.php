@@ -83,7 +83,7 @@
     @endif
 
     @yield('scripts')
-    <script src="{{ asset('admin/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></link>
     <script src="{{ asset('admin/vendors/jquery-datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/jquery-datatables/custom.jquery.dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/fontawesome/all.min.js') }}"></script>

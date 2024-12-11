@@ -306,13 +306,24 @@ class ReviewController extends Controller
         $request->validate([
             'id' => 'required',
             'catatan' => 'required',
+            'dokumen' => 'required|mimes:pdf,docx|max:2048', // Validate file type and size
         ]);
+
+
+
+        $file = $request->file('dokumen');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $move= Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
+        // dd($request->id);
+        if($move){
         $kerjasama = Kerjasama::findOrFail($request->id);
         $update = $kerjasama->update([
             'catatan' => $request->catatan,
             'step' => '2',
             'reviewer_id' => Auth::user()->id,
+            'file' => $nama_file, // Save the relative path in the database
         ]);
+
         if ($update) {
             log_persetujuan::create([
                 'kerjasama_id' => $kerjasama->id,
@@ -326,7 +337,10 @@ class ReviewController extends Controller
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
         }
+
+        }
     }
+
     public function tolakWadir(Request $request)
     {
         $request->validate([
@@ -384,6 +398,7 @@ class ReviewController extends Controller
 
     public function terimaLegal($id)
     {
+
         $kerjasama = Kerjasama::findOrFail($id);
         $update = $kerjasama->update([
             'step' => '3', // current_step + 2
