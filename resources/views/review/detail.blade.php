@@ -56,7 +56,7 @@
                         </div>
                     @endif
 
-                    <!-- Tanggal Disetujui Wadir (step 5 or 4 for rejection) -->
+                    <!-- Tanggal Disetujui Wadir 4 (step 5 or 4 for rejection) -->
                     @php
                         $wadirReview = $data->log_persetujuan->firstWhere('step', 5);
                         $wadirRejection = $data->log_persetujuan->firstWhere('step', 4);
@@ -67,7 +67,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
-                                    <p class="text-center">Tanggal Disetujui Wadir</p>
+                                    <p class="text-center">Tanggal Disetujui Wadir 4</p>
                                     <p class="text-center">{{ \Carbon\Carbon::parse($wadirReview->created_at)->format('d-m-Y') }}</p>
                                     <p class="text-center text-dark">
                                         <span class="badge bg-success text-white">Diterima</span>

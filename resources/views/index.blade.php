@@ -12,6 +12,7 @@
                     Sistem Kerja Sama (SIMKERMA) PNJ menyajikan data historis kerja sama Politeknik Negeri Jakarta
                 </p>
             </div>
+            
             <div class="col-md-6 text-center order-md-1 order-0 mb-md-0 mb-3">
                 <img src="{{ asset('img/banner.png') }}" alt="Header" class="img-responsive w-75">
             </div>
@@ -23,38 +24,59 @@
 </div>
 <div class="container-xl container-fluid py-md-5 py-4">
     <div class="row justify-content-md-center">
-        <div class="col-12 mb-3">
-            <h2 class="fw-bold text-center">Data Kerja Sama</h2>
+        <div class="col-12 mb-4">
+            <h2 class="fw-bold text-center" style="color: #00000; text-bold: 1px 1px 5px rgba(0, 0, 0, 0.2);">
+                Data Kerja Sama
+            </h2>
         </div>
-        <div class="col-lg-12">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama</strong></div>
-                        <div class="card-body">
-                            <h5 class="card-title text-center" id="totalKerjasama">0</h5>
+        
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<div class="col-lg-12">
+    <div class="row justify-content-center gap-3">
+        <!-- Card 1 -->
+        <div class="col-lg-3 col-md-5">
+            <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #4CAF50, #81C784);">
+                <div class="card-header text-center text-white">
+                    <i class="fas fa-handshake" style="font-size: 36px; display: block; margin-bottom: 8px;"></i>
+                    <strong>Total Kerjasama</strong>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold text-white" id="totalKerjasama" style="font-size: 2rem;">0</h5>
+                    <p class="text-white-50">Keseluruhan data kerja sama</p>
+                </div>
+            </div>  
+        </div>
+                <!-- Card 2 -->
+                <div class="col-lg-3 col-md-5">
+                    <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #FF9800, #FFB74D);">
+                        <div class="card-header text-center text-white">
+                        <i class="fas fa-hourglass-half" style="font-size: 36px; display: block; margin-bottom: 8px;"></i>
+                            <strong>Kerjasama Berlangsung</strong>
+                        </div>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold text-white" id="kerjasamaBerlangsung" style="font-size: 2rem;">0</h5>
+                            <p class="text-white-50">Masih aktif</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama yang sedang berlangsung</strong></div>
-                        <div class="card-body">
-                            <h5 class="card-title text-center" id="kerjasamaBerlangsung">0</h5>
+                <!-- Card 3 -->
+                <div class="col-lg-3 col-md-5">
+                    <div class="card border-0 shadow-sm" style="background: linear-gradient(135deg, #F44336, #E57373);">
+                        <div class="card-header text-center text-white">
+                        <i class="fas fa-check-circle" style="font-size: 36px; display: block; margin-bottom: 8px;"></i>
+                            <strong>Kerjasama Selesai</strong>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama yang sudah selesai</strong></div>
-                        <div class="card-body">
-                            <h5 class="card-title text-center" id="kerjasamaSelesai">0</h5>
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold text-white" id="kerjasamaSelesai" style="font-size: 2rem;">0</h5>
+                            <p class="text-white-50">Sudah berakhir</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
     <div class="row">
         <div class="col-12 mb-3">
             <h2 class="fw-bold text-center">Data Statistik</h2>

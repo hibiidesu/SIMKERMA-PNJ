@@ -13,13 +13,8 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-<<<<<<< Updated upstream
                                     <label class="mb-2 fw-bold text-capitalize" for="tracker_id">Cari Pengajuan<span class="text-danger"></span></label>
                                     <input type="text" id="tracker_id" class="form-control" name="tracker_id" required placeholder="Masukan ID Pengajuan cnth 1">
-=======
-                                    <label class="mb-2 fw-bold text-capitalize" for="tracker_id">Cari kerja sama<span class="text-danger"></span></label>
-                                    <input type="text" id="tracker_id" class="form-control" name="tracker_id" required>
->>>>>>> Stashed changes
                                 </div>
                             </div>
                             <div class="row">

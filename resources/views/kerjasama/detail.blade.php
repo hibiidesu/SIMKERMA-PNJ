@@ -66,7 +66,7 @@
                         <div class="card-body text-center">
                             <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
-                            <p class="font-weight">Tanggal Disetujui Wadir</p>
+                            <p class="font-weight">Tanggal Disetujui Wadir 4</p>
                             <p class="text-muted">20-11-2024</p>
                             <span class="badge bg-success">Diterima</span>
                         </div>

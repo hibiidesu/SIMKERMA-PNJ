@@ -29,8 +29,8 @@
                     <thead>
                         <tr>
                             <th width="3%">No</th>
-                            <th>Mitra</th>
                             <th>Judul</th>
+                            <th>Mitra</th>
                             <th>Nomor</th>
                             <th width="15%">Created at</th>
                             <th width="10%">Created by</th>
