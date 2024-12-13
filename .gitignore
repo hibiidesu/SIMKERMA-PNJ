@@ -10,4 +10,5 @@
 /node_modules
 composer.lock
 /public/surat_kerjasama
+/public/template_surat
 data.txt
