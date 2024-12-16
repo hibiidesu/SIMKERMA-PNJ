@@ -33,7 +33,7 @@ class ReviewController extends Controller
         foreach (pks::all() as $item) {
             $perjanjian[$item->id] = $item->pks;
         }
-        if (Auth::user()->role_id == 3) {
+        if (Auth::user()->role_id == 3) { // legal
             return view('review/index', [
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('step', '=', '1')
@@ -43,7 +43,7 @@ class ReviewController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get(),
             ]);
-        } else if (Auth::user()->role_id == 2) {
+        } else if (Auth::user()->role_id == 2) { // wadir 4
             return view('review/index', [
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('step', '=', '3')
@@ -53,7 +53,7 @@ class ReviewController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get(),
             ]);
-        } else if (Auth::user()->role_id == 5) {
+        } else if (Auth::user()->role_id == 5) { // Direktur
             return view('review/index', [
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('step', '=', '5')
@@ -63,10 +63,15 @@ class ReviewController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get(),
             ]);
-        } else {
+        } else if(Auth::user()->role_id == 4) { // PIC
             return view('review/index', [
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('user_id', '=', Auth::user()->id)->orderBy('step', 'asc')->get(),
+            ]);
+        } else { // Admin
+            return view('review/index', [
+                'perjanjian' => $perjanjian,
+                'data' => Kerjasama::all(),
             ]);
         }
     }
@@ -306,24 +311,20 @@ class ReviewController extends Controller
         $request->validate([
             'id' => 'required',
             'catatan' => 'required',
+            'nomor' => 'required',
             'dokumen' => 'required|mimes:pdf,docx|max:2048', // Validate file type and size
         ]);
-
-
-
         $file = $request->file('dokumen');
         $nama_file = time() . "_" . $file->getClientOriginalName();
         $move= Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
-        // dd($request->id);
         if($move){
         $kerjasama = Kerjasama::findOrFail($request->id);
         $update = $kerjasama->update([
             'catatan' => $request->catatan,
             'step' => '2',
             'reviewer_id' => Auth::user()->id,
-            'file' => $nama_file, // Save the relative path in the database
+            'file' => $nama_file,
         ]);
-
         if ($update) {
             log_persetujuan::create([
                 'kerjasama_id' => $kerjasama->id,
@@ -332,7 +333,7 @@ class ReviewController extends Controller
                 'step' => 2
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
-            mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
+            // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
@@ -361,7 +362,7 @@ class ReviewController extends Controller
                 'step' => 4
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
-            mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
+            // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
@@ -389,7 +390,7 @@ class ReviewController extends Controller
                 'step' => 6
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
-            mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
+            // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
             return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
@@ -412,7 +413,7 @@ class ReviewController extends Controller
                 'step' => 3
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
-            mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
+            // mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
             $PemimpinUsers = User::where('role_id', 2)->get();
             foreach ($PemimpinUsers as $i) {
                 Persetujuan::create([
