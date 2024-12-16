@@ -54,7 +54,7 @@ class Kerjasama extends Model
     }
     public function pks()
     {
-        return $this->belongsTo('App\Models\pks', 'pks');
+        return $this->belongsTo('App\Models\pks', 'id');
     }
     public function user()
     {

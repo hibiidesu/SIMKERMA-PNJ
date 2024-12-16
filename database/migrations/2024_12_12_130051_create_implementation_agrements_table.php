@@ -13,7 +13,7 @@ class CreateImplementationAgrementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('implementation_agrements', function (Blueprint $table) {
+        Schema::create('implementation_agreements', function (Blueprint $table) {
             $table->id();
             $table->string('nama_mitra');
             $table->string('dokumen_agreement');
