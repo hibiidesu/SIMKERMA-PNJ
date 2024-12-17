@@ -131,6 +131,9 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/store', [App\Http\Controllers\TemplateSuratController::class, 'store']);
         Route::get('/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download']);
         Route::get('/delete/{id}',[App\Http\Controllers\TemplateSuratController::class, 'destroy']);
+        Route::get('/edit/{id}', [App\Http\Controllers\TemplateSuratController::class, 'edit'])->name('template.edit');
+        Route::post('/update/{id}', [App\Http\Controllers\TemplateSuratController::class, 'update'])->name('template.update');
+
 
     });
     Route::prefix('agreement')->group(function(){

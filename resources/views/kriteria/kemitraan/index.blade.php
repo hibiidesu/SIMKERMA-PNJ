@@ -35,7 +35,7 @@
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $item->kriteria_kemitraan }}</td>
                             <td>
-                                <div class="d-flex">
+                                <div class="d-flex gap-2">
                                     <a href="{{ url('/admin/kriteria/kemitraan/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
                                     <form action="{{ url('/admin/kriteria/kemitraan/delete/' . $item->id) }}" method="POST" class="delete-form">
                                         @csrf

@@ -87,6 +87,13 @@ class trackerApi extends Controller
 #                    'file' => asset('surat_kerjasama/' . $kerjasama->file),
                     'step_code' => $kerjasama->step,
                     'step' => $this->getStepData($kerjasama->step),
+                    'log' => $kerjasama->log_persetujuan->map(function ($log, $index) {
+                        return [
+                            'index' => $index + 1,
+                            'created_at' => $log->created_at->format('d-m-Y H:i:s'),
+                            'step' => $log->getStep() . ' Oleh ' . $log->user->name . ' (' . $log->user->role->role_name . ')'
+                        ];
+                    }),
                 ];
             })
         ]);

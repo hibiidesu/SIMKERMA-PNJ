@@ -23,7 +23,7 @@
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
                         <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pemimpin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/direktur/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
                         <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @endif
@@ -141,7 +141,7 @@
                             @if (Auth::user()->role->role_name == 'admin')
                             <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
-                            <td> <a href="{{ url('/pemimpin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'direktur')
                             <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pic')

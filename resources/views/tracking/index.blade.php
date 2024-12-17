@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('heading', 'Track Kerjasama')
 @section('content')
 <section class="row justify-content-center">
     <div class="col-md-8">
+        <h1 class="card-title mb-4 text-center">Track Kerjasama</h1>
         <div class="card shadow-sm">
             <div class="card-body">
                 <h4 class="card-title mb-4">Track Persetujuan Kerjasama</h4>
@@ -34,11 +34,44 @@ $(document).ready(function() {
                     $('#response').html(`
                         <div class="card">
                             <div class="card-body">
-                                <div class="progress mb-4">
-                                    <div class="progress-bar" role="progressbar" style="width: ${getProgressPercentage(data.step_code)}%" aria-valuenow="${getProgressPercentage(data.step)}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
                                 <h5 class="card-title text-center">Status:<br>${data.step}</h5>
-                                <h5 class="card-title">Kerjasama: ${data.kerjasama}</h5>
+                                <div class="progress mb-4" style="height: 25px; background-color: ${getProgressPercentage(data.step_code) === 0 ? '#dc3545' : '#e9ecef'};">
+                                    <div class="progress-bar bg-success"
+                                        role="progressbar"
+                                        style="width: ${getProgressPercentage(data.step_code)}%;
+                                                ${getProgressPercentage(data.step_code) === 0 ? 'background-color: transparent !important;' : ''}
+                                                color: #000;
+                                                font-weight: bold;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                transition: width 0.6s ease;"
+                                        aria-valuenow="${getProgressPercentage(data.step)}"
+                                        aria-valuemin="0"
+                                        aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="mb-5">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>*</th>
+                                                <th>Tanggal</th>
+                                                <th>Keterangan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${data.log.map((item) => `
+                                                <tr>
+                                                    <td>👉</td>
+                                                    <td><b>${item.created_at}</b></td>
+                                                    <td>${item.step}</td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <h5 class="card-title">Detail<br>Kerjasama: ${data.kerjasama}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">Mitra: ${data.mitra}</h6>
                                 <p class="card-text mt-3">
                                     <strong>Nomor:</strong> ${data.nomor}<br>

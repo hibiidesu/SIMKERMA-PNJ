@@ -318,7 +318,7 @@
                             @if (Auth::user()->role->role_name == 'admin')
                                 <td class="text-center"><a href="{{ url('/admin/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
-                                <td class="text-center"><a href="{{ url('/pemimpin/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
+                                <td class="text-center"><a href="{{ url('/direktur/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
                             @elseif (Auth::user()->role->role_name == 'pic')
                                 <td class="text-center"><a href="{{ url('/pic/kerjasama/repo/'.$item->id) }}" class="btn btn-warning text-dark"><i class="fas fa-eye"></i></a></td>
                             @endif
