@@ -18,6 +18,17 @@
                         <th>Nama Mitra</th>
                         <th>Action</th>
                     </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{  $loop->index+1  }}</td>
+                                <td>{{ $item->nama_mitra }}</td>
+                                <td><a href={{ url('admin/agreement/detail/'.$item->id) }} target="_blank" rel="noopener noreferrer" class="btn btn-info">detail</a></td>
+
+                            </tr>
+
+                        @endforeach
+                    </tbody>
                 </table>
             </div>
         </div>

@@ -50,6 +50,11 @@ return [
             'root' => public_path() . '/template_surat',
         ],
 
+        'dokumen_agreement' => [
+            'driver' => 'local',
+            'root' => public_path() . '/dokumen_agreement'
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
