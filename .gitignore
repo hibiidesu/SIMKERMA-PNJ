@@ -11,4 +11,5 @@
 composer.lock
 /public/surat_kerjasama
 /public/template_surat
+/public/dokumen_agreement
 data.txt

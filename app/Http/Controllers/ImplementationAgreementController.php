@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\implementationAgreement;
+use App\Models\Jenis_kerjasama;
 use Illuminate\Http\Request;
 use App\Models\Kerjasama;
-use App\Models\implementationAgreement;
+use App\Models\pks;
+use Illuminate\Support\Facades\Storage;
 
 class ImplementationAgreementController extends Controller
 {
     public function index() {
-        return view('IAView.index');
+        $data = implementationAgreement::all();
+        return view('IAView.index', compact('data'));
     }
     public function create(){
-
         return view('IAView.add', [
             'data' => Kerjasama::all()
         ]);
@@ -23,19 +26,32 @@ class ImplementationAgreementController extends Controller
             'dokumen_agreement' => 'required|mimes:pdf,docx,doc',
         ]);
         $file = $request->file('dokumen_agreement');
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/IA', $fileName);
-         $ia = implementationAgreement::create([
+        $fileName = time() . '.'. $file->getClientOriginalName(). $file->getClientOriginalExtension();
+        $move = Storage::disk('dokumen_agreement')->put($fileName, file_get_contents($file));
+
+        if($move){
+            implementationAgreement::create([
             'nama_mitra' => $request->nama_mitra,
             'dokumen_agreement' => $fileName,
-        ]);
-        if($ia){
-            return redirect()->route('IAView.index')->with('success', 'Data Berhasil Ditambahkan');
-        } else {
-            return redirect()->route('IAView.index')->with('error', 'Data gagal Ditambahkan');
-        }
+           ]);
 
+            return redirect('/admin/agreement/')->with('success', 'Data Berhasil Ditambahkan');
+        } else {
+            return redirect('/admin/agreement/')->with('error', 'Data gagal Ditambahkan');
+        }
     }
+    public function show($id) {
+        $ia = implementationAgreement::find($id);
+
+        if (!$ia) {
+            return redirect()->back()->with('error', 'Implementation Agreement not found');
+        }
+        $dataKerjasama = Kerjasama::where('mitra', $ia->nama_mitra)->with('pks')
+        ->get();
+
+        return view('IAView.detail', compact('ia', 'dataKerjasama'));
+    }
+
     public function destroy($id){
 
     }
