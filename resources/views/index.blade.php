@@ -30,7 +30,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama</strong></div>
+                        <div class="card-header text-center"><strong>Total kerjasama diajukan</strong></div>
                         <div class="card-body">
                             <h5 class="card-title text-center" id="totalKerjasama">0</h5>
                         </div>

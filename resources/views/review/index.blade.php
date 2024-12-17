@@ -62,7 +62,7 @@
                                 @if ($item->step == '0')
                                 <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak System</span>
                                 @elseif ($item->step == '1')
-                                    <span class="badge bg-warning text-dark mt-lg-0 mt-2">Menunggu Review Legal</span>
+                                    <span class="badge bg-warning text-black mt-lg-0 mt-2">Menunggu Review Legal</span>
                                 @elseif ($item->step == '2')
                                     @if ($item->catatan)
                                         <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak dengan Catatan Legal</span>
@@ -70,7 +70,7 @@
                                         <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak Legal</span>
                                     @endif
                                 @elseif ($item->step == '3')
-                                    <span class="badge bg-warning text-white mt-lg-0 mt-2">Menunggu Review WD4</span>
+                                    <span class="badge bg-warning text-black mt-lg-0 mt-2">Menunggu Review WD4</span>
                                 @elseif ($item->step == '4')
                                     @if ($item->catatan)
                                         <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak dengan Catatan WD4</span>
@@ -78,7 +78,7 @@
                                         <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak WD4</span>
                                     @endif
                                 @elseif ($item->step == '5')
-                                    <span class="badge bg-warning text-white mt-lg-0 mt-2">Menunggu Review Direktur</span>
+                                    <span class="badge bg-warning text-black mt-lg-0 mt-2">Menunggu Review Direktur</span>
                                 @elseif ($item->step == '6')
                                     @if ($item->catatan)
                                         <span class="badge bg-danger text-white mt-lg-0 mt-2">Ditolak dengan Catatan Direktur</span>

@@ -36,14 +36,23 @@
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
                             {{-- href to asset surat tos download --}}
-                            <td><a  target="_blank" rel="noopener noreferrer" href="{{ url('template_surat/'.$item->template_surat) }}">{{ $item->nama_surat }}</a></td>
                             <td>
-                                @if(Auth::user()->role_id == 1)
-
+                                @if(Auth::user()->role_id != 1)
+                                    <p>{{ $item->nama_surat }}</p>
+                                @else
+                                    <a  target="_blank" rel="noopener noreferrer" href="{{ url('template_surat/'.$item->template_surat) }}">{{ $item->nama_surat }}</a>
                                 @endif
-                                <div class="d-flex">
-                                    <a href="{{ url('/admin/template/download/'. $item->id) }}" class="btn btn-success">Download</a>
-                                </div>
+
+                            </td>
+                            <td>
+                                @if(Auth::user()->role_id != 1)
+                                    <a  target="_blank" rel="noopener noreferrer" class="btn btn-success" href="{{ url('template_surat/'.$item->template_surat) }}">Download</a>
+                                @else
+                                    <div class="d-flex">
+                                        <a href="{{ url('/admin/template/download/'. $item->id) }}" class="btn btn-success">Download</a>
+                                    </div>
+                                @endif
+
                             </td>
                         </tr>
                         @endforeach

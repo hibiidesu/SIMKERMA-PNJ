@@ -1,83 +1,98 @@
 @extends('layouts.app')
 @section('heading', 'Track Kerjasama')
 @section('content')
-<section class="row">
-    <div class="col-10">
+<section class="row justify-content-center">
+    <div class="col-md-8">
         <div class="card shadow-sm">
-            <div class="card-body text-dark">
-                <div class="row">
-                    <div class="order-md-0 order-1 col-12 col-md-8">
-                        <h4>Track Persetujuan</h4>
+            <div class="card-body">
+                <h4 class="card-title mb-4">Track Persetujuan Kerjasama</h4>
+                <form id="trackForm">
+                    <div class="input-group mb-3">
+                        <input type="text" id="tracker_id" class="form-control" name="tracker_id" required placeholder="Masukan ID Pengajuan">
+                        <button type="submit" class="btn btn-primary">Cari</button>
                     </div>
-                    <form id="trackForm">
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="tracker_id">Cari Pengajuan<span class="text-danger"></span></label>
-                                    <input type="text" id="tracker_id" class="form-control" name="tracker_id" required placeholder="Masukan ID Pengajuan cnth 1">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 d-flex justify-content-start">
-                                    <a class="btn btn-info" href="/">Kembali</a>
-                                </div>
-                                <div class="col-6 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary mb-1">Submit</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-                <div id="response" class="mt-3">
-                    </div>
-                </div>
+                </form>
+                <div id="response" class="mt-4"></div>
             </div>
         </div>
     </div>
 </section>
+@endsection
+
 @section('scripts')
 <script>
-    $(document).ready(function() {
-        $('#trackForm').on('submit', function(e) {
-            e.preventDefault();
-
-            const trackerId = $('#tracker_id').val();
-
-            $.ajax({
-                 url: `/api/track/${trackerId}`  ,
-                 type: 'GET',
-                success: function(response) {
-        if (response.message === "success") {
-            console.log(response.data[0]);
-            const data = response.data[0]
-            $('#response').empty();
-            $.each(data, function(key, value) {
-                $('#response').append(`
-                    <div class="form-group mb-2">
-                        <label for="${key}">${key}</label>
-                         <input type="text" class="form-control" id="${key}" value="${value}" readonly>
-                    </div>
-                `);
-            });
-
-
-        } else {
-            $('#response').empty()
-            $('#response').html("<p class='text-danger'>No data found.</p>");
-        }
-    },
-    error: function(xhr, status, error) {
-        Swal.fire({
-            'title': status.toUpperCase(),
-            'text': 'Data Tidak Di Temukan',
-            'icon'  : 'error'
-        })
-    }
-});
+$(document).ready(function() {
+    $('#trackForm').on('submit', function(e) {
+        e.preventDefault();
+        const trackerId = $('#tracker_id').val();
+        $.ajax({
+            url: `/api/track/${trackerId}`,
+            type: 'GET',
+            success: function(response) {
+                if (response.message === "success") {
+                    const data = response.data[0];
+                    $('#response').html(`
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="progress mb-4">
+                                    <div class="progress-bar" role="progressbar" style="width: ${getProgressPercentage(data.step_code)}%" aria-valuenow="${getProgressPercentage(data.step)}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <h5 class="card-title text-center">Status:<br>${data.step}</h5>
+                                <h5 class="card-title">Kerjasama: ${data.kerjasama}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Mitra: ${data.mitra}</h6>
+                                <p class="card-text mt-3">
+                                    <strong>Nomor:</strong> ${data.nomor}<br>
+                                    <strong>Periode:</strong> ${data.tanggal_mulai} s/d ${data.tanggal_selesai}<br>
+                                    <strong>Jenis:</strong> ${data.jenis_kerjasama}<br>
+                                    <strong>Sifat:</strong> ${data.sifat}
+                                </p>
+                                <div class="mt-3">
+                                    <h6>Kriteria Mitra:</h6>
+                                    <ul>
+                                        ${data.kriteria_mitra.map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>Kriteria Kemitraan:</h6>
+                                    <ul>
+                                        ${data.kriteria_kemitraan.map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                <div class="mt-3">
+                                    <h6>Jurusan / Unit Terkait:</h6>
+                                    <ul>
+                                        ${data.jurusan.map(item => `<li>${item}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                } else {
+                    $('#response').html("<p class='text-danger'>No data found.</p>");
+                }
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    'title': status.toUpperCase(),
+                    'text': 'Data Tidak Di Temukan',
+                    'icon': 'error'
+                });
+            }
         });
     });
+
+    function getProgressPercentage(step) {
+        const steps = {
+            1 : 14,
+            2 : 0,
+            3 : 42,
+            4 : 0,
+            5 : 70,
+            6 : 0,
+            7 : 100
+        };
+        return steps[step] || 0;
+    }
+});
 </script>
 @endsection
-@endsection
-

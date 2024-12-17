@@ -207,7 +207,7 @@ class KerjasamaController extends Controller
                 'kerjasama' => 'required',
                 'tanggal_mulai' => 'required|date',
                 'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-                'nomor' => 'required',
+                'nomor' => 'nullable',
                 'kegiatan' => 'nullable',
                 'sifat' => 'required',
                 'jenis_kerjasama_id' => 'required',
@@ -333,9 +333,21 @@ class KerjasamaController extends Controller
 
     public function delete($id)
     {
-        $delete = Kerjasama::findOrFail($id)->delete();
+        $kerjasama = Kerjasama::findOrFail($id);
+
+        // Menghapus file jika ada
+        if ($kerjasama->file) {
+            $filePath = $kerjasama->file;
+            if (Storage::disk('surat_kerjasama')->exists($filePath)) {
+                Storage::disk('surat_kerjasama')->delete($filePath);
+            }
+        }
+
+        // Menghapus data kerjasama dari database
+        $delete = $kerjasama->delete();
+
         if ($delete) {
-            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
+            return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data dan file berhasil dihapus');
         } else {
             return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
         }

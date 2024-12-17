@@ -105,7 +105,8 @@
                                 <div class="form-group">
 
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
+                                    <select class="form-select" required id="kriteria_mitra_id" name="kriteria_mitra_id[]">
+                                        <option value="">-</option>
                                         @foreach ($kriteria_mitra as $item)
                                         <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
                                         @endforeach
@@ -115,7 +116,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
-                                    <select class="choices-2 form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                    <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
                                         @foreach ($kriteria_kemitraan as $item)
                                         <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
                                         @endforeach
@@ -142,8 +143,8 @@
 
 
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
-                                    <select class="choices-3 form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" multiple required>
-
+                                    <select class="form-select" id="perjanjian" name="perjanjian[]" required>
+                                        <option value="">-</option>
                                         @foreach ($perjanjian as $item)
                                             <option value="{{ $item->id }}"
                                                 {{ old('perjanjian') && in_array($item->id, old('perjanjian')) ? 'selected' : '' }}>
@@ -157,7 +158,7 @@
 
                                     <label class="mb-2 fw-bold text-capitalize" for="jurusan">Unit<span
                                             class="text-danger">*</span></label>
-                                    <select class="choices-4 form-select" multiple="multiple" id="jurusan"
+                                    <select class="choices-2 form-select" multiple="multiple" id="jurusan"
                                         name="jurusan[]" multiple required>
 
                                         @foreach ($unit as $item)

@@ -32,7 +32,7 @@ class ImplementationAgreementController extends Controller
         if($ia){
             return redirect()->route('IAView.index')->with('success', 'Data Berhasil Ditambahkan');
         } else {
-            return redirect()->route('IAView.index')->with('error', 'Data gagal Ditambahkan')
+            return redirect()->route('IAView.index')->with('error', 'Data gagal Ditambahkan');
         }
 
     }

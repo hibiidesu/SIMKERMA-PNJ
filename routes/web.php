@@ -11,6 +11,11 @@ Route::get('/', [App\Http\Controllers\WebController::class, 'index']);
 Route::get('/php', function () {
     return phpinfo();
 });
+
+Route::get('/admin/template/download/{id}', [TemplateSuratController::class, 'download'])
+    ->name('template.download')
+    ->middleware('auth');
+
 Route::get('/chart/data', [App\Http\Controllers\WebController::class, 'chartData']);
 Route::get('/chart/unit', [App\Http\Controllers\WebController::class, 'chartByUnit']);
 Route::get('/chart/sifat', [App\Http\Controllers\WebController::class, 'chartBySifat']);
