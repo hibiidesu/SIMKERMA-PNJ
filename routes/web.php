@@ -126,11 +126,11 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\UserController::class, 'update']);
     });
     Route::prefix('template')->group(function(){
-        Route::get('/', [App\Http\Controllers\templateSuratController::class, 'index']);
-        Route::get('/add', [App\Http\Controllers\templateSuratController::class, 'create']);
-        Route::post('/store', [App\Http\Controllers\templateSuratController::class, 'store']);
-        Route::get('/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
-        Route::get('/delete/{id}',[App\Http\Controllers\templateSuratController::class, 'destroy']);
+        Route::get('/', [App\Http\Controllers\TemplateSuratController::class, 'index']);
+        Route::get('/add', [App\Http\Controllers\TemplateSuratController::class, 'create']);
+        Route::post('/store', [App\Http\Controllers\TemplateSuratController::class, 'store']);
+        Route::get('/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download']);
+        Route::get('/delete/{id}',[App\Http\Controllers\TemplateSuratController::class, 'destroy']);
 
     });
     Route::prefix('agreement')->group(function(){
@@ -218,7 +218,7 @@ Route::middleware(['isPic'])->group(function () {
     Route::post('/pic/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
 
 
-        Route::get('/pic/template', [App\Http\Controllers\templateSuratController::class, 'index']);
-        Route::get('/pic/template/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
+        Route::get('/pic/template', [App\Http\Controllers\TemplateSuratController::class, 'index']);
+        Route::get('/pic/template/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download']);
 
 });
