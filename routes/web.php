@@ -11,6 +11,11 @@ Route::get('/', [App\Http\Controllers\WebController::class, 'index']);
 Route::get('/php', function () {
     return phpinfo();
 });
+
+Route::get('/admin/template/download/{id}', [TemplateSuratController::class, 'download'])
+    ->name('template.download')
+    ->middleware('auth');
+
 Route::get('/chart/data', [App\Http\Controllers\WebController::class, 'chartData']);
 Route::get('/chart/unit', [App\Http\Controllers\WebController::class, 'chartByUnit']);
 Route::get('/chart/sifat', [App\Http\Controllers\WebController::class, 'chartBySifat']);
@@ -121,11 +126,14 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\UserController::class, 'update']);
     });
     Route::prefix('template')->group(function(){
-        Route::get('/', [App\Http\Controllers\templateSuratController::class, 'index']);
-        Route::get('/add', [App\Http\Controllers\templateSuratController::class, 'create']);
-        Route::post('/store', [App\Http\Controllers\templateSuratController::class, 'store']);
-        Route::get('/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
-        Route::get('/delete/{id}',[App\Http\Controllers\templateSuratController::class, 'destroy']);
+        Route::get('/', [App\Http\Controllers\TemplateSuratController::class, 'index']);
+        Route::get('/add', [App\Http\Controllers\TemplateSuratController::class, 'create']);
+        Route::post('/store', [App\Http\Controllers\TemplateSuratController::class, 'store']);
+        Route::get('/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download']);
+        Route::get('/delete/{id}',[App\Http\Controllers\TemplateSuratController::class, 'destroy']);
+        Route::get('/edit/{id}', [App\Http\Controllers\TemplateSuratController::class, 'edit'])->name('template.edit');
+        Route::post('/update/{id}', [App\Http\Controllers\TemplateSuratController::class, 'update'])->name('template.update');
+
 
     });
     Route::prefix('agreement')->group(function(){
@@ -213,7 +221,7 @@ Route::middleware(['isPic'])->group(function () {
     Route::post('/pic/my-profile/update', [App\Http\Controllers\UserController::class, 'profileUpdate']);
 
 
-        Route::get('/pic/template', [App\Http\Controllers\templateSuratController::class, 'index']);
-        Route::get('/pic/template/download/{id}', [App\Http\Controllers\templateSuratController::class, 'download']);
+        Route::get('/pic/template', [App\Http\Controllers\TemplateSuratController::class, 'index']);
+        Route::get('/pic/template/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download']);
 
 });

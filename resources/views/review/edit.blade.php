@@ -94,7 +94,7 @@
                                     $explodeMitra = explode(',', $data->kriteria_mitra_id)
                                     ?>
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" required id="kriteria_mitra_id" name="kriteria_mitra_id[]" multiple>
+                                    <select class="form-select" required id="kriteria_mitra_id" name="kriteria_mitra_id[]">
                                         @foreach ($kriteria_mitra as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodeMitra)? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
                                         @endforeach
@@ -107,7 +107,7 @@
                                 ?>
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
-                                    <select class="choices-2 form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                    <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]">
                                         @foreach ($kriteria_kemitraan as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodeKemitraan)? 'selected' : '' }}>{{ $item->kriteria_kemitraan }}</option>
                                         @endforeach
@@ -120,7 +120,7 @@
                                 ?>
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
-                                    <select class="choices-3 form-select" multiple="multiple" id="perjanjian" name="perjanjian[]" required>
+                                    <select class="form-select" id="perjanjian" name="perjanjian[]" required>
                                         @foreach ($perjanjian as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodedPKS) ? 'selected' : '' }}>{{ $item->pks }}</option>
                                         @endforeach
@@ -133,7 +133,7 @@
                                     <?php
                                         $explodedUnit = explode(',', $data->jurusan);
                                     ?>
-                                    <select class="choices-4 form-select" multiple="multiple" id="jurusan" name="jurusan[]" required>
+                                    <select class="choices-2 form-select" multiple="multiple" id="jurusan" name="jurusan[]" required>
                                         @foreach ($unit as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodedUnit) ? 'selected' : '' }}>{{ $item->name }}</option>
                                         @endforeach

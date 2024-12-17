@@ -105,9 +105,10 @@ class TemplateSuratController extends Controller
      * @param  \App\Models\templateSurat  $templateSurat
      * @return \Illuminate\Http\Response
      */
-    public function edit(templateSurat $templateSurat)
+    public function edit($id)
     {
-        //
+        $template = TemplateSurat::findOrFail($id);
+        return view('surat.edit', compact('template'));
     }
 
     /**
@@ -117,9 +118,32 @@ class TemplateSuratController extends Controller
      * @param  \App\Models\templateSurat  $templateSurat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, templateSurat $templateSurat)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_surat' => 'required|string|max:255',
+            'template_surat' => 'nullable|file|mimes:doc,docx,pdf|max:2048',
+        ]);
+
+        $template = TemplateSurat::findOrFail($id);
+        $template->nama_surat = $request->nama_surat;
+
+        if ($request->hasFile('template_surat')) {
+            if ($template->file_path) {
+                Storage::disk('template_surat')->delete($template->file_path);
+            }
+
+            // Store new file
+            $file = $request->file('template_surat');
+            $fileName = time() . "_" . $file->getClientOriginalName();
+            $filePath = $file->storeAs('', $fileName, 'template_surat');
+
+            $template->file_path = $filePath;
+        }
+
+        $template->save();
+
+        return redirect('/admin/template')->with('success', 'Template berhasil diedit');
     }
 
     /**

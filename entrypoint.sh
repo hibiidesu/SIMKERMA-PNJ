@@ -29,6 +29,7 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
     cd /var/www
 
     composer install --no-dev --optimize-autoloader
+    composer require chillrend/pnj-socialite-provider
 
     chown -R www-data:www-data /var/www
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache

@@ -37,7 +37,7 @@
                             <td>{{ $item->name }}</td>
                             <td>{{ $item->unit->name }} ({{ $item->unit->id }})</td>
                             <td>
-                                <div class="d-flex">
+                                <div class="d-flex gap-2">
                                     <a href="{{ url('/admin/prodi/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
                                     <form action="{{ url('/admin/prodi/delete/' . $item->id) }}" method="POST" class="delete-form">
                                         @csrf
