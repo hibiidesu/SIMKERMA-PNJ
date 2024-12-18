@@ -90,7 +90,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                     $k_mitra[] = kriteria_mitra::find($id)->kriteria_mitra;
                 }
                 foreach  ($k_kemitraanId as $id) {
-                    $k_kemitraan[] = kriteria_kemitraan::find($id)->kriteria_kemitraaan;
+                    $k_kemitraan[] = kriteria_kemitraan::find($id)->kriteria_kemitraan;
                 }
 
             }
