@@ -137,10 +137,10 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
 
     });
     Route::prefix('agreement')->group(function(){
-        Route::get('/', [App\Http\Controllers\implementationAgreementController::class, 'index']);
-        Route::get('/add', [App\Http\Controllers\implementationAgreementController::class, 'create']);
-        Route::post('/store', [App\Http\Controllers\implementationAgreementController::class, 'store']);
-        Route::get('/detail/{id}', [App\Http\Controllers\implementationAgreementController::class,'show']);
+        Route::get('/', [App\Http\Controllers\ImplementationAgreementController::class, 'index']);
+        Route::get('/add', [App\Http\Controllers\ImplementationAgreementController::class, 'create']);
+        Route::post('/store', [App\Http\Controllers\ImplementationAgreementController::class, 'store']);
+        Route::get('/detail/{id}', [App\Http\Controllers\ImplementationAgreementController::class,'show']);
 
     });
 });
