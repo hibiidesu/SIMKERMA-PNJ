@@ -41,7 +41,7 @@ class SSOController extends Controller
             }
         } catch (\Exception $e) {
             \Log::error('SSO Error: ' . $e->getMessage());
-            return redirect()->route('login')->with('error', 'An error occurred during SSO login. Please try again.');
+            return redirect()->route('login')->with('error', 'An error occurred during SSO login. Please try again.\n'. $e->getMessage());
         }
     }
     public function registerSSO(Request $request)

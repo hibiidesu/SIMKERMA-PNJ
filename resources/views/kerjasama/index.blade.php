@@ -21,28 +21,28 @@
 
                 @if (Request::get('filter'))
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                        <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
-                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/direktur/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
+                    {{-- @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
+                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pemimpin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('pic/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
                     @endif
                 @else
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                        <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
-                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
+                        <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
+                    {{-- @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
                         <a href="{{ url('pemimpin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
                     @endif
                 @endif
 
-                <form action="" method="get">
-                    <h5>Filter:</h5>
-                    <div class="d-flex flex-column flex-md-row gap-md-3">
-                        <div class="form-group">
-                            <label for="date">Masa Berlaku</label>
-                            <div class="mt-md-1">
+                <form action="" method="get" class="mb-4">
+                    <h5 class="mb-3">Filter:</h5>
+                    <div class="row g-3">
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label for="date" class="form-label">Masa Berlaku</label>
                                 <select name="date" id="date" class="form-select">
                                     <option value="1" {{ Request::get('date') == '1' ? 'selected' : '' }}>Semua</option>
                                     <option value="2" {{ Request::get('date') == '2' ? 'selected' : '' }}>Masih Berlaku</option>
@@ -51,9 +51,9 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="sifat">Sifat</label>
-                            <div class="mt-md-1">
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label for="sifat" class="form-label">Sifat</label>
                                 <select name="sifat" id="sifat" class="form-select">
                                     <option value="all" {{ Request::get('sifat') == 'all' ? 'selected' : '' }}>Semua</option>
                                     <option value="Lokal" {{ Request::get('sifat') == 'Lokal' ? 'selected' : '' }}>Lokal</option>
@@ -62,54 +62,62 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="type">Jenis Kerja Sama</label>
-                            <div class="mt-md-1">
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label for="type" class="form-label">Jenis Kerja Sama</label>
                                 <select class="form-select" required id="type" name="type">
                                     <option value="all">Semua</option>
                                     @foreach ($jenisKerjasama as $item)
-                                    <option value="{{ $item->id + 1 }}" {{ Request::get('type') == $item->id + 1 ? 'selected' : '' }}>{{ $item->jenis_kerjasama }}</option>
+                                        <option value="{{ $item->id + 1 }}" {{ Request::get('type') == $item->id + 1 ? 'selected' : '' }}>
+                                            {{ $item->jenis_kerjasama }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="type">Kriteria Kemitraan</label>
-                            <div class="mt-md-1">
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label for="k_kemitraan" class="form-label">Kriteria Kemitraan</label>
                                 <select class="form-select" required id="k_kemitraan" name="k_kemitraan">
                                     <option value="all">Semua</option>
                                     @foreach ($kriteria_kemitraan_filter as $item)
-                                    <option value="{{ $item->id}}" {{ Request::get('k_kemitraan') == $item->id  ? 'selected' : '' }}>{{ $item->kriteria_kemitraan }}</option>
+                                        <option value="{{ $item->id }}" {{ Request::get('k_kemitraan') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->kriteria_kemitraan }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="type">Kriteria Mitra</label>
-                            <div class="mt-md-1">
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label for="k_mitra" class="form-label">Kriteria Mitra</label>
                                 <select class="form-select" required id="k_mitra" name="k_mitra">
                                     <option value="all">Semua</option>
                                     @foreach ($kriteria_mitra_filter as $item)
-                                    <option value="{{ $item->id}}" {{ Request::get('k_mitra') == $item->id ? 'selected' : '' }}>{{ $item->kriteria_mitra }}</option>
+                                        <option value="{{ $item->id }}" {{ Request::get('k_mitra') == $item->id ? 'selected' : '' }}>
+                                            {{ $item->kriteria_mitra }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="mt-md-1">
-                                <button class="btn btn-primary mt-4" type="submit" name="filter" value="true">Terapkan</button>
+                        <div class="col-md-4 col-lg-2 d-flex align-items-end">
+                            <div class="form-group">
+                                <button class="btn btn-primary" type="submit" name="filter" value="true">Terapkan</button>
                                 @if (Request::get('filter'))
-                                    @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                                        <a href="{{ url('admin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
-                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                                        <a href="{{ url('pemimpin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
-                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'legal')
-                                        <a href="{{ url('legal/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
-                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'direktur')
-                                        <a href="{{ url('direktur/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
-                                    @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                                        <a href="{{ url('pic/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>
-                                    @endif
+                                    @php
+                                        $resetUrl = match (Auth::user()->role->role_name) {
+                                            'admin' => url('admin/kerjasama'),
+                                            'pemimpin' => url('pemimpin/kerjasama'),
+                                            'legal' => url('legal/kerjasama'),
+                                            'direktur' => url('direktur/kerjasama'),
+                                            'pic' => url('pic/kerjasama'),
+                                            default => '#'
+                                        };
+                                    @endphp
+                                    <a href="{{ $resetUrl }}" class="btn btn-secondary ms-2" title="Hapus Filter">
+                                        <i class="fas fa-times"></i>
+                                    </a>
                                 @endif
                             </div>
                         </div>

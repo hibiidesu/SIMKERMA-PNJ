@@ -110,6 +110,8 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\ReviewController::class, 'update']);
         Route::get('/delete/{id}', [App\Http\Controllers\ReviewController::class, 'delete']);
         Route::get('/add', [App\Http\Controllers\ReviewController::class, 'create']);
+        Route::get('/record', [App\Http\Controllers\ReviewController::class, 'record']);
+        Route::post('/store-record', [App\Http\Controllers\ReviewController::class, 'store_record']);
         Route::post('/store', [App\Http\Controllers\ReviewController::class, 'store']);
         Route::post('/dokumenakhir',[App\Http\Controllers\ReviewController::class,'dokumenAkhirAdmin']);
     });
@@ -138,10 +140,10 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
 
     });
     Route::prefix('agreement')->group(function(){
-        Route::get('/', [App\Http\Controllers\implementationAgreementController::class, 'index']);
-        Route::get('/add', [App\Http\Controllers\implementationAgreementController::class, 'create']);
-        Route::post('/store', [App\Http\Controllers\implementationAgreementController::class, 'store']);
-        Route::get('/detail/{id}', [App\Http\Controllers\implementationAgreementController::class,'show']);
+        Route::get('/', [App\Http\Controllers\ImplementationAgreementController::class, 'index']);
+        Route::get('/add', [App\Http\Controllers\ImplementationAgreementController::class, 'create']);
+        Route::post('/store', [App\Http\Controllers\ImplementationAgreementController::class, 'store']);
+        Route::get('/detail/{id}', [App\Http\Controllers\ImplementationAgreementController::class,'show']);
 
     });
 });

@@ -307,7 +307,7 @@
                 <div class="card-title fw-bold text-dark">Action</div>
             </div>
             <div class="card-body">
-                <form class="form form-vertical" method="post" action="{{ url('/direktur/review/tolak') }}" >
+                <form class="form form-vertical" method="post" action="{{ url('/pemimpin/review/tolak') }}" >
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                     <div class="form-group">
@@ -320,7 +320,7 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
+                                <a href="{{ url('/pemimpin/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
                                 <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
                             </div>
                         </div>

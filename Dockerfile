@@ -30,10 +30,12 @@ WORKDIR /var/www
 COPY . /var/www
 COPY --chown=www-data:www-data . /var/www
 
-# Nginx configuration
+# Nginx & PHP configuration
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+COPY custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
+
 
 # Permissions
 RUN chown -R www-data:www-data /var/www

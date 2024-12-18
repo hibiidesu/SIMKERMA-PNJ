@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use App\Models\Unit;
+use App\Models\prodi;
 use App\Models\Kerjasama;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -64,39 +65,47 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         // @endif
         // @endforeach
 
-        foreach ($kerjasama->get() as $data) {
-            $jurusan = "";
-            $index = 1;
-            if ($data->jurusan != null) {
-                foreach (explode(',', $data->jurusan) as $y) {
-                    if ($index < count(explode(',', $data->jurusan))) {
-                        $jurusan .= Unit::find($y)->name . ',';
-                    } else {
-                        $jurusan .= Unit::find($y)->name;
-                    }
-                    $index++;
+        foreach ($kerjasama->get() as $index => $data) {
+            $jurusan = [];
+            $prodi = [];
+
+            if ($data->jurusan) {
+                $jurusanIds = explode(',', $data->jurusan);
+                $prodiIds = explode(',', $data->prodi);
+
+                foreach ($jurusanIds as $id) {
+                    $jurusan[] = Unit::find($id)->name;
+                }
+
+                foreach ($prodiIds as $id) {
+                    $prodi[] = Prodi::find($id)->name;
                 }
             }
-            $temp = [
-                $x + 1,
+
+            $jurusanString = implode(', ', $jurusan);
+            $prodiString = implode(', ', $prodi);
+
+            $arr[] = [
+                $index + 1,
+                $data->mitra,
                 $data->kerjasama,
-                $data->sifat, $jurusan,
+                $data->nomor,
                 $data->kegiatan,
+                $data->sifat,
+                $jurusanString,
+                $prodiString,
                 $data->jenis_kerjasama->jenis_kerjasama,
                 $data->tanggal_mulai,
                 $data->tanggal_selesai,
-                $data->nomor,
                 $data->file ? asset('surat_kerjasama/' . $data->file) : "",
             ];
-            $arr[$x] = $temp;
-            $x++;
         }
 
         return $arr;
     }
     public function headings(): array
     {
-        return ["No.",  "Nama Mitra", "Sifat", "Unit", "Kegiatan", "Jenis Kerja Sama", "Tanggal Mulai", "Tanggal Berakhir", "No SK/MOU", "Bukti"];
+        return ["No.",  "Nama Mitra", "Judul Kerjasama", "No SK/MOU", "Kegiatan", "Sifat", "Jurusan", "Program Studi", "Jenis Kerjasama", "Tanggal Mulai", "Tanggal Selesai", "Bukti"];
     }
     public function styles(Worksheet $sheet)
     {
