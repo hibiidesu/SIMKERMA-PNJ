@@ -19,7 +19,7 @@ class CreateKerjasamasTable extends Migration
             $table->string("kerjasama");
             $table->date("tanggal_mulai")->nullable();
             $table->date("tanggal_selesai")->nullable();
-            $table->string("nomor");
+            $table->string("nomor")->nullable();
             $table->text("kegiatan")->nullable();
             $table->integer("jenis_kerjasama_id");
             $table->string("kriteria_mitra_id");
