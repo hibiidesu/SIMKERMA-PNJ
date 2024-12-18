@@ -31,8 +31,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set up the working directory
 WORKDIR /var/www
 COPY . .
-# Generate optimized autoloader
-RUN composer dump-autoload --optimize
 
 # Nginx configuration
 RUN rm -f /etc/nginx/sites-enabled/default
