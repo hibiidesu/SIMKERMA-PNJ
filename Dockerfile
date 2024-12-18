@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     netcat-openbsd \
     nano \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # PHP extensions and Composer
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip
@@ -56,9 +57,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libmemcached11 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Expose port and copy entrypoint
-EXPOSE 80
+E 80
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
