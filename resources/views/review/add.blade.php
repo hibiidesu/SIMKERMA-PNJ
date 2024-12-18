@@ -19,10 +19,10 @@
             <div class="card">
                 <div class="card-body">
                     @if (Auth::user()->role->role_name == 'admin')
-                        <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store') }}"
+                        <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store') }}"
                             enctype="multipart/form-data">
                         @elseif (Auth::user()->role->role_name == 'pic')
-                            <form class="form form-vertical" method="post"
+                            <form id="kForm" class="form form-vertical" method="post"
                                 action="{{ url('/pic/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
                     @endif
                     @csrf
@@ -249,6 +249,7 @@
             </div>
         </div>
     </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function() {
         // Inisialisasi Choices.js untuk prodi
@@ -320,7 +321,26 @@
             }
         });
     });
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('kForm');
 
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: 'Memproses data ke server...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                // Submit the form
+                this.submit();
+            });
+        });
 </script>
 
 @endsection

@@ -10,7 +10,7 @@
                     <h4 class="card-title">Edit Surat</h4>
                     <button class="btn btn-danger" onclick="confirmDelete({{ $template->id }})">Delete</button>
                 </div>
-                <form class="form form-vertical" method="post" action="{{ route('template.update', $template->id) }}" enctype="multipart/form-data">
+                <form id='kForm' class="form form-vertical" method="post" action="{{ route('template.update', $template->id) }}" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
                     <div class="form-body">
@@ -88,5 +88,28 @@ document.querySelector('.custom-file-input').addEventListener('change', function
     var nextSibling = e.target.nextElementSibling;
     nextSibling.innerText = fileName;
 })
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('kForm');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: 'Memproses data ke server...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                // Submit the form
+                this.submit();
+            });
+        });
+    </script>
 </script>
 @endsection
