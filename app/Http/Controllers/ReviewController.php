@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
 use App\Models\prodi;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -307,40 +308,59 @@ class ReviewController extends Controller
     }
 
     public function tolakLegal(Request $request)
-    {
-        $request->validate([
-            'id' => 'required',
-            'catatan' => 'required',
-            'nomor' => 'required',
-            'dokumen' => 'required|mimes:pdf,docx|max:2048', // Validate file type and size
-        ]);
-        $file = $request->file('dokumen');
-        $nama_file = time() . "_" . $file->getClientOriginalName();
-        $move= Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
-        if($move){
-        $kerjasama = Kerjasama::findOrFail($request->id);
-        $update = $kerjasama->update([
+{
+    $request->validate([
+        'id' => 'required|exists:kerjasamas,id',
+        'catatan' => 'required',
+        'dokumen' => 'nullable|mimes:pdf,docx|max:2048',
+    ]);
+
+    $kerjasama = Kerjasama::find($request->id);
+    if (!$kerjasama) {
+        return redirect('/legal/review')->with('error', 'Kerjasama not found.');
+    }
+
+    DB::beginTransaction();
+
+    try {
+        $updateData = [
             'catatan' => $request->catatan,
             'step' => '2',
-            'reviewer_id' => Auth::user()->id,
-            'file' => $nama_file,
-        ]);
-        if ($update) {
-            log_persetujuan::create([
-                'kerjasama_id' => $kerjasama->id,
-                'user_id' => Auth::user()->id,
-                'role_id' => Auth::user()->role_id,
-                'step' => 2
-            ]);
-            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
-            // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
-            return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
-        } else {
-            return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
+            'reviewer_id' => Auth::id(),
+        ];
+
+
+        if ($request->hasFile('dokumen')) {
+            $file = $request->file('dokumen');
+            $file_name = time() . '.' . $file->getClientOriginalName();
+            Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
+            $updateData['file'] = $file_name;
+        }
+        if($request->has('nomor')){
+            $updateData['nomor'] = $request->nomor;
         }
 
-        }
+
+        $kerjasama->update($updateData);
+
+        log_persetujuan::create([
+            'kerjasama_id' => $kerjasama->id,
+            'user_id' => Auth::id(),
+            'role_id' => Auth::user()->role_id,
+            'step' => 2,
+        ]);
+
+
+        Mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama, $request->catatan));
+
+        DB::commit();
+        return redirect('/legal/review')->with('success', 'Data berhasil ditolak');
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return redirect('/legal/review')->with('error', 'An error occurred: ' . $e->getMessage());
     }
+}
+
 
     public function tolakWadir(Request $request)
     {
@@ -363,9 +383,9 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
-            return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
+            return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
-            return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
+            return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
         }
     }
 
@@ -480,6 +500,28 @@ class ReviewController extends Controller
         } else {
             return redirect('/direktur/review')->with('error', 'Data gagal diterima');
         }
+    }
+    public function dokumenAkhirAdmin(Request $request){
+        // dd($request);
+        $request->validate([
+            'id' => 'required|exists:kerjasamas,id',
+            'dokumen' => 'nullable|mimes:pdf,docx|max:2048',
+        ]);
+
+        $kerjasama = Kerjasama::find($request->id);
+        if (!$kerjasama) {
+            return redirect('/admin/pengajuan-kerjasama')->with('error', 'Kerjasama not found.');
+        }
+        if ($request->hasFile('dokumen')) {
+            $file = $request->file('dokumen');
+            $file_name = time() . '.' . $file->getClientOriginalName();
+            Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
+            $kerjasama->update([
+                'file' => $file_name,
+            ]);
+        }
+        return redirect('admin/pengajuan-kerjasama')->with('success', 'Dokumen Tanda Tangan Berhasil Di rubah');
+
     }
 
 

@@ -12,7 +12,7 @@ Route::get('/php', function () {
     return phpinfo();
 });
 
-Route::get('/admin/template/download/{id}', [TemplateSuratController::class, 'download'])
+Route::get('/admin/template/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download'])
     ->name('template.download')
     ->middleware('auth');
 
@@ -111,6 +111,7 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [App\Http\Controllers\ReviewController::class, 'delete']);
         Route::get('/add', [App\Http\Controllers\ReviewController::class, 'create']);
         Route::post('/store', [App\Http\Controllers\ReviewController::class, 'store']);
+        Route::post('/dokumenakhir',[App\Http\Controllers\ReviewController::class,'dokumenAkhirAdmin']);
     });
     Route::prefix('my-profile')->group(function () {
         Route::get('/{id}', [App\Http\Controllers\UserController::class, 'edit']);
