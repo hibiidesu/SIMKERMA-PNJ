@@ -309,6 +309,7 @@ class ReviewController extends Controller
 
     public function tolakLegal(Request $request)
 {
+    // dd($request);
     $request->validate([
         'id' => 'required|exists:kerjasamas,id',
         'catatan' => 'required',
@@ -336,8 +337,10 @@ class ReviewController extends Controller
             Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
             $updateData['file'] = $file_name;
         }
-        if($request->has('nomor')){
+        if ($request->has('nomor') && !is_null($request->nomor)) {
             $updateData['nomor'] = $request->nomor;
+        } else {
+            $updateData['nomor'] = $kerjasama->nomor;
         }
 
 
