@@ -358,6 +358,29 @@
             <div class="card-body">
                 <div class="form-body">
                     <h6>{{ $data->reviewer->name}}</h6>
+
+                </div>
+            </div>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <div class="card-title fw-bold text-dark">Dokumen Tertanda Tangan</div>
+
+            </div>
+            <div class="card-body">
+                <div class="form-body">
+                    <br>
+                    <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/dokumenakhir') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
+                            <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Tertanda Tangan</label>
+                            <input type="file" name="dokumen" id="dokumen" class="form-control">
+                            <br>
+                            <button type="submit" class="btn btn-success mb-1" style="margin-left: 5px">Kirim</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -412,7 +435,9 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="catatan">Catatan <span class="text-danger">*</span></label>
                                     <textarea name="catatan" id="catatan" cols="30" class="form-control" rows="3" required></textarea>
                                     <br>
-                                    <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Perbaikan <span class="text-danger">*</span></label>
+                                    <label for="nomor" class="mb-2 fw-bold text-capitalize">Nomor</label>
+                                    <input type="text" name="nomor" id="nomor" class="form-control">
+                                    <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Perbaikan</label>
                                     <input type="file" name="dokumen" id="dokumen" class="form-control">
                                     <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
                                 </div>
@@ -456,7 +481,6 @@
             </div>
         </div>
     </div>
-
 
     @endif
 </section>
