@@ -81,7 +81,7 @@ class ReviewController extends Controller
     {
         if(Auth::user()->role_id == 2){
 
-            return view('review/ad', [
+            return view('review/add', [
                 'users' => User::where('role_id', '=', '2')->get(),
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
