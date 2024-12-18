@@ -63,8 +63,8 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="nomor">nomor <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" id="nomor" class="form-control" name="nomor" required
+                                            class="text-danger"></span></label>
+                                    <input type="text" id="nomor" class="form-control" name="nomor"
                                         value="{{ old('nomor') }}">
                                 </div>
                             </div>
