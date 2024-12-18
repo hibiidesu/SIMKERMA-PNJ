@@ -15,6 +15,8 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Cell\Hyperlink;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEvents
 {
@@ -160,36 +162,77 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         ];
     }
     public function registerEvents(): array
-    {
-        return [
-            AfterSheet::class => function(AfterSheet $event) {
-                foreach ($event->sheet->getColumnIterator('J') as $row) {
-                    foreach ($row->getCellIterator() as $cell) {
-                        if (str_contains($cell->getValue(), '://')) {
-                            $cell->setHyperlink(new Hyperlink($cell->getValue(), 'Click here to access file'));
-                            $event->sheet->getStyle($cell->getCoordinate())->applyFromArray([
-                                'font' => [
-                                    'color' => ['rgb' => '0000FF'],
-                                    'underline' => 'single'
-                                ]
-                            ]);
-                        }
+{
+    return [
+        AfterSheet::class => function(AfterSheet $event) {
+            foreach ($event->sheet->getColumnIterator('J') as $row) {
+                foreach ($row->getCellIterator() as $cell) {
+                    if (str_contains($cell->getValue(), '://')) {
+                        $cell->setHyperlink(new Hyperlink($cell->getValue(), 'Click here to access file'));
+                        $event->sheet->getStyle($cell->getCoordinate())->applyFromArray([
+                            'font' => [
+                                'color' => ['rgb' => '0000FF'],
+                                'underline' => 'single'
+                            ]
+                        ]);
                     }
                 }
+            }
 
-                $cellRange = 'A1:W1';
-                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(13);
-                $event->sheet->getDelegate()->getStyle($cellRange)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $columns = ['D', 'E', 'I', 'J'];
-                foreach ($columns as $column) {
-                    $event->sheet->getDelegate()->getStyle($column . '2:' . $column . $event->sheet->getHighestRow())
-                        ->getAlignment()->setWrapText(true)->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-                }
+            $lastColumn = $event->sheet->getHighestColumn();
+            $headerRange = 'A1:' . $lastColumn . '1';
+            $event->sheet->getDelegate()->getStyle($headerRange)->applyFromArray([
+                'font' => [
+                    'bold' => true,
+                    'color' => ['rgb' => 'FFFFFF'],
+                    'size' => 13,
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => '4472C4'],
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                        'color' => ['rgb' => '000000'],
+                    ],
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                ],
+            ]);
 
-                for ($i = 2; $i <= $event->sheet->getHighestRow(); $i++) {
-                    $event->sheet->getDelegate()->getRowDimension($i)->setRowHeight(-1);
-                }
-            },
-        ];
-    }
+            $event->sheet->getDelegate()->getRowDimension(1)->setRowHeight(30);
+
+            $dataRange = 'A2:' . $lastColumn . $event->sheet->getHighestRow();
+            $event->sheet->getDelegate()->getStyle($dataRange)->applyFromArray([
+                'alignment' => [
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                        'color' => ['rgb' => 'CCCCCC'],
+                    ],
+                ],
+            ]);
+
+            $wrapColumns = ['D', 'E', 'I', 'J'];
+            foreach ($wrapColumns as $column) {
+                $columnRange = $column . '2:' . $column . $event->sheet->getHighestRow();
+                $event->sheet->getDelegate()->getStyle($columnRange)->getAlignment()->setWrapText(true);
+            }
+
+            for ($i = 2; $i <= $event->sheet->getHighestRow(); $i++) {
+                $event->sheet->getDelegate()->getRowDimension($i)->setRowHeight(-1);
+            }
+
+            foreach (range('A', $lastColumn) as $column) {
+                $event->sheet->getDelegate()->getColumnDimension($column)->setAutoSize(true);
+            }
+        },
+    ];
+}
 }
