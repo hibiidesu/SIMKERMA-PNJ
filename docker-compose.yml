@@ -4,8 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: simkerma-pnj
-    container_name: simkerma-pnj-app
+    image: simkerma
+    container_name: simkerma-app
     restart: unless-stopped
     working_dir: /var/www
     volumes:
@@ -15,11 +15,11 @@ services:
     environment:
       TZ: ${APP_TIMEZONE:-Asia/Jakarta}
     networks:
-      - simkerma-network
+      - simkerma
 
   db:
     image: postgres:13
-    container_name: simkerma-pnj-db
+    container_name: simkerma-db
     restart: unless-stopped
     environment:
       POSTGRES_DB: ${DB_DATABASE}
@@ -29,24 +29,24 @@ services:
     volumes:
       - dbdata-simkerma:/var/lib/postgresql/data
     networks:
-      - simkerma-network
+      - simkerma
 
   redis:
     image: redis:alpine
-    container_name: simkerma-pnj-redis
+    container_name: simkerma-redis
     restart: unless-stopped
     networks:
-      - simkerma-network
+      - simkerma
 
   memcached:
     image: memcached:alpine
-    container_name: simkerma-pnj-memcached
+    container_name: simkerma-memcached
     restart: unless-stopped
     networks:
-      - simkerma-network
+      - simkerma
 
 networks:
-  simkerma-network:
+  simkerma:
     driver: bridge
 
 volumes:
