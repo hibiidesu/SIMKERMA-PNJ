@@ -366,12 +366,12 @@ class KerjasamaController extends Controller
     public function export(Request $request)
     {
         try {
-            $filename = 'Data-Kerjasama-' . Carbon::now()->format('Y-m-d') . '.xlsx';
+            $filename = 'Data-Kerjasama-' . Carbon::now()->format('Y-m-d_H-i-s.v') . '.xlsx';
             return Excel::download(new KerjasamaExport($request->all()), $filename);
 
         } catch (\Exception $e) {
             \Log::error('Export failed: ' . $e->getMessage());
-            return back()->with('error', 'Export failed. Please try again.');
+            return back()->with('error', 'Export failed. Please try again.: '.$e->getMessage());
         }
 
     }

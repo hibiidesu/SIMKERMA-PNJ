@@ -65,41 +65,40 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         // @endif
         // @endforeach
 
-        foreach ($kerjasama->get() as $data) {
-            $jurusan = "";
-            $prodi = "";
-            $index = 1;
+        foreach ($kerjasama->get() as $index => $data) {
+            $jurusan = [];
+            $prodi = [];
 
-            if ($data->jurusan != null) {
-                foreach (explode(',', $data->jurusan) as $y) {
-                    if ($index < count(explode(',', $data->jurusan))) {
-                        $jurusan .= Unit::find($y)->name . ',';
-                    } else {
-                        $jurusan .= Unit::find($y)->name;
-                    }
-                    if ($index < count(explode(',', $data->prodi))) {
-                        $prodi .= prodi::find($y)->name . ',';
-                    } else {
-                        $prodi .= prodi::find($y)->name;
-                    }
-                    $index++;
+            if ($data->jurusan) {
+                $jurusanIds = explode(',', $data->jurusan);
+                $prodiIds = explode(',', $data->prodi);
+
+                foreach ($jurusanIds as $id) {
+                    $jurusan[] = Unit::find($id)->name;
+                }
+
+                foreach ($prodiIds as $id) {
+                    $prodi[] = Prodi::find($id)->name;
                 }
             }
 
-            $temp = [
-                $x + 1,
+            $jurusanString = implode(', ', $jurusan);
+            $prodiString = implode(', ', $prodi);
+
+            $arr[] = [
+                $index + 1,
                 $data->mitra,
                 $data->kerjasama,
                 $data->nomor,
                 $data->kegiatan,
-                $data->sifat, $jurusan, $prodi,
+                $data->sifat,
+                $jurusanString,
+                $prodiString,
                 $data->jenis_kerjasama->jenis_kerjasama,
                 $data->tanggal_mulai,
                 $data->tanggal_selesai,
                 $data->file ? asset('surat_kerjasama/' . $data->file) : "",
             ];
-            $arr[$x] = $temp;
-            $x++;
         }
 
         return $arr;
