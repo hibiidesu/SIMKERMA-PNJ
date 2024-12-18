@@ -363,9 +363,9 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
-            return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
+            return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
-            return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
+            return redirect('/pemimpin/review')->with('error', 'Data gagal ditolak');
         }
     }
 
@@ -454,9 +454,9 @@ class ReviewController extends Controller
                 ]);
                 Mail::to($i->email)->send(new pengajuanBaru($kerjasama, 'direktur'));
             }
-            return redirect('/direktur/review')->with('success', 'Data berhasil diterima');
+            return redirect('/pemimpin/review')->with('success', 'Data berhasil diterima');
         } else {
-            return redirect('/direktur/review')->with('error', 'Data gagal diterima');
+            return redirect('/pemimpin/review')->with('error', 'Data gagal diterima');
         }
     }
 

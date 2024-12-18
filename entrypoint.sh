@@ -58,6 +58,12 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
         exit 1
     fi
 
+    composer dump-autoload --optimize
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Composer install failed"
+        exit 1
+    fi
+
     composer require chillrend/pnj-socialite-provider
     if [ $? -ne 0 ]; then
         echo "ERROR: Failed to require chillrend/pnj-socialite-provider"
