@@ -95,10 +95,10 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
 
             }
 
-            $jurusanString = implode(', ', $jurusan);
-            $prodiString = implode(', ', $prodi);
-            $kMitraString = implode(', ', $k_mitra);
-            $kKemitraanString = implode(', ', $k_kemitraan);
+            $jurusanString = implode(', '.chr(10), $jurusan);
+            $prodiString = implode(', '.chr(10), $prodi);
+            $kMitraString = implode(', '.chr(10), $k_mitra);
+            $kKemitraanString = implode(', '.chr(10), $k_kemitraan);
 
             $arr[] = [
                 $index + 1,
@@ -162,12 +162,11 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function (AfterSheet $event) {
+            AfterSheet::class => function(AfterSheet $event) {
                 foreach ($event->sheet->getColumnIterator('J') as $row) {
                     foreach ($row->getCellIterator() as $cell) {
                         if (str_contains($cell->getValue(), '://')) {
                             $cell->setHyperlink(new Hyperlink($cell->getValue(), 'Click here to access file'));
-                            // Upd: Link styling added
                             $event->sheet->getStyle($cell->getCoordinate())->applyFromArray([
                                 'font' => [
                                     'color' => ['rgb' => '0000FF'],
@@ -177,10 +176,19 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                         }
                     }
                 }
-                $cellRange = 'A1:W1'; // All headers
+
+                $cellRange = 'A1:W1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(13);
-                // $event->sheet->getDelegate()->getStyle($cellRange)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('DD4B39');
                 $event->sheet->getDelegate()->getStyle($cellRange)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $columns = ['D', 'E', 'I', 'J'];
+                foreach ($columns as $column) {
+                    $event->sheet->getDelegate()->getStyle($column . '2:' . $column . $event->sheet->getHighestRow())
+                        ->getAlignment()->setWrapText(true)->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+                }
+
+                for ($i = 2; $i <= $event->sheet->getHighestRow(); $i++) {
+                    $event->sheet->getDelegate()->getRowDimension($i)->setRowHeight(-1);
+                }
             },
         ];
     }
