@@ -48,7 +48,7 @@
                             @elseif (Auth::user()->role->role_name == 'legal')
                             <td> <a href="{{ url('/legal/review/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
-                            <td> <a href="{{ url('/direktur/review/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/pemimpin/review/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'direktur')
                             <td> <a href="{{ url('/direktur/review/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
                             @elseif (Auth::user()->role->role_name == 'pic')

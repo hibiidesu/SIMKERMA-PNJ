@@ -23,10 +23,10 @@ class ImplementationAgreementController extends Controller
     public function store(Request $request){
         $request->validate([
             'nama_mitra' => 'required',
-            'dokumen_agreement' => 'required|mimes:pdf,docx,doc',
+            'dokumen_agreement' => 'required|mimes:pdf',
         ]);
         $file = $request->file('dokumen_agreement');
-        $fileName = time() . '.'. $file->getClientOriginalName(). $file->getClientOriginalExtension();
+        $fileName = time() . '.'. $file->getClientOriginalName();
         $move = Storage::disk('dokumen_agreement')->put($fileName, file_get_contents($file));
 
         if($move){
