@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use App\Models\Unit;
 use App\Models\prodi;
 use App\Models\Kerjasama;
+use App\Models\kriteria_kemitraan;
+use App\Models\kriteria_mitra;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithEvents;
@@ -68,44 +70,87 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         foreach ($kerjasama->get() as $index => $data) {
             $jurusan = [];
             $prodi = [];
+            $k_mitra = [];
+            $k_kemitraan = [];
 
             if ($data->jurusan) {
                 $jurusanIds = explode(',', $data->jurusan);
                 $prodiIds = explode(',', $data->prodi);
+                $k_mitraId = explode(',', $data->kriteria_mitra_id);
+                $k_kemitraanId = explode(',', $data->kriteria_kemitraan_id);
 
                 foreach ($jurusanIds as $id) {
                     $jurusan[] = Unit::find($id)->name;
                 }
 
                 foreach ($prodiIds as $id) {
-                    $prodi[] = Prodi::find($id)->name;
+                    $prodi[] = prodi::find($id)->name;
                 }
+                foreach  ($k_mitraIds as $id) {
+                    $k_mitra[] = kriteria_mitra::find($id)->kriteria_mitra;
+                }
+                foreach  ($k_kemitraanId as $id) {
+                    $k_kemitraan[] = kriteria_kemitraan::find($id)->kriteria_kemitraaan;
+                }
+
             }
 
             $jurusanString = implode(', ', $jurusan);
             $prodiString = implode(', ', $prodi);
+            $kMitraString = implode(', ', $k_mitra);
+            $kKemitraanString = implode(', ', $k_kemitraan);
 
             $arr[] = [
                 $index + 1,
-                $data->mitra,
-                $data->kerjasama,
-                $data->nomor,
-                $data->kegiatan,
-                $data->sifat,
-                $jurusanString,
-                $prodiString,
-                $data->jenis_kerjasama->jenis_kerjasama,
-                $data->tanggal_mulai,
-                $data->tanggal_selesai,
-                $data->file ? asset('surat_kerjasama/' . $data->file) : "",
+                $data->mitra ?? 'KOSONG',
+                $data->kerjasama ?? 'KOSONG',
+                $kMitraString ?? 'KOSONG',
+                $kKemitraanString ?? 'KOSONG',
+                $data->nomor ?? 'KOSONG',
+                $data->kegiatan ?? 'KOSONG',
+                $data->sifat ?? 'KOSONG',
+                $jurusanString ?? 'KOSONG',
+                $prodiString ?? 'KOSONG',
+                $data->jenis_kerjasama->jenis_kerjasama ?? 'KOSONG',
+                $data->tanggal_mulai ?? 'KOSONG',
+                $data->tanggal_selesai ?? 'KOSONG',
+                $data->pic_pnj ?? 'KOSONG',
+                $data->pic_industri ?? 'KOSONG',
+                $data->jabatan_pic_industri ?? 'KOSONG',
+                $data->telp_industri ?? 'KOSONG',
+                $data->email ?? 'KOSONG',
+                $data->alamat_perusahaan ?? 'KOSONG',
+                $data->file ? asset('surat_kerjasama/' . $data->file) : "404",
             ];
         }
 
         return $arr;
     }
+
     public function headings(): array
     {
-        return ["No.",  "Nama Mitra", "Judul Kerjasama", "No SK/MOU", "Kegiatan", "Sifat", "Jurusan", "Program Studi", "Jenis Kerjasama", "Tanggal Mulai", "Tanggal Selesai", "Bukti"];
+        return [
+            "No.",
+            "Nama Mitra",
+            "Judul Kerjasama",
+            "Kriteria Mitra",
+            "Kriteria Kemitraan",
+            "No SK/MOU",
+            "Kegiatan",
+            "Sifat",
+            "Jurusan",
+            "Program Studi",
+            "Jenis Kerjasama",
+            "Tanggal Mulai",
+            "Tanggal Selesai",
+            "PIC PNJ",
+            "PIC Industri",
+            "Jabatan PIC Industri",
+            "Telp PIC Industri",
+            "Email PIC Industri",
+            "Alamat Perusahaan",
+            "Bukti"
+        ];
     }
     public function styles(Worksheet $sheet)
     {
