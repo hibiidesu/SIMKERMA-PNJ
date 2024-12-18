@@ -30,9 +30,6 @@ WORKDIR /var/www
 COPY . /var/www
 COPY --chown=www-data:www-data . /var/www
 
-# Install dependencies and optimize autoloader
-RUN composer install --no-dev --optimize-autoloader
-
 # Nginx configuration
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-available/default
