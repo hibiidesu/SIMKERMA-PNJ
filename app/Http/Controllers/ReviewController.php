@@ -143,7 +143,7 @@ class ReviewController extends Controller
                 'kerjasama' => 'required',
                 'tanggal_mulai' => 'required|date',
                 'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-                'nomor' => 'nullable',
+                // 'nomor' => 'nullable',
                 'sifat' => 'required',
                 'kriteria_kemitraan_id' => 'required',
                 'kriteria_mitra_id' => 'required',
