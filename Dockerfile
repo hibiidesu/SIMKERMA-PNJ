@@ -17,8 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libzip-dev \
     netcat-openbsd \
     nano \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
 # PHP extensions and Composer
 RUN docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip
