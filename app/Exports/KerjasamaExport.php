@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use App\Models\Unit;
+use App\Models\prodi;
 use App\Models\Kerjasama;
 use Maatwebsite\Excel\Events\AfterSheet;
 use Maatwebsite\Excel\Concerns\FromArray;
@@ -66,7 +67,9 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
 
         foreach ($kerjasama->get() as $data) {
             $jurusan = "";
+            $prodi = "";
             $index = 1;
+
             if ($data->jurusan != null) {
                 foreach (explode(',', $data->jurusan) as $y) {
                     if ($index < count(explode(',', $data->jurusan))) {
@@ -74,18 +77,25 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                     } else {
                         $jurusan .= Unit::find($y)->name;
                     }
+                    if ($index < count(explode(',', $data->prodi))) {
+                        $prodi .= prodi::find($y)->name . ',';
+                    } else {
+                        $prodi .= prodi::find($y)->name;
+                    }
                     $index++;
                 }
             }
+
             $temp = [
                 $x + 1,
+                $data->mitra,
                 $data->kerjasama,
-                $data->sifat, $jurusan,
+                $data->nomor,
                 $data->kegiatan,
+                $data->sifat, $jurusan, $prodi,
                 $data->jenis_kerjasama->jenis_kerjasama,
                 $data->tanggal_mulai,
                 $data->tanggal_selesai,
-                $data->nomor,
                 $data->file ? asset('surat_kerjasama/' . $data->file) : "",
             ];
             $arr[$x] = $temp;
@@ -96,7 +106,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
     }
     public function headings(): array
     {
-        return ["No.",  "Nama Mitra", "Sifat", "Unit", "Kegiatan", "Jenis Kerja Sama", "Tanggal Mulai", "Tanggal Berakhir", "No SK/MOU", "Bukti"];
+        return ["No.",  "Nama Mitra", "Judul Kerjasama", "No SK/MOU", "Kegiatan", "Sifat", "Jurusan", "Program Studi", "Jenis Kerjasama", "Tanggal Mulai", "Tanggal Selesai", "Bukti"];
     }
     public function styles(Worksheet $sheet)
     {

@@ -110,6 +110,8 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\ReviewController::class, 'update']);
         Route::get('/delete/{id}', [App\Http\Controllers\ReviewController::class, 'delete']);
         Route::get('/add', [App\Http\Controllers\ReviewController::class, 'create']);
+        Route::get('/record', [App\Http\Controllers\ReviewController::class, 'record']);
+        Route::post('/store-record', [App\Http\Controllers\ReviewController::class, 'store_record']);
         Route::post('/store', [App\Http\Controllers\ReviewController::class, 'store']);
     });
     Route::prefix('my-profile')->group(function () {

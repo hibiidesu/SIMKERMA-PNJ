@@ -80,7 +80,7 @@ class ReviewController extends Controller
     {
         if(Auth::user()->role_id == 2){
 
-            return view('review/add', [
+            return view('review/ad', [
                 'users' => User::where('role_id', '=', '2')->get(),
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
@@ -677,6 +677,131 @@ class ReviewController extends Controller
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
             }
 
+        }
+    }
+
+    public function  record(){
+        if(Auth::user()->role_id == 1){
+            return view('review/record', [
+                'users' => User::where('role_id', '=', '1')->get(),
+                'kriteria_mitra' => kriteria_mitra::all(),
+                'kriteria_kemitraan' => kriteria_kemitraan::all(),
+                'unit' => Unit::all(),
+                'prodi' => Prodi::all(),
+                'perjanjian' => pks::all(),
+                'jenisKerjasama' => Jenis_kerjasama::all(),
+            ]);
+        } else {
+            return error('Anda Tidak Memiliki Hak Akses');
+        }
+    }
+
+    public function store_record(Request $request){
+        $request->validate(
+            [
+                'mitra' => 'required',
+                'kerjasama' => 'required',
+                'tanggal_mulai' => 'required|date',
+                'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+                'nomor' => 'required',
+                'sifat' => 'required',
+                'kriteria_kemitraan_id' => 'required',
+                'kriteria_mitra_id' => 'required',
+                'jenis_kerjasama_id' => 'required',
+                'kriteria_mitra_id' => 'required',
+                'kriteria_kemitraan_id' => 'required',
+                'perjanjian' => 'required',
+                'jurusan' => 'required',
+                'pic_pnj' => 'required',
+                'alamat_perusahaan' => 'required',
+                'pic_industri' => 'required',
+                'jabatan_pic_industri' => 'required',
+                // 'telp_industri' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                // 'email' => 'required|email',
+                'file' => 'required|file|mimes:pdf,doc,docx',
+            ],
+            ['telp_industri.regex' => 'format nomor telpon tidak valid']
+        );
+
+        if ($request->telp_industri) {
+            $request->validate([
+                'telp_industri' => 'regex:/^([0-9\s\-\+\(\)]*)$/',
+            ]);
+        }
+        $prodi = $request->has('prodi') ? $request->prodi : [];
+        $file = $request->file('file');
+        $nama_file = time() . "_" . $file->getClientOriginalName();
+        $move = Storage::disk('surat_kerjasama')->put($nama_file, file_get_contents($file));
+        if ($move) {
+            $kerjasama = Kerjasama::create([
+                'mitra' => $request->mitra,
+                'kerjasama' => $request->kerjasama,
+                'tanggal_mulai' => $request->tanggal_mulai,
+                'tanggal_selesai' => $request->tanggal_selesai,
+                'nomor' => $request->nomor,
+                'kegiatan' => $request->kegiatan,
+                'sifat' => $request->sifat,
+                'kriteria_kemitraan_id' => implode(',', $request->kriteria_kemitraan_id),
+                'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
+                'user_id' => Auth::user()->id,
+                'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
+                'pks' => implode(',', $request->perjanjian),
+                'jurusan' => implode(',', $request->jurusan),
+                'prodi' => implode(',', $prodi),
+                'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
+                'pic_pnj' => $request->pic_pnj,
+                'alamat_perusahaan' => $request->alamat_perusahaan,
+                'pic_industri' => $request->pic_industri,
+                'jabatan_pic_industri' => $request->jabatan_pic_industri,
+                'telp_industri' => $request->telp_industri,
+                'email' => $request->email,
+                'file' => $nama_file,
+                'step' => 1,
+            ]);
+
+            $update = $kerjasama->update([
+                'step' => '3',
+                'reviewer_id' => Auth::user()->id,
+            ]);
+            if ($update) {
+                log_persetujuan::create([
+                    'kerjasama_id' => $kerjasama->id,
+                    'user_id' => Auth::user()->id,
+                    'role_id' => 3,
+                    'step' => 3
+            ]);}
+
+            $update = $kerjasama->update([
+                'step' => '5',
+                'reviewer_id' => Auth::user()->id,
+            ]);
+            if ($update) {
+                log_persetujuan::create([
+                    'kerjasama_id' => $kerjasama->id,
+                    'user_id' => Auth::user()->id,
+                    'role_id' => 2,
+                    'step' => 5
+            ]);}
+            $update = $kerjasama->update([
+                'step' => '7',
+                'reviewer_id' => Auth::user()->id,
+            ]);
+            if ($update) {
+                log_persetujuan::create([
+                    'kerjasama_id' => $kerjasama->id,
+                    'user_id' => Auth::user()->id,
+                    'role_id' => 5,
+                    'step' => 7
+            ]);}
+
+            if (Auth::user()->role->role_name == 'admin') {
+                return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil direkam');
+            }  else {
+                return redirect('/login')->with('error', 'Anda tidak memiliki hak akses');
+            }
+
+        } else {
+            return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
         }
     }
 }
