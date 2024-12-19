@@ -154,7 +154,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_pnj">Nama PIC PNJ <span class="text-danger">*</span></label>
-                                    <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" value="{{ $data->pic_pnj }}" required>
+                                    <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" value="{{ $data->pic_pnj }}" required disabled>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">

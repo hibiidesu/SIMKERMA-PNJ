@@ -185,7 +185,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_pnj">Nama PIC PNJ <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" required
-                                        value="{{ auth::user()->name }}" disabled>
+                                        value="{{ auth::user()->name }}">
                                     <input type="hidden" name="pic_pnj" value="{{ auth::user()->name }}">
                                 </div>
                             </div>
