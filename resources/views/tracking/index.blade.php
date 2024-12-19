@@ -29,8 +29,9 @@ $(document).ready(function() {
             url: `/api/track/${trackerId}`,
             type: 'GET',
             success: function(response) {
-                if (response.message === "success") {
-                    const data = response.data[0];
+                console.log('API Response:', response); // Log the entire response
+                if (response.message === "success" && response.data) {
+                    const data = response.data;
                     $('#response').html(`
                         <div class="card">
                             <div class="card-body">
@@ -46,7 +47,7 @@ $(document).ready(function() {
                                                 align-items: center;
                                                 justify-content: center;
                                                 transition: width 0.6s ease;"
-                                        aria-valuenow="${getProgressPercentage(data.step)}"
+                                        aria-valuenow="${getProgressPercentage(data.step_code)}"
                                         aria-valuemin="0"
                                         aria-valuemax="100">
                                     </div>
@@ -61,13 +62,13 @@ $(document).ready(function() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            ${data.log.map((item) => `
+                                            ${data.log && data.log.length > 0 ? data.log.map((item) => `
                                                 <tr>
                                                     <td>👉</td>
                                                     <td><b>${item.created_at}</b></td>
                                                     <td>${item.step}</td>
                                                 </tr>
-                                            `).join('')}
+                                            `).join('') : '<tr><td colspan="3">No log data available</td></tr>'}
                                         </tbody>
                                     </table>
                                 </div>
@@ -101,13 +102,14 @@ $(document).ready(function() {
                         </div>
                     `);
                 } else {
-                    $('#response').html("<p class='text-danger'>No data found.</p>");
+                    $('#response').html("<p class='text-danger'>Data tidak ditemukan atau invalid respons</p>");
                 }
             },
             error: function(xhr, status, error) {
+                console.error('AJAX Error:', status, error);
                 Swal.fire({
-                    'title': status.toUpperCase(),
-                    'text': 'Data Tidak Di Temukan',
+                    'title': 'Waduh',
+                    'text': 'Data tidak ditemukan',
                     'icon': 'error'
                 });
             }
