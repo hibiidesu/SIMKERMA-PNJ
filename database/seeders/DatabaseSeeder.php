@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             KriteriaMitraSeeder::class,
             KriteriaKemitraanSeeder::class,
-            prodiSeeder::class
+            prodiSeeder::class,
+            KerjasamaSeeders::class
         ]);
     }
 }
