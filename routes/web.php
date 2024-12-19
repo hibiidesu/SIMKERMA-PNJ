@@ -15,10 +15,10 @@ Route::get('/php', function () {
 Route::get('/admin/template/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download'])
     ->name('template.download')
     ->middleware('auth');
-Route::get('/logout', function () {
+Route::get('/llogout', function () {
     Auth::logout();
     return redirect('/');
-})->name('logout');
+})->name('llogout');
 
 Route::get('/chart/data', [App\Http\Controllers\WebController::class, 'chartData']);
 Route::get('/chart/unit', [App\Http\Controllers\WebController::class, 'chartByUnit']);
