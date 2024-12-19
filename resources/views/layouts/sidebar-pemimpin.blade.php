@@ -22,33 +22,29 @@
             <ul class="menu">
                 {{-- <li class="sidebar-title">Menu</li> --}}
 
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/dashboard') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pemimpin/dashboard') || Request::is('pemimpin/dashboard/*') ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/dashboard') }}" class='sidebar-link'>
                         <i class="fas fa-th-large"></i>
                         <span class="text-capitalize">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pemimpin/kerjasama') || Request::is('pemimpin/kerjasama/*') ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-handshake"></i>
                         <span class="text-capitalize">kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/review-kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pemimpin/review') || Request::is('pemimpin/review/*') ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/review') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Review kerja sama</span>
-                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaBaru() }}</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/user') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/user') }}" class='sidebar-link'>
-                        <i class="fas fa-users"></i>
-                        <span class="text-capitalize">Users</span>
+                        @if (Auth::user()->kerjasamaWadir() != 0)
+                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaWadir() }}</span>
+                        @endif
                     </a>
                 </li>
                 <hr>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pemimpin/my-profile') || Request::is('pemimpin/my-profile/*') ? 'active' : '' }}">
                     <a href="{{ url('pemimpin/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
                         <i class="fas fa-user"></i>
                         <span class="text-capitalize">My Profile</span>

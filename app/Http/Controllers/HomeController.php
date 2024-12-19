@@ -29,6 +29,13 @@ class HomeController extends Controller
             return view('home');
         } elseif (Auth::User()->role->role_name == 'pemimpin') {
             return view('home');
+        } elseif (Auth::User()->role->role_name == 'pic') {
+            return view('home');
+        } elseif (Auth::User()->role->role_name == 'legal') {
+            return view('home');
+        } elseif (Auth::User()->role->role_name == 'direktur') {
+            return view('home');
         }
+
     }
 }

@@ -18,7 +18,11 @@
                         </div>
                     @elseif (Auth::user()->role->role_name == 'pemimpin')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/pemimpin/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
+                            <a href="{{ url('/direktur/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
+                        </div>
+                    @elseif (Auth::user()->role->role_name == 'pic')
+                        <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
+                            <a href="{{ url('/pic/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
                         </div>
                     @endif
 
@@ -37,6 +41,8 @@
                         <span class="fw-bold fs-6 badge bg-info text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @elseif ($data->sifat == 'Internasional')
                         <span class="fw-bold fs-6 badge bg-warning text-dark mt-lg-0 mt-2">{{ $data->sifat }}</span>
+                    @elseif ($data->sifat == 'Lokal')
+                        <span class="fw-bold fs-6 badge bg-success text-light mt-lg-0 mt-2">{{ $data->sifat }}</span>
                     @endif
                 </p>
                 <div class="my-3">

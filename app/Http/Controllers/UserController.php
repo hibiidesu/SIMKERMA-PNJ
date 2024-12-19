@@ -62,9 +62,9 @@ class UserController extends Controller
             'status' => 1,
         ]);
         if ($insert) {
-            return redirect('/pemimpin/user')->with('success', 'User Berhasil ditambahkan');
+            return redirect('/admin/user')->with('success', 'User Berhasil ditambahkan');
         } else {
-            return redirect('/pemimpin/user')->with('error', 'User Gagal ditambahkan');
+            return redirect('/admin/user')->with('error', 'User Gagal ditambahkan');
         }
         dd($request->input(), $insert);
     }
@@ -138,9 +138,9 @@ class UserController extends Controller
             ]);
         }
         if ($update) {
-            return redirect('/pemimpin/user')->with('success', 'User Berhasil diubah');
+            return redirect('/admin/user')->with('success', 'User Berhasil diubah');
         } else {
-            return redirect('/pemimpin/user')->with('error', 'User Gagal diubah');
+            return redirect('/admin/user')->with('error', 'User Gagal diubah');
         }
         dd($request->input(), $update);
     }
@@ -151,9 +151,9 @@ class UserController extends Controller
             'status' => 0,
         ]);
         if ($update) {
-            return redirect('/pemimpin/user')->with('success', 'User Berhasil dinonaktifkan');
+            return redirect('/admin/user')->with('success', 'User Berhasil dinonaktifkan');
         } else {
-            return redirect('/pemimpin/user')->with('error', 'User Gagal dinonaktifkan');
+            return redirect('/admin/user')->with('error', 'User Gagal dinonaktifkan');
         }
         dd($id);
     }
@@ -164,9 +164,9 @@ class UserController extends Controller
             'status' => 1,
         ]);
         if ($update) {
-            return redirect('/pemimpin/user')->with('success', 'User Berhasil diaktifkan');
+            return redirect('/admin/user')->with('success', 'User Berhasil diaktifkan');
         } else {
-            return redirect('/pemimpin/user')->with('error', 'User Gagal diaktifkan');
+            return redirect('/admin/user')->with('error', 'User Gagal diaktifkan');
         }
         dd($id);
     }

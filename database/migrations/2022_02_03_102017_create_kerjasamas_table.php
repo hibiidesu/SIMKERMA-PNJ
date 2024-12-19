@@ -15,15 +15,19 @@ class CreateKerjasamasTable extends Migration
     {
         Schema::create('kerjasamas', function (Blueprint $table) {
             $table->id();
+            $table->string("mitra")->nullable();
             $table->string("kerjasama");
             $table->date("tanggal_mulai")->nullable();
             $table->date("tanggal_selesai")->nullable();
-            $table->string("nomor");
+            $table->string("nomor")->nullable();
             $table->text("kegiatan")->nullable();
             $table->integer("jenis_kerjasama_id");
+            $table->string("kriteria_mitra_id");
+            $table->string("kriteria_kemitraan_id");
             $table->string("sifat");
             $table->string("pks");
             $table->string("jurusan");
+            $table->string("prodi");
             $table->string("pic_pnj");
             $table->text("alamat_perusahaan");
             $table->string("pic_industri");
@@ -31,7 +35,7 @@ class CreateKerjasamasTable extends Migration
             $table->string("telp_industri");
             $table->string("email");
             $table->text("file");
-            $table->integer("step")->default(3);
+            $table->integer("step")->default(1);
             $table->integer("user_id")->default(1);
             $table->text("catatan")->nullable();
             $table->integer("reviewer_id")->nullable();

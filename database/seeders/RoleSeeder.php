@@ -17,6 +17,9 @@ class RoleSeeder extends Seeder
         $data = [
             "admin",
             "pemimpin",
+            "legal",
+            "pic",
+            'direktur',
         ];
         Role::truncate(); //kosongkan table
         foreach ($data as $item) {

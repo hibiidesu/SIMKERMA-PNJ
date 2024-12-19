@@ -1,8 +1,15 @@
 .htaccess
 .env
 .env.backup
+.env.testing
+.phpunit.result.cache
+/tests/reports/
 /.idea
 /.vscode
 /vendor
 /node_modules
 composer.lock
+/public/surat_kerjasama
+/public/template_surat
+/public/dokumen_agreement
+data.txt

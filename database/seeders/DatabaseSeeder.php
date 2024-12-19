@@ -16,18 +16,14 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UnitSeeder::class,
-        ]);
-        $this->call([
             JenisKerjasamaSeeder::class,
-        ]);
-        $this->call([
             pks::class,
-        ]);
-        $this->call([
             RoleSeeder::class,
-        ]);
-        $this->call([
             UserSeeder::class,
+            KriteriaMitraSeeder::class,
+            KriteriaKemitraanSeeder::class,
+            prodiSeeder::class,
+            KerjasamaSeeders::class
         ]);
     }
 }

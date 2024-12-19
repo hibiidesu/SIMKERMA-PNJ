@@ -11,15 +11,21 @@ class Kerjasama extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'mitra',
         'kerjasama',
         'tanggal_mulai',
         'tanggal_selesai',
         'nomor',
         'kegiatan',
         'sifat',
+        'kriteria_kemitraan_id',
+        'kriteria_mitra_id',
         'jenis_kerjasama_id',
+        'kriteria_mitra_id',
+        'kriteria_kemitraan_id',
         'pks',
         'jurusan',
+        'prodi',
         'pic_pnj',
         'alamat_perusahaan',
         'pic_industri',
@@ -38,14 +44,23 @@ class Kerjasama extends Model
     {
         return $this->hasMany('App\Models\Repository')->orderBy('created_at', 'desc');
     }
+    public function log_persetujuan()
+    {
+        return $this->hasMany('App\Models\log_persetujuan')->orderBy('created_at', 'desc');
+    }
     public function jenis_kerjasama()
     {
         return $this->belongsTo('App\Models\Jenis_kerjasama', 'jenis_kerjasama_id');
     }
     public function pks()
     {
-        return $this->belongsTo('App\Models\pks', 'pks');
+        return $this->belongsTo('App\Models\pks', 'id');
     }
+    public function pks_id()
+    {
+        return $this->belongsTo('App\Models\pks', 'pks', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');
@@ -53,5 +68,13 @@ class Kerjasama extends Model
     public function reviewer()
     {
         return $this->belongsTo('App\Models\User', 'reviewer_id');
+    }
+    public function kriteriaKemitraan()
+    {
+        return $this->belongsTo('App\Models\kriteria_kemitraan');
+    }
+    public function kriteriaMitra()
+    {
+        return $this->belongsTo('App\Models\kriteria_mitra');
     }
 }

@@ -19,7 +19,14 @@ class RoleController extends Controller
                 return redirect(route('adminHome'));
             } elseif (Auth::User()->role->role_name == 'pemimpin') {
                 return redirect(route('PemimpinHome'));
+            } elseif (Auth::User()->role->role_name == 'legal') {
+                return redirect(route('LegalHome'));
+            } elseif (Auth::User()->role->role_name == 'pic') {
+                return redirect(route('PicHome'));
+            } elseif (Auth::User()->role->role_name == 'direktur') {
+                return redirect(route('DirekturHome'));
             }
+
         }else{
             Auth::logout();
             return redirect('/login')->with('info','Akun anda telah di nonaktifkan');
