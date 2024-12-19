@@ -320,8 +320,8 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/pemimpin/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
-                                <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
+                                <a href="{{ url('/pemimpin/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                <button type="submit" class="btn btn-danger mb-1 action-btn" style="margin-left: 5px">Tolak</button>
                             </div>
                         </div>
                     </div>
@@ -340,9 +340,9 @@
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
                     @if ((Auth::user()->role->role_name == 'admin' )&& ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
-                    <form action="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}">
-                        <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
-                        <button class="btn btn-danger delete-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
+                    <form id="hapus" action="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}">
+                        <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary action-btn">Edit</a>
+                        <button class="btn btn-danger delete-btn action-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
                        </form>
                     @endif
                 </div>
@@ -377,7 +377,7 @@
                             <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Tertanda Tangan</label>
                             <input type="file" name="dokumen" id="dokumen" class="form-control">
                             <br>
-                            <button type="submit" class="btn btn-success mb-1" style="margin-left: 5px">Kirim</button>
+                            <button type="submit" class="btn btn-success mb-1 action-btn" style="margin-left: 5px">Kirim</button>
                         </div>
 
                     </form>
@@ -396,8 +396,8 @@
                     <h6>{{ $data->reviewer->name}}</h6>
                     <p> {{ $data->catatan}} </p>
                     @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
-                       <form action="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}">
-                        <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
+                    <form id="hapus" action="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}">
+                        <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary action-btn">Edit</a>
                         <button class="btn btn-danger delete-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
                        </form>
                     @endif
@@ -443,8 +443,8 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/legal/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
-                                <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
+                                <a href="{{ url('/legal/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                <button type="submit" class="btn btn-danger mb-1 action-btn" style="margin-left: 5px">Tolak</button>
                             </div>
                         </div>
                     </div>
@@ -472,8 +472,8 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1">Setujui</a>
-                                <button type="submit" class="btn btn-danger mb-1" style="margin-left: 5px">Tolak</button>
+                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                <button type="submit" class="btn btn-danger mb-1 action-btn" style="margin-left: 5px">Tolak</button>
                             </div>
                         </div>
                     </div>
@@ -484,4 +484,83 @@
 
     @endif
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const actionButtons = document.querySelectorAll('.action-btn');
+
+        actionButtons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const url = this.href || this.form.action;
+                const form = this.closest('form');
+                if (form && form.id === 'hapus' && this.classList.contains('delete-btn')) {
+                    Swal.fire({
+                        title: 'Apakah Anda yakin ingin menghapus?',
+                        text: "Anda tidak akan dapat mengembalikan ini!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            submitForm(form);
+                        }
+                    });
+                    return;
+                }
+
+                if (this.tagName === 'BUTTON' && this.type === 'submit') {
+                    if (form && !form.checkValidity()) {
+                        form.reportValidity();
+                        return;
+                    }
+                }
+
+                showLoadingAndSubmit(this);
+            });
+        });
+
+        function showLoadingAndSubmit(element) {
+            Swal.fire({
+                title: 'Loading...',
+                html: 'Memproses data ke server...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            setTimeout(() => {
+                if (element.tagName === 'A') {
+                    window.location.href = element.href;
+                } else if (element.tagName === 'BUTTON') {
+                    element.form.submit();
+                }
+            }, 100);
+        }
+
+        function submitForm(form) {
+            Swal.fire({
+                title: 'Loading...',
+                html: 'Memproses data ke server...',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            setTimeout(() => {
+                form.submit();
+            }, 100);
+        }
+    });
+</script>
 @endsection

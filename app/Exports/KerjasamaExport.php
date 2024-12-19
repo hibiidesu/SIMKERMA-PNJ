@@ -34,7 +34,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         $arr = array();
         // $kerjasama = Kerjasama::all();
 
-        $kerjasama = Kerjasama::orderBy('id', 'desc');
+        $kerjasama = Kerjasama::where('step', 7)->orderBy('id', 'desc');
         if (count($this->request) > 0) {
             if ($this->request['type'] && $this->request['type'] != 'all') {
                 $kerjasama = $kerjasama->where('jenis_kerjasama_id', ($this->request['type'] - 1));

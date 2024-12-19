@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('admin/vendors/fontawesome/all.min.css') }}">
     @yield('styles')
     <link rel="stylesheet" href="{{ asset('admin/css/app.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .sidebar-wrapper {
             width: 260px
@@ -33,6 +34,14 @@
         }
         .form-control.is-invalid~.form-control-icon {
             top: 32%;
+        }
+        .select2-container .select2-selection--single {
+        height: 38px !important;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border: 1px solid #ced4da !important;
+            border-radius: 0.25rem !important;
         }
     </style>
 </head>

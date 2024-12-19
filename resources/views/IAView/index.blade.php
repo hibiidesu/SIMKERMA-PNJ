@@ -23,8 +23,11 @@
                             <tr>
                                 <td>{{  $loop->index+1  }}</td>
                                 <td>{{ $item->nama_mitra }}</td>
-                                <td><a href={{ url('admin/agreement/detail/'.$item->id) }} target="_blank" rel="noopener noreferrer" class="btn btn-info">detail</a></td>
-
+                                <td class="gap-2">
+                                    <a href="{{ url('admin/agreement/detail/'.$item->id) }}" class="btn btn-info">Lihat</a>
+                                    <a href="{{ url('admin/agreement/edit/'.$item->id) }}" class="btn btn-primary">Edit</a>
+                                    <button class="btn btn-danger delete-btn" data-id="{{ $item->id }}">Delete</button>
+                                </td>
                             </tr>
 
                         @endforeach
@@ -33,5 +36,26 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $('.delete-btn').on('click', function() {
+            var id = $(this).data('id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{{ url('admin/agreement/delete') }}/" + id;
+                }
+            })
+        });
+    });
+</script>
 </section>
 @endsection

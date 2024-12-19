@@ -19,10 +19,10 @@
             <div class="card">
                 <div class="card-body">
                     @if (Auth::user()->role->role_name == 'admin')
-                        <form class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store-record') }}"
+                        <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store-record') }}"
                             enctype="multipart/form-data">
                         @elseif (Auth::user()->role->role_name == 'pic')
-                            <form class="form form-vertical" method="post"
+                            <form id="kForm" class="form form-vertical" method="post"
                                 action="{{ url('/pic/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
                     @endif
                     @csrf
@@ -185,7 +185,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_pnj">Nama PIC PNJ <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" required
-                                        value="{{ auth::user()->name }}" disabled>
+                                        value="{{ auth::user()->name }}">
                                     <input type="hidden" name="pic_pnj" value="{{ auth::user()->name }}">
                                 </div>
                             </div>
@@ -321,6 +321,29 @@
         });
     });
 
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('kForm');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Loading...',
+                html: 'Memproses data ke server...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            // Submit the form
+            this.submit();
+        });
+    });
 </script>
 
 @endsection

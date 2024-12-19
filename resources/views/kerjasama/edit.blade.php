@@ -10,9 +10,9 @@
         <div class="card">
             <div class="card-body">
                 @if (Auth::user()->role->role_name == 'admin')
-                    <form class="form form-vertical" method="post" action="{{ url('/admin/kerjasama/update') }}" enctype="multipart/form-data">
+                    <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/kerjasama/update') }}" enctype="multipart/form-data">
                 @elseif (Auth::user()->role->role_name == 'pic')
-                    <form class="form form-vertical" method="post" action="{{ url('/pic/kerjasama/update') }}" enctype="multipart/form-data">
+                    <form id="kForm" class="form form-vertical" method="post" action="{{ url('/pic/kerjasama/update') }}" enctype="multipart/form-data">
                 @endif
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
@@ -140,10 +140,21 @@
                                     </select>
                                 </div>
                             </div>
+                            @php
+                                $explodedProdi = is_array($data->prodi) ? $data->prodi : explode(',', $data->prodi);
+                            @endphp
+                            <div class="col-12 mb-2">
+                                <label class="mb-2 fw-bold text-capitalize" for="prodi">Prodi</label>
+                                <select id="prodi" name="prodi[]" multiple data-existing-prodi="{{ implode(',', $explodedProdi) }}">
+                                </select>
+                                <div id="prodi-loading" style="display: none;">
+                                    <small class="text-muted">Memuat data prodi...</small>
+                                </div>
+                            </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_pnj">Nama PIC PNJ <span class="text-danger">*</span></label>
-                                    <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" required value="{{ $data->pic_pnj }}">
+                                    <input type="text" id="pic_pnj" class="form-control" name="pic_pnj" required value="{{ $data->pic_pnj }}" disabled>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -196,6 +207,101 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            const prodiElement = document.getElementById('prodi');
+            const prodiChoice = new Choices(prodiElement, {
+                removeItemButton: true,
+                searchEnabled: true
+            });
+
+            const existingProdi = prodiElement.dataset.existingProdi.split(',').filter(Boolean);
+
+            function loadProdi() {
+                const selectedUnits = $('#jurusan').val();
+
+                prodiChoice.clearStore();
+                prodiChoice.setChoices([{
+                    value: '',
+                    label: 'Memuat data prodi...',
+                    disabled: true
+                }]);
+
+                if (selectedUnits && selectedUnits.length > 0) {
+                    $.ajax({
+                        url: `/api/prodi/find/${selectedUnits.join(',')}`,
+                        method: 'GET',
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#prodi-loading').show();
+                        },
+                        success: function(response) {
+                            if (response.status === 'success' && response.data.length > 0) {
+                                prodiChoice.clearStore();
+                                const choices = response.data.map(prodi => ({
+                                    value: prodi.id.toString(),
+                                    label: prodi.name,
+                                    selected: existingProdi.includes(prodi.id.toString())
+                                }));
+                                prodiChoice.setChoices(choices, 'value', 'label', true);
+                            } else {
+                                prodiChoice.setChoices([{
+                                    value: '',
+                                    label: 'Tidak ada prodi tersedia',
+                                    disabled: true
+                                }]);
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error('Error:', xhr);
+                            prodiChoice.setChoices([{
+                                value: '',
+                                label: 'Terjadi kesalahan saat mengambil data',
+                                disabled: true
+                            }]);
+                        },
+                        complete: function() {
+                            $('#prodi-loading').hide();
+                        }
+                    });
+                } else {
+                    prodiChoice.setChoices([{
+                        value: '',
+                        label: 'Pilih jurusan terlebih dahulu',
+                        disabled: true
+                    }]);
+                }
+            }
+
+            $('#jurusan').on('change', loadProdi);
+
+            // Load prodi on page load
+            loadProdi();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('kForm');
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: 'Memproses data ke server...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                // Submit the form
+                this.submit();
+            });
+        });
+    </script>
 </section>
 @endsection
 

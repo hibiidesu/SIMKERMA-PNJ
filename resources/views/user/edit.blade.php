@@ -29,9 +29,9 @@
                     </div>
                 @endif
                 @if (Request::segment(2) == 'my-profile')
-                    <form class="form form-vertical" method="post" action="{{ url('/'.Request::segment(1).'/my-profile/update') }}">
+                    <form id="kForm" class="form form-vertical" method="post" action="{{ url('/'.Request::segment(1).'/my-profile/update') }}">
                 @else
-                    <form class="form form-vertical" method="post" action="{{ url('/admin/user/update') }}">
+                    <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/user/update') }}">
                         <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                 @endif
                     @csrf
@@ -94,6 +94,29 @@
         </div>
     </div>
 </section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('kForm');
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Loading...',
+                html: 'Memproses data ke server...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            // Submit the form
+            this.submit();
+        });
+    });
+</script>
 @endsection
 
 @section('scripts')

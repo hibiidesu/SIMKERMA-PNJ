@@ -268,4 +268,25 @@ class WebController extends Controller
             'selesai' => $kerjasamaSelesai,
         ]);
     }
+
+    public function getAllKerjasama()
+    {
+        $kerjasamas = Kerjasama::all();
+
+        return response()->json($kerjasamas->map(function ($kerjasama) {
+            return [
+                'id' => $kerjasama->id,
+                'kerjasama' => $kerjasama->kerjasama,
+                'mitra' => $kerjasama->mitra,
+                'tanggal_mulai' => $kerjasama->tanggal_mulai,
+                'tanggal_selesai' => $kerjasama->tanggal_selesai,
+                'sifat' => $kerjasama->sifat,
+                'pks' => $kerjasama->pks_id->pks ?? null,
+                'step' => $kerjasama->step,
+            ];
+        }));
+    }
+
+
+
 }
