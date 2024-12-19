@@ -18,7 +18,7 @@ Route::get('/admin/template/download/{id}', [App\Http\Controllers\TemplateSuratC
 Route::get('/getout', function () {
     Auth::logout();
     return redirect('/');
-})->name('logout');
+});
 Route::get('/chart/data', [App\Http\Controllers\WebController::class, 'chartData']);
 Route::get('/chart/unit', [App\Http\Controllers\WebController::class, 'chartByUnit']);
 Route::get('/chart/sifat', [App\Http\Controllers\WebController::class, 'chartBySifat']);
