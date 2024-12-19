@@ -48,7 +48,7 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Ya Hapus'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "{{ url('admin/agreement/delete') }}/" + id;
