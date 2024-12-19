@@ -44,6 +44,7 @@ Route::get('/checkrole', [RoleController::class, 'checkRole'])->name('checkrole'
 Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'view'])->name('adminHome');
+    Route::get('/api/getAllKerjasama',[App\Http\Controllers\WebController::class, 'getAllKerjasama']);
     Route::prefix('kerjasama')->group(function () {
         Route::get('/', [App\Http\Controllers\KerjasamaController::class, 'index']);
         Route::get('/i', [App\Http\Controllers\KerjasamaController::class, 'x']);
@@ -144,6 +145,9 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::get('/add', [App\Http\Controllers\ImplementationAgreementController::class, 'create']);
         Route::post('/store', [App\Http\Controllers\ImplementationAgreementController::class, 'store']);
         Route::get('/detail/{id}', [App\Http\Controllers\ImplementationAgreementController::class,'show']);
+        Route::get('/edit/{id}', [App\Http\Controllers\ImplementationAgreementController::class, 'edit']);
+        Route::post('/update', [App\Http\Controllers\ImplementationAgreementController::class, 'update']);
+        Route::get('/delete/{id}', [App\Http\Controllers\ImplementationAgreementController::class, 'destroy']);
 
     });
 });

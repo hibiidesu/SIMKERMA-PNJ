@@ -56,6 +56,11 @@ class Kerjasama extends Model
     {
         return $this->belongsTo('App\Models\pks', 'id');
     }
+    public function pks_id()
+    {
+        return $this->belongsTo('App\Models\pks', 'pks', 'id');
+    }
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');

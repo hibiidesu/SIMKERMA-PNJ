@@ -334,8 +334,19 @@ class ReviewController extends Controller
         if ($request->hasFile('dokumen')) {
             $file = $request->file('dokumen');
             $file_name = time() . '.' . $file->getClientOriginalName();
+
+            // Delete the old file if it exists
+            if ($kerjasama->file && Storage::disk('surat_kerjasama')->exists($kerjasama->file)) {
+                Storage::disk('surat_kerjasama')->delete($kerjasama->file);
+            }
+
+            // Store the new file
             Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
-            $updateData['file'] = $file_name;
+
+            // Update the kerjasama record with the new file name
+            $kerjasama->update([
+                'file' => $file_name,
+            ]);
         }
         if ($request->has('nomor') && !is_null($request->nomor)) {
             $updateData['nomor'] = $request->nomor;
@@ -518,7 +529,13 @@ class ReviewController extends Controller
         if ($request->hasFile('dokumen')) {
             $file = $request->file('dokumen');
             $file_name = time() . '.' . $file->getClientOriginalName();
+
+            if ($kerjasama->file && Storage::disk('surat_kerjasama')->exists($kerjasama->file)) {
+                Storage::disk('surat_kerjasama')->delete($kerjasama->file);
+            }
+
             Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
+
             $kerjasama->update([
                 'file' => $file_name,
             ]);

@@ -22,19 +22,19 @@
             <ul class="menu">
                 {{-- <li class="sidebar-title">Menu</li> --}}
 
-                <li class="sidebar-item {{ url()->current() == url('legal/dashboard') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('legal/dashboard') || Request::is('legal/dashboard/*') ? 'active' : '' }}">
                     <a href="{{ url('legal/dashboard') }}" class='sidebar-link'>
                         <i class="fas fa-th-large"></i>
                         <span class="text-capitalize">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('legal/kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('legal/kerjasama') || Request::is('legal/kerjasama/*') ? 'active' : '' }}">
                     <a href="{{ url('legal/kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-handshake"></i>
                         <span class="text-capitalize">kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('legal/review') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('legal/review') || Request::is('legal/review/*') ? 'active' : '' }}">
                     <a href="{{ url('legal/review') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Review kerja sama</span>
@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <hr>
-                <li class="sidebar-item {{ url()->current() == url('legal/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('legal/my-profile') || Request::is('legal/my-profile/*') ? 'active' : '' }}">
                     <a href="{{ url('legal/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
                         <i class="fas fa-user"></i>
                         <span class="text-capitalize">My Profile</span>

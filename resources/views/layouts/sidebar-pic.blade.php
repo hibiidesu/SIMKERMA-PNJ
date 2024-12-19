@@ -22,33 +22,33 @@
             <ul class="menu">
                 {{-- <li class="sidebar-title">Menu</li> --}}
 
-                <li class="sidebar-item {{ url()->current() == url('pic/dashboard') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pic/dashboard') || Request::is('pic/dashboard/*') ? 'active' : '' }}">
                     <a href="{{ url('pic/dashboard') }}" class='sidebar-link'>
                         <i class="fas fa-th-large"></i>
                         <span class="text-capitalize">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pic/kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pic/kerjasama') || Request::is('pic/kerjasama/*') ? 'active' : '' }}">
                     <a href="{{ url('pic/kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-handshake"></i>
                         <span class="text-capitalize">kerja sama</span>
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ url()->current() == url('pic/pengajuan-kerjasama') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pic/pengajuan-kerjasama') || Request::is('pic/pengajuan-kerjasama/*') ? 'active' : '' }}">
                     <a href="{{ url('pic/pengajuan-kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">pengajuan kerja sama</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ url()->current() == url('pic/template/') ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pic/template') || Request::is('pic/template/*') ? 'active' : '' }}">
                     <a href="{{ url('pic/template/') }}" class='sidebar-link'>
                         <i class="fas fa-clipboard"></i>
                         <span class="text-capitalize">Template</span>
                     </a>
                 </li>
                 <hr>
-                <li class="sidebar-item {{ url()->current() == url('pic/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::is('pic/my-profile') || Request::is('pic/my-profile/*') ? 'active' : '' }}">
                     <a href="{{ url('pic/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
                         <i class="fas fa-user"></i>
                         <span class="text-capitalize">My Profile</span>

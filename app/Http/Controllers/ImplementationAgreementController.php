@@ -52,7 +52,55 @@ class ImplementationAgreementController extends Controller
         return view('IAView.detail', compact('ia', 'dataKerjasama'));
     }
 
-    public function destroy($id){
+        public function edit($id)
+    {
+        $ia = implementationAgreement::findOrFail($id);
+        $kerjasamas = Kerjasama::all();
+        return view('IAView.edit', compact('ia', 'kerjasamas'));
+    }
 
+    public function update(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:implementation_agreements,id',
+            'nama_mitra' => 'required',
+            'dokumen_agreement' => 'nullable|mimes:pdf',
+        ]);
+
+        $ia = implementationAgreement::findOrFail($request->id);
+        $ia->nama_mitra = $request->nama_mitra;
+
+        if ($request->hasFile('dokumen_agreement')) {
+            // Delete old file
+            if ($ia->dokumen_agreement) {
+                Storage::disk('dokumen_agreement')->delete($ia->dokumen_agreement);
+            }
+
+            // Upload new file
+            $file = $request->file('dokumen_agreement');
+            $fileName = time() . '.' . $file->getClientOriginalName();
+            Storage::disk('dokumen_agreement')->put($fileName, file_get_contents($file));
+            $ia->dokumen_agreement = $fileName;
+        }
+
+        if ($ia->save()) {
+            return redirect('/admin/agreement')->with('success', 'Data Berhasil Diperbarui');
+        } else {
+            return redirect()->back()->with('error', 'Gagal memperbarui data. Silakan coba lagi.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        $ia = implementationAgreement::findOrFail($id);
+
+        // Delete the associated file
+        if ($ia->dokumen_agreement) {
+            Storage::disk('dokumen_agreement')->delete($ia->dokumen_agreement);
+        }
+
+        $ia->delete();
+
+        return redirect('/admin/agreement')->with('success', 'Data Berhasil Dihapus');
     }
 }
