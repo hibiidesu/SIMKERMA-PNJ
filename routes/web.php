@@ -73,6 +73,15 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\UnitController::class, 'update']);
         Route::get('/edit/{id}', [App\Http\Controllers\UnitController::class, 'edit']);
     });
+    Route::prefix('review')->group(function() {
+        Route::get('/', [App\Http\Controllers\ReviewController::class, 'index']);
+        Route::post('/tolak', [App\Http\Controllers\ReviewController::class, 'tolakDirektur']);
+        Route::get('/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terimaDirektur']);
+        Route::get('/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+
+
+    });
+
     Route::prefix('prodi')->group(function() {
         Route::get('/', [ProdiController::class , 'index']);
         Route::get('/add', [ProdiController::class , 'create']);

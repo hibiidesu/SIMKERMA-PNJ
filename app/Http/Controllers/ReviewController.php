@@ -70,11 +70,18 @@ class ReviewController extends Controller
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('user_id', '=', Auth::user()->id)->orderBy('step', 'asc')->get(),
             ]);
-        } else { // Admin
+        } else if (Auth::user()->role_id == 1) { // Admin
             return view('review/index', [
                 'perjanjian' => $perjanjian,
-                'data' => Kerjasama::all(),
+                'data' => Kerjasama::where('step', '=', '5')
+                    ->where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
+                    ->orWhereNull('target_reviewer_id')
+                    ->where('step', '=', '5')
+                    ->orderBy('created_at', 'desc')
+                    ->get(),
             ]);
+        } else {
+            abort(403, 'Unauthorized action.');
         }
     }
 
@@ -269,7 +276,7 @@ class ReviewController extends Controller
                 ->where('step', '=', '3')
                 ->get()
                 ->first();
-        } else if (Auth::user()->role_id == 5) {
+        } else if (Auth::user()->role_id == 5 || Auth::user()->role_id == 1) {
 
             $data = Kerjasama::where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
                 ->where('id', '=', $id)
@@ -447,8 +454,14 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('success', 'Data berhasil ditolak');
+            }
             return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
         } else {
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('error', 'Data gagal ditolak');
+            }
             return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
         }
     }
@@ -532,8 +545,16 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('success', 'Data berhasil diterima');
+            }
+
             return redirect('/direktur/review')->with('success', 'Data berhasil diterima');
         } else {
+            if (Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('error', 'Data gagal diterima');
+            }
+
             return redirect('/direktur/review')->with('error', 'Data gagal diterima');
         }
     }

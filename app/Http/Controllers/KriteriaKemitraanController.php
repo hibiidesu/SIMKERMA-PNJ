@@ -57,11 +57,11 @@ class KriteriaKemitraanController extends Controller
     }
     public function delete($id){
         $find = kriteria_kemitraan::findOrFail($id);
-        $delete = $find->delete();
-        if($delete){
-            return redirect('/admin/kriteria/kemitraan')->with('success', 'Data di hapus');
-        } else {
-            return redirect('/admin/kriteria/kemitraan')->with('error', 'gagal menghapus data');
+        try {
+            $find->forceDelete();
+            return response()->json(['success' => true, 'message' => 'Data berhasil dihapus permanen']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Data gagal dihapus, karena: '.$e->getMessage()], 500);
         }
     }
 }

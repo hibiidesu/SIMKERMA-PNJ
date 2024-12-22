@@ -462,14 +462,18 @@
             </div>
         </div>
     </div>
-    @elseif (Auth::user()->role->role_name=="direktur")
+    @elseif (Auth::user()->role->role_name=="direktur" || Auth::user()->role->role_name=="admin")
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
                 <div class="card-title fw-bold text-dark">Action</div>
             </div>
             <div class="card-body">
+                @if(Auth::user()->role->role_name=="direktur")
                 <form class="form form-vertical" method="post" action="{{ url('/direktur/review/tolak') }}" >
+                @elseif (Auth::user()->role->role_name=="admin")
+                <form class="form form-vertical" method="post" action="{{ url('/admin/review/tolak') }}">
+                @endif
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                     <div class="form-group">
@@ -482,8 +486,13 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @if (Auth::user()->role->role_name=="direktur")
+                                    <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @elseif (Auth::user()->role->role_name=="admin")
+                                    <a href="{{ url('/admin/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @endif
                                 <button type="submit" class="btn btn-danger mb-1 action-btn" style="margin-left: 5px">Tolak</button>
+
                             </div>
                         </div>
                     </div>

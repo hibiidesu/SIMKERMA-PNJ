@@ -88,9 +88,13 @@ class ProdiController extends Controller
        }
     }
 
-    public function delete($id) {
-        $data = prodi::findOrFail($id);
-        $data->delete();
-        return redirect('admin/prodi')->with('success', 'Data Prodi Berhasil dihapus');
+    public function delete($id){
+        $find = prodi::findOrFail($id);
+        try {
+            $find->forceDelete();
+            return response()->json(['success' => true, 'message' => 'Data berhasil dihapus permanen']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Data gagal dihapus, karena: '.$e->getMessage()], 500);
+        }
     }
 }

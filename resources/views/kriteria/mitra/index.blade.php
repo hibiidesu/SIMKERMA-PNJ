@@ -50,7 +50,7 @@
                                         @csrf
                                         @method('DELETE')
                                         {{-- Bug Apabila Data Nomor Sebelas ke atas tidak dapat menggunakan Sweetalert2 --}}
-                                        <button type="submit" class="btn btn-danger delete-btn">Delete</button>
+                                        <button type="button" class="btn btn-danger delete-btn" onclick="confirmDelete({{ $item->id }})">Hapus</button>
                                     </form>
                                 </div>
                             </td>
@@ -61,6 +61,50 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Anda akan menghapus kriteria mitra ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteItem(id);
+                }
+            });
+        }
+
+        function deleteItem(id) {
+            fetch(`{{ url('/admin/kriteria/mitra/delete') }}/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Terhapus!', data.message, 'success')
+                    .then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error!', data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Error!', 'Terjadi kesalahan saat menghapus.', 'error');
+            });
+        }
+        </script>
 </section>
 @endsection
 
