@@ -13,6 +13,7 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KerjasamaExport;
+use Illuminate\Support\Facades\Validator;
 
 
 use App\Models\kriteria_kemitraan;
@@ -200,8 +201,7 @@ class KerjasamaController extends Controller
      */
     public function update(Request $request, Kerjasama $kerjasama)
     {
-        $request->validate(
-            [
+        $validator = Validator::make($request->all(), [
                 'id' => 'required',
                 'mitra' => 'required',
                 'kerjasama' => 'required',
@@ -222,10 +222,25 @@ class KerjasamaController extends Controller
                 'jabatan_pic_industri' => 'required',
                 // 'telp_industri' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 // 'email' => 'required|email',
-                'file' => 'file|mimes:pdf,doc,docx',
+                'file' => 'file|mimes:pdf,doc,docx|max:10240',
             ],
-            ['telp_industri.regex' => 'Format nomer telpon tidak valid']
+            ['telp_industri.regex' => 'Format nomer telpon tidak valid',
+            'email.email' => 'Format email tidak valid',
+            'file.mimes' => 'Format file harus PDF, DOC, DOCX',
+            'tanggal_mulai.after' => 'Tanggal mulai harus lebih awal dibandingkan tanggal selesai',
+            'tanggal_selesai.after' => 'Tanggal selesai harus lebih awal dibandingkan tanggal mulai',
+            'telp_industri.regex' => 'Format nomer telpon harus angka dan spasi, plus, minus, titik, atau koma',
+            'file.max' => 'File maksimal 10MB',
+            ]
         );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+
 
         if ($request->telp_industri) {
             $request->validate([

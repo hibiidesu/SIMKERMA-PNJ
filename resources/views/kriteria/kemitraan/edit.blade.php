@@ -6,6 +6,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                 <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/kriteria/kemitraan/update') }}">
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">

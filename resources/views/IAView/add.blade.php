@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="nama_mitra">Nama Mitra <span class="text-danger">*</span></label>
                                     <select class="form-control select2" id="nama_mitra" name="nama_mitra" required>
-                                        <option value="">Select Mitra</option>
+                                        <option value="">Pilih Mitra</option>
                                     </select>
                                     <input type="hidden" id="mitra_id" name="mitra_id">
                                 </div>

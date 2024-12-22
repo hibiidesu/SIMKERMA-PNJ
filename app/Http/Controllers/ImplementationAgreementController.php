@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Kerjasama;
 use App\Models\pks;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ImplementationAgreementController extends Controller
 {
@@ -21,10 +22,23 @@ class ImplementationAgreementController extends Controller
         ]);
     }
     public function store(Request $request){
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_mitra' => 'required',
-            'dokumen_agreement' => 'required|mimes:pdf',
+            'dokumen_agreement' => 'required|mimes:pdf,doc,docx|max:10240',
+        ], [
+            'nama_mitra.required' => 'Nama Mitra wajib diisi',
+            'dokumen_agreement.required' => 'Dokumen Agreement wajib diisi',
+            'dokumen_agreement.mimes' => 'Format Dokumen Agreement harus PDF, DOC, atau DOCX',
+            'dokumen_agreement.size' => 'Dokumen Agreement maksimal 10MB',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+
         $file = $request->file('dokumen_agreement');
         $fileName = time() . '.'. $file->getClientOriginalName();
         $move = Storage::disk('dokumen_agreement')->put($fileName, file_get_contents($file));
@@ -61,11 +75,23 @@ class ImplementationAgreementController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'id' => 'required|exists:implementation_agreements,id',
             'nama_mitra' => 'required',
-            'dokumen_agreement' => 'nullable|mimes:pdf',
+            'dokumen_agreement' => 'nullable|mimes:pdf,doc,docx|max:10240',
+        ], [
+            'id.required' => 'ID Implementation Agreement harus diisi',
+            'id.exists' => 'ID Implementation Agreement tidak ditemukan',
+            'nama_mitra.required' => 'Nama Mitra harus diisi',
+            'dokumen_agreement.mimes' => 'Format file yang diperbolehkan hanya PDF',
+            'dokumen_agreement.max' => 'File yang diupload terlalu besar. Maksimal ukuran file 10MB',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
 
         $ia = implementationAgreement::findOrFail($request->id);
         $ia->nama_mitra = $request->nama_mitra;

@@ -9,6 +9,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                @endif
                 @if (Auth::user()->role->role_name == 'admin')
                     <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/kerjasama/update') }}" enctype="multipart/form-data">
                 @elseif (Auth::user()->role->role_name == 'pic')
