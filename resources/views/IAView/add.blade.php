@@ -38,6 +38,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="dokumen_agreement">Dokumen agreement <span class="text-danger">*</span></label>
                                     <input type="file" id="dokumen_agreement" class="form-control" name="dokumen_agreement" required>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">

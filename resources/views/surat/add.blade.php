@@ -45,6 +45,7 @@
                                                 class="text-danger">*</span></label>
                                         <input type="file" id="template_surat" class="form-control" name="template_surat"
                                             required>
+                                            <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
                                     </div>
                                 </div>
                                 <div class="col-12 d-flex justify-content-end">

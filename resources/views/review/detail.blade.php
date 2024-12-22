@@ -385,6 +385,7 @@
                             <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                             <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Tertanda Tangan</label>
                             <input type="file" name="dokumen" id="dokumen" class="form-control">
+                            <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
                             <br>
                             <button type="submit" class="btn btn-success mb-1 action-btn" style="margin-left: 5px">Kirim</button>
                         </div>
@@ -448,7 +449,7 @@
                                     <input type="text" name="nomor" id="nomor" class="form-control">
                                     <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Perbaikan</label>
                                     <input type="file" name="dokumen" id="dokumen" class="form-control">
-                                    <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Abaikan jika anda menyetujui kerjasama ini</small>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
