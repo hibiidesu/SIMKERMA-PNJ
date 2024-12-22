@@ -183,7 +183,7 @@
                     <img src="{{ asset('img/kerjasama/kominfo.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/rindam.jpg') }}" alt="kerjasama pnj" style="width : 150px; display: unset">
+                    <img src="{{ asset('img/kerjasama/rindam.png') }}" alt="kerjasama pnj" style="width : 150px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/jasamarga.png') }}" alt="kerjasama pnj" style="width : 220px; display: unset">
@@ -222,19 +222,19 @@
                     <img src="{{ asset('img/kerjasama/gmf.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/holcim.jpg') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
+                    <img src="{{ asset('img/kerjasama/holcim.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/itc.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/mercubuana.jpg') }}" alt="kerjasama pnj" style="width : 150px; display: unset">
+                    <img src="{{ asset('img/kerjasama/mercubuana.png') }}" alt="kerjasama pnj" style="width : 150px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/metro.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/mnc.jpg') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
+                    <img src="{{ asset('img/kerjasama/mnc.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/budi-luhur.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
@@ -243,7 +243,7 @@
                     <img src="{{ asset('img/kerjasama/ngl.png') }}" alt="kerjasama pnj" style="width : 120px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/paragon.jpg') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
+                    <img src="{{ asset('img/kerjasama/paragon.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/pln.png') }}" alt="kerjasama pnj" style="width : 120px; display: unset">
@@ -258,7 +258,7 @@
                     <img src="{{ asset('img/kerjasama/skp.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
-                    <img src="{{ asset('img/kerjasama/surveyor.jpg') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
+                    <img src="{{ asset('img/kerjasama/surveyor.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
                 </div>
                 <div class="text-center">
                     <img src="{{ asset('img/kerjasama/trakindo.png') }}" alt="kerjasama pnj" style="width : 180px; display: unset">
