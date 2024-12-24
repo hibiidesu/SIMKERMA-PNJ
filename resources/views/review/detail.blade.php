@@ -462,7 +462,7 @@
             </div>
         </div>
     </div>
-    @elseif (Auth::user()->role->role_name=="direktur" || Auth::user()->role->role_name=="admin")
+    @elseif (Auth::user()->role->role_name=="direktur" || (Auth::user()->role->role_name=="admin" && $data->step == 5))
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
