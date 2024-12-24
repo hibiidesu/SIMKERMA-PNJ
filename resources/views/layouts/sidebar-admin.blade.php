@@ -38,7 +38,7 @@
                     <a href="{{ url('admin/pengajuan-kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
                         <span class="text-capitalize">Rekam / Review kerja sama</span>
-                        @if (Auth::user()->kerjasamaDirektur() != 0)
+                        @if (Auth::user()->kerjasamaAdmin() != 0)
                             <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaDirektur() }}</span>
                         @endif
                     </a>
