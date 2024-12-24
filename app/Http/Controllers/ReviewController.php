@@ -70,18 +70,11 @@ class ReviewController extends Controller
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('user_id', '=', Auth::user()->id)->orderBy('step', 'asc')->get(),
             ]);
-        } else if (Auth::user()->role_id == 1) { // Admin
+        } else { // Admin
             return view('review/index', [
                 'perjanjian' => $perjanjian,
-                'data' => Kerjasama::where('step', '=', '5')
-                    ->where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
-                    ->orWhereNull('target_reviewer_id')
-                    ->where('step', '=', '5')
-                    ->orderBy('created_at', 'desc')
-                    ->get(),
+                'data' => Kerjasama::all(),
             ]);
-        } else {
-            abort(403, 'Unauthorized action.');
         }
     }
 
