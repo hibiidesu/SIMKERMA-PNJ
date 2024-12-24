@@ -269,7 +269,7 @@ class ReviewController extends Controller
                 ->where('step', '=', '3')
                 ->get()
                 ->first();
-        } else if (Auth::user()->role_id == 5 || Auth::user()->role_id == 1) {
+        } else if (Auth::user()->role_id == 5 ) {
 
             $data = Kerjasama::where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
                 ->where('id', '=', $id)
