@@ -37,7 +37,10 @@
                 <li class="sidebar-item {{ Request::is('admin/pengajuan-kerjasama') || Request::is('admin/pengajuan-kerjasama/*') ? 'active' : '' }}">
                     <a href="{{ url('admin/pengajuan-kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-file"></i>
-                        <span class="text-capitalize">pengajuan kerja sama</span>
+                        <span class="text-capitalize">Rekam / Review kerja sama</span>
+                        @if (Auth::user()->kerjasamaAdmin() != 0)
+                            <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaDirektur() }}</span>
+                        @endif
                     </a>
                 </li>
                 <li class="sidebar-item {{ Request::is('admin/agreement') || Request::is('admin/agreement/*') ? 'active' : '' }}">

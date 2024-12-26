@@ -18,6 +18,7 @@ use App\Models\Persetujuan;
 use App\Models\prodi;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 
 
@@ -137,31 +138,39 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(
-            [
-                'mitra' => 'required',
-                'kerjasama' => 'required',
-                'tanggal_mulai' => 'required|date',
-                'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-                // 'nomor' => 'nullable',
-                'sifat' => 'required',
-                'kriteria_kemitraan_id' => 'required',
-                'kriteria_mitra_id' => 'required',
-                'jenis_kerjasama_id' => 'required',
-                'kriteria_mitra_id' => 'required',
-                'kriteria_kemitraan_id' => 'required',
-                'perjanjian' => 'required',
-                'jurusan' => 'required',
-                'pic_pnj' => 'required',
-                'alamat_perusahaan' => 'required',
-                'pic_industri' => 'required',
-                'jabatan_pic_industri' => 'required',
-                // 'telp_industri' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                // 'email' => 'required|email',
-                'file' => 'required|file|mimes:pdf,doc,docx',
-            ],
-            ['telp_industri.regex' => 'format nomor telpon tidak valid']
-        );
+        $validator = Validator::make($request->all(), [
+            'mitra' => 'required',
+            'kerjasama' => 'required',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'sifat' => 'required',
+            'kriteria_kemitraan_id' => 'required',
+            'kriteria_mitra_id' => 'required',
+            'jenis_kerjasama_id' => 'required',
+            'perjanjian' => 'required',
+            'jurusan' => 'required',
+            'pic_pnj' => 'required',
+            'alamat_perusahaan' => 'required',
+            'pic_industri' => 'required',
+            'jabatan_pic_industri' => 'required',
+            'telp_industri' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'email' => 'nullable|email',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+        ], [
+            'telp_industri.regex' => 'Format nomor telepon tidak valid',
+            'file.max' => 'Ukuran file tidak boleh lebih dari 10 MB',
+            'file.mimes' => 'Format file yang diperbolehkan hanya PDF, DOC, DOCX',
+            'tanggal_mulai.date' => 'Format tanggal mulai harus tanggal',
+            'tanggal_selesai.date' => 'Format tanggal selesai harus tanggal',
+            'tanggal_selesai.after' => 'Tanggal selesai harus setelah tanggal mulai',
+            'email.email' => 'Format email harus valid',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
 
         if ($request->telp_industri) {
             $request->validate([
@@ -260,7 +269,7 @@ class ReviewController extends Controller
                 ->where('step', '=', '3')
                 ->get()
                 ->first();
-        } else if (Auth::user()->role_id == 5) {
+        } else if (Auth::user()->role_id == 5 ) {
 
             $data = Kerjasama::where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
                 ->where('id', '=', $id)
@@ -310,11 +319,24 @@ class ReviewController extends Controller
     public function tolakLegal(Request $request)
 {
     // dd($request);
-    $request->validate([
+    $validator = Validator::make($request->all(), [
         'id' => 'required|exists:kerjasamas,id',
-        'catatan' => 'required',
-        'dokumen' => 'nullable|mimes:pdf,docx|max:2048',
+        'catatan' => 'required|string',
+        'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+        'nomor' => 'nullable|string|max:255',
+    ], [
+        'id.required' => 'ID kerjasama harus diisi.',
+        'catatan.required' => 'Catatan harus diisi.',
+        'dokumen.mimes' => 'Format file yang diperbolehkan hanya PDF, DOC, atau DOCX.',
+        'dokumen.max' => 'Ukuran file tidak boleh lebih dari 10 MB.',
+        'nomor.max' => 'Nomor tidak boleh lebih dari 255 karakter.',
     ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+                         ->withErrors($validator)
+                         ->withInput();
+    }
 
     $kerjasama = Kerjasama::find($request->id);
     if (!$kerjasama) {
@@ -425,8 +447,14 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('success', 'Data berhasil ditolak');
+            }
             return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
         } else {
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('error', 'Data gagal ditolak');
+            }
             return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
         }
     }
@@ -510,16 +538,30 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
+            if(Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('success', 'Data berhasil diterima');
+            }
+
             return redirect('/direktur/review')->with('success', 'Data berhasil diterima');
         } else {
+            if (Auth::user()->role_id == 1){
+                return redirect('/admin/review')->with('error', 'Data gagal diterima');
+            }
+
             return redirect('/direktur/review')->with('error', 'Data gagal diterima');
         }
     }
     public function dokumenAkhirAdmin(Request $request){
         // dd($request);
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'id' => 'required|exists:kerjasamas,id',
-            'dokumen' => 'nullable|mimes:pdf,docx|max:2048',
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+        ], [
+            'id.required' => 'ID kerjasama harus diisi.',
+            'id.exists' => 'ID kerjasama tidak valid.',
+            'dokumen.file' => 'Dokumen harus berupa file.',
+            'dokumen.mimes' => 'Format file yang diperbolehkan hanya PDF, DOC, atau DOCX.',
+            'dokumen.max' => 'Ukuran file tidak boleh lebih dari 10 MB.',
         ]);
 
         $kerjasama = Kerjasama::find($request->id);
@@ -759,31 +801,40 @@ class ReviewController extends Controller
     }
 
     public function store_record(Request $request){
-        $request->validate(
-            [
-                'mitra' => 'required',
-                'kerjasama' => 'required',
-                'tanggal_mulai' => 'required|date',
-                'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-                'nomor' => 'required',
-                'sifat' => 'required',
-                'kriteria_kemitraan_id' => 'required',
-                'kriteria_mitra_id' => 'required',
-                'jenis_kerjasama_id' => 'required',
-                'kriteria_mitra_id' => 'required',
-                'kriteria_kemitraan_id' => 'required',
-                'perjanjian' => 'required',
-                'jurusan' => 'required',
-                'pic_pnj' => 'required',
-                'alamat_perusahaan' => 'required',
-                'pic_industri' => 'required',
-                'jabatan_pic_industri' => 'required',
-                // 'telp_industri' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                // 'email' => 'required|email',
-                'file' => 'required|file|mimes:pdf,doc,docx',
-            ],
-            ['telp_industri.regex' => 'format nomor telpon tidak valid']
-        );
+        $validator = Validator::make($request->all(), [
+            'mitra' => 'required',
+            'kerjasama' => 'required',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
+            'nomor' => 'required',
+            'sifat' => 'required',
+            'kriteria_kemitraan_id' => 'required',
+            'kriteria_mitra_id' => 'required',
+            'jenis_kerjasama_id' => 'required',
+            'perjanjian' => 'required',
+            'jurusan' => 'required',
+            'pic_pnj' => 'required',
+            'alamat_perusahaan' => 'required',
+            'pic_industri' => 'required',
+            'jabatan_pic_industri' => 'required',
+            'telp_industri' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'email' => 'nullable|email',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+        ], [
+            'telp_industri.regex' => 'Format nomor telepon tidak valid',
+            'file.max' => 'Ukuran file tidak boleh lebih dari 2MB',
+            'file.mimes' => 'Format file harus PDF, DOC, DOCX',
+            'email.email' => 'Format email tidak valid',
+            'tanggal_mulai.date' => 'Format tanggal mulai harus dalam format tanggal',
+            'tanggal_selesai.date' => 'Format tanggal selesai harus dalam format tanggal',
+            'tanggal_selesai.after' => 'Tanggal selesai harus setelah tanggal mulai',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
 
         if ($request->telp_industri) {
             $request->validate([

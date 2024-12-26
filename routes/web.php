@@ -15,7 +15,10 @@ Route::get('/php', function () {
 Route::get('/admin/template/download/{id}', [App\Http\Controllers\TemplateSuratController::class, 'download'])
     ->name('template.download')
     ->middleware('auth');
-
+Route::get('/getout', function () {
+    Auth::logout();
+    return redirect('/');
+});
 Route::get('/chart/data', [App\Http\Controllers\WebController::class, 'chartData']);
 Route::get('/chart/unit', [App\Http\Controllers\WebController::class, 'chartByUnit']);
 Route::get('/chart/sifat', [App\Http\Controllers\WebController::class, 'chartBySifat']);
@@ -70,6 +73,15 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::post('/update', [App\Http\Controllers\UnitController::class, 'update']);
         Route::get('/edit/{id}', [App\Http\Controllers\UnitController::class, 'edit']);
     });
+    Route::prefix('review')->group(function() {
+        Route::get('/', [App\Http\Controllers\ReviewController::class, 'index']);
+        Route::post('/tolak', [App\Http\Controllers\ReviewController::class, 'tolakDirektur']);
+        Route::get('/terima/{id}', [App\Http\Controllers\ReviewController::class, 'terimaDirektur']);
+        Route::get('/detail/{id}', [App\Http\Controllers\ReviewController::class, 'show']);
+
+
+    });
+
     Route::prefix('prodi')->group(function() {
         Route::get('/', [ProdiController::class , 'index']);
         Route::get('/add', [ProdiController::class , 'create']);

@@ -19,6 +19,9 @@ class pks extends Seeder
             "MOU",
             "MOA",
             "Adendum PKS",
+            "Kontrak",
+            "PK",
+            "Rencana Implementasi",
         ];
         PksM::truncate(); //kosongkan table
         \DB::table('pks')->insert([

@@ -83,4 +83,13 @@ class User extends Authenticatable
             ->get()
             ->count();
     }
+    public function kerjasamaAdmin()
+    {
+        return Kerjasama::where('step', '=', '5')
+            ->where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
+            ->orWhereNull('target_reviewer_id')
+            ->where('step', '=', '5')
+            ->get()
+            ->count();
+    }
 }

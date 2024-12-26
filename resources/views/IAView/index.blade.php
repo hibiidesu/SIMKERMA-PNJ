@@ -42,13 +42,13 @@
         $('.delete-btn').on('click', function() {
             var id = $(this).data('id');
             Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
+                title: 'Apakah anda yakin?',
+                text: "Data & dokumen akan terhapus secara permanen!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
+                confirmButtonText: 'Ya Hapus'
             }).then((result) => {
                 if (result.isConfirmed) {
                     window.location.href = "{{ url('admin/agreement/delete') }}/" + id;

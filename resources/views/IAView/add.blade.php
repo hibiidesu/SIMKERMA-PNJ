@@ -27,7 +27,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="nama_mitra">Nama Mitra <span class="text-danger">*</span></label>
                                     <select class="form-control select2" id="nama_mitra" name="nama_mitra" required>
-                                        <option value="">Select Mitra</option>
+                                        <option value="">Pilih Mitra</option>
                                     </select>
                                     <input type="hidden" id="mitra_id" name="mitra_id">
                                 </div>
@@ -38,6 +38,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="dokumen_agreement">Dokumen agreement <span class="text-danger">*</span></label>
                                     <input type="file" id="dokumen_agreement" class="form-control" name="dokumen_agreement" required>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">

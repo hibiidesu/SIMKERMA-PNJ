@@ -9,6 +9,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
+                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                @endif
                 @if (Auth::user()->role->role_name == 'admin')
                     <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/kerjasama/update') }}" enctype="multipart/form-data">
                 @elseif (Auth::user()->role->role_name == 'pic')
@@ -191,7 +200,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="file">Surat Kerja Sama</label>
                                     <input type="file" id="file" class="form-control" name="file" accept="application/pdf">
-                                    <div class="form-text text-muted">Upload surat kerja sama baru untuk mengganti surat kerja sama lama</div><br>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
 
                                     @if ($data->file)
                                         <iframe src="{{ asset('surat_kerjasama/'.$data->file) }}" frameborder="0" class="w-100" height="580px"></iframe>

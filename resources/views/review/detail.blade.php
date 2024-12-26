@@ -5,6 +5,15 @@
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-body text-dark">
+                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                 <h5 class="text-center page-heading"><span>TIMELINE PENGAJUAN</span></h5>
                 <div class="row">
                     <!-- Tanggal Pengajuan-->
@@ -376,6 +385,7 @@
                             <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                             <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Tertanda Tangan</label>
                             <input type="file" name="dokumen" id="dokumen" class="form-control">
+                            <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
                             <br>
                             <button type="submit" class="btn btn-success mb-1 action-btn" style="margin-left: 5px">Kirim</button>
                         </div>
@@ -439,7 +449,7 @@
                                     <input type="text" name="nomor" id="nomor" class="form-control">
                                     <label for="dokumen" class="mb-2 fw-bold text-capitalize">Dokumen Perbaikan</label>
                                     <input type="file" name="dokumen" id="dokumen" class="form-control">
-                                    <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Abaikan jika anda menyetujui kerjasama ini</small>
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
@@ -452,14 +462,18 @@
             </div>
         </div>
     </div>
-    @elseif (Auth::user()->role->role_name=="direktur")
+    @elseif (Auth::user()->role->role_name=="direktur" || (Auth::user()->role->role_name=="admin" && $data->step == 5))
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
                 <div class="card-title fw-bold text-dark">Action</div>
             </div>
             <div class="card-body">
+                @if(Auth::user()->role->role_name=="direktur")
                 <form class="form form-vertical" method="post" action="{{ url('/direktur/review/tolak') }}" >
+                @elseif (Auth::user()->role->role_name=="admin")
+                <form class="form form-vertical" method="post" action="{{ url('/admin/review/tolak') }}">
+                @endif
                     @csrf
                     <input type="hidden" readonly required class="form-control" name="id" value="{{ $data->id }}">
                     <div class="form-group">
@@ -472,8 +486,13 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @if (Auth::user()->role->role_name=="direktur")
+                                    <a href="{{ url('/direktur/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @elseif (Auth::user()->role->role_name=="admin")
+                                    <a href="{{ url('/admin/review/terima/'. $data->id) }}" class="btn btn-success mb-1 action-btn">Setujui</a>
+                                @endif
                                 <button type="submit" class="btn btn-danger mb-1 action-btn" style="margin-left: 5px">Tolak</button>
+
                             </div>
                         </div>
                     </div>

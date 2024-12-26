@@ -6,6 +6,15 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
+                @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                 @if (Auth::user()->role->role_name == 'admin')
                     <a href="{{ url('/admin/pengajuan-kerjasama/record') }}" class="btn btn-primary"><i class="fas fa-clipboard"></i> &nbsp;Add New Record</a>
                     <a href="{{ url('/admin/pengajuan-kerjasama/add') }}" class="btn btn-success"><i class="fas fa-plus"></i> &nbsp;Add New Request</a>

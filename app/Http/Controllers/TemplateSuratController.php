@@ -6,6 +6,7 @@ use App\Models\templateSurat;
 use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class TemplateSuratController extends Controller
 {
@@ -39,10 +40,22 @@ class TemplateSuratController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'nama_surat' => 'required',
             'template_surat' => 'required|file|mimes:pdf,docx|max:10240', // Validate for PDF or DOCX, max size 10MB
+        ], [
+            'nama_surat.required' => 'Nama surat wajib diisi',
+            'template_surat.required' => 'File template surat wajib diisi',
+            'template_surat.mimes' => 'File template surat harus berformat PDF atau DOCX',
+            'template_surat.max' => 'File template surat terlalu besar, maksimal 10MB',
         ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
+
+
 
 
         $originalName = $request->file('template_surat')->getClientOriginalName();
@@ -120,10 +133,19 @@ class TemplateSuratController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'nama_surat' => 'required|string|max:255',
-            'template_surat' => 'nullable|file|mimes:doc,docx,pdf|max:2048',
+        $validator = Validator::make($request->all(), [
+            'nama_surat' => 'required',
+            'template_surat' => 'nullable|file|mimes:pdf,docx|max:10240', // Validate for PDF or DOCX, max size 10MB
+        ], [
+            'nama_surat.required' => 'Nama surat wajib diisi',
+            'template_surat.mimes' => 'File template surat harus berformat PDF atau DOCX',
+            'template_surat.max' => 'File template surat terlalu besar, maksimal 10MB',
         ]);
+        if ($validator->fails()) {
+            return redirect()->back()
+                             ->withErrors($validator)
+                             ->withInput();
+        }
 
         $template = TemplateSurat::findOrFail($id);
         $template->nama_surat = $request->nama_surat;

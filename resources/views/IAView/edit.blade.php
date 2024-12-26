@@ -45,7 +45,8 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="dokumen_agreement">Dokumen agreement</label>
                                     <input type="file" id="dokumen_agreement" class="form-control" name="dokumen_agreement">
                                     @if($ia->dokumen_agreement)
-                                        <p class="mt-2">Dokumen saat ini: {{ $ia->dokumen_agreement }}<br>Abaikan jika tidak ingin mengubah</p>
+                                        <p class="mt-2">Dokumen saat ini: {{ $ia->dokumen_agreement }}</p><br>
+                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
                                     @endif
                                 </div>
                             </div>
