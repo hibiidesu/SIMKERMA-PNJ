@@ -22,34 +22,47 @@
             <ul class="menu">
                 {{-- <li class="sidebar-title">Menu</li> --}}
 
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/dashboard') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/dashboard') }}" class='sidebar-link'>
-                        <i class="fas fa-th-large"></i>
-                        <span class="text-capitalize">Dashboard</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/kerjasama') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/kerjasama') }}" class='sidebar-link'>
-                        <i class="fas fa-handshake"></i>
-                        <span class="text-capitalize">kerja sama</span>
-                    </a>
-                </li>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/review') ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/review') }}" class='sidebar-link'>
-                        <i class="fas fa-file"></i>
-                        <span class="text-capitalize">Review kerja sama</span>
-                        @if (Auth::user()->kerjasamaWadir() != 0)
-                        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaWadir() }}</span>
-                        @endif
-                    </a>
-                </li>
-                <hr>
-                <li class="sidebar-item {{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'active' : '' }}">
-                    <a href="{{ url('pemimpin/my-profile/'.Auth::user()->id) }}" class='sidebar-link'>
-                        <i class="fas fa-user"></i>
-                        <span class="text-capitalize">My Profile</span>
-                    </a>
-                </li>
+                <li class="sidebar-item {{ url()->current() == url('pemimpin/dashboard') ? 'active' : '' }}" 
+    style="{{ url()->current() == url('pemimpin/dashboard') ? 'background-color: #018797; color: white; border-radius: 8px; box-shadow: none; border: none;' : '' }}">
+    <a href="{{ url('pemimpin/dashboard') }}" class='sidebar-link' 
+       style="display: flex; align-items: center; text-decoration: none; background-color: transparent; color: inherit; border: none; outline: none; box-shadow: none; padding: 10px; border-radius: 8px;">
+        <i class="fas fa-th-large" style="margin-right: 8px;"></i>
+        <span class="text-capitalize">Dashboard</span>
+    </a>
+</li>
+
+<li class="sidebar-item {{ url()->current() == url('pemimpin/kerjasama') ? 'active' : '' }}" 
+    style="{{ url()->current() == url('pemimpin/kerjasama') ? 'background-color: #018797; color: white; border-radius: 8px; box-shadow: none; border: none;' : '' }}">
+    <a href="{{ url('pemimpin/kerjasama') }}" class='sidebar-link' 
+       style="display: flex; align-items: center; text-decoration: none; background-color: transparent; color: inherit; border: none; outline: none; box-shadow: none; padding: 10px; border-radius: 8px;">
+        <i class="fas fa-handshake" style="margin-right: 8px;"></i>
+        <span class="text-capitalize">Kerja Sama</span>
+    </a>
+</li>
+
+<li class="sidebar-item {{ url()->current() == url('pemimpin/review') ? 'active' : '' }}" 
+    style="{{ url()->current() == url('pemimpin/review') ? 'background-color: #018797; color: white; border-radius: 8px; box-shadow: none; border: none;' : '' }}">
+    <a href="{{ url('pemimpin/review') }}" class='sidebar-link' 
+       style="display: flex; align-items: center; text-decoration: none; background-color: transparent; color: inherit; border: none; outline: none; box-shadow: none; padding: 10px; border-radius: 8px;">
+        <i class="fas fa-file" style="margin-right: 8px;"></i>
+        <span class="text-capitalize">Review Kerja Sama</span>
+        @if (Auth::user()->kerjasamaWadir() != 0)
+        <span class="badge bg-warning text-dark">{{ Auth::user()->kerjasamaWadir() }}</span>
+        @endif
+    </a>
+</li>
+
+<hr>
+
+<li class="sidebar-item {{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'active' : '' }}" 
+    style="{{ url()->current() == url('pemimpin/my-profile/'.Auth::user()->id) ? 'background-color: #018797; color: white; border-radius: 8px; box-shadow: none; border: none;' : '' }}">
+    <a href="{{ url('pemimpin/my-profile/'.Auth::user()->id) }}" class='sidebar-link' 
+       style="display: flex; align-items: center; text-decoration: none; background-color: transparent; color: inherit; border: none; outline: none; box-shadow: none; padding: 10px; border-radius: 8px;">
+        <i class="fas fa-user" style="margin-right: 8px;"></i>
+        <span class="text-capitalize">My Profile</span>
+    </a>
+</li>
+
                 <li class="sidebar-item">
                     <a class='sidebar-link' href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out"></i>

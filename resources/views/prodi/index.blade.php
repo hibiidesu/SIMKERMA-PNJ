@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ url('/admin/prodi/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                <a href="{{ url('/admin/prodi/add') }}" class="btn btn-info"style="background-color: #018797; border-color: #018797;" ><i class="fas fa-plus"></i> &nbsp;Add New</a>
             </div>
             <div class="card-body">
             <div class="message form">
@@ -38,7 +38,7 @@
                             <td>{{ $item->unit->name }} ({{ $item->unit->id }})</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ url('/admin/prodi/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('/admin/prodi/edit/'. $item->id) }}" style="background-color: #018797; border-color: #018797;" class="btn btn-primary">Edit</a>
                                     <form action="{{ url('/admin/prodi/delete/' . $item->id) }}" method="POST" class="delete-form">
                                         @csrf
                                         @method('DELETE')

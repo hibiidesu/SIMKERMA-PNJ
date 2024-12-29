@@ -68,7 +68,7 @@
                             Remember Me
                         </label>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5" style="background-color: #018797; border-color: #018797;">Log in</button>
                 </form>
                 <a href="{{ route('sso.login') }}"
                         class="btn btn-success btn-block btn-lg mt-3 d-flex align-items-center text-center justify-content-center">

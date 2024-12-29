@@ -29,11 +29,23 @@
                     @endif
                 @else
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                        <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                    <a href="{{ url('admin/kerjasama/export') }}" 
+                    class="btn" 
+                    style="background-color: #018797; border-color: #018797; color: white; float: right;">
+                    <i class="fas fa-file-excel"></i> Generate Excel
+                    </a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                        <a href="{{ url('pemimpin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                    <a href="{{ url('pemimpin/kerjasama/export') }}" 
+                    class="btn" 
+                    style="background-color: #018797; border-color: #018797; color: white; float: right;">
+                    <i class="fas fa-file-excel"></i> Generate Excel
+                    </a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                    <a href="{{ url('pic/kerjasama/export') }}" 
+                    class="btn" 
+                    style="background-color: #018797; border-color: #018797; color: white; float: right;">
+                   <i class="fas fa-file-excel"></i> Generate Excel
+                   </a>
                     @endif
                 @endif
 
@@ -97,7 +109,8 @@
                         </div>
                         <div class="form-group">
                         <div class="form-group" style="flex: 1 1 18%; min-width: 150px;">
-                                <button class="btn btn-primary mt-4" type="submit" name="filter" value="true">Terapkan</button>
+                        <button class="btn btn-primary mt-4" type="submit" name="filter" value="true" style="background-color: #018797; border-color: #018797; color: white;"> Terapkan
+                        </button>
                                 @if (Request::get('filter'))
                                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
                                         <a href="{{ url('admin/kerjasama') }}" class="btn btn-secondary mt-4" title="Hapus Filter"><i class="fas fa-times"></i></a>

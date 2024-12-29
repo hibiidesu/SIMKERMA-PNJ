@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ url('/admin/jenis-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+            <a href="{{ url('/admin/jenis-kerjasama/add') }}" class="btn btn-info" style="background-color: #018797; border-color: #018797;"><i class="fas fa-plus"></i> &nbsp;Add New</a>
             </div>
             <div class="card-body">
             <div class="message form">
@@ -35,9 +35,9 @@
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $item->jenis_kerjasama }}</td>
                             <td>
-                                <div class="d-flex">
-                                    <a href="{{ url('/admin/jenis-kerjasama/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
-                                </div>
+                            <div class="d-flex">
+                            <a href="{{ url('/admin/jenis-kerjasama/edit/'. $item->id) }}" class="btn" style="background-color: #018797; color: white;">Edit</a>
+                            </div>
                             </td>
                         </tr>
                         @endforeach

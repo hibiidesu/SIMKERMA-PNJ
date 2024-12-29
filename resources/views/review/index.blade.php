@@ -7,9 +7,9 @@
         <div class="card">
             <div class="card-header">
                 @if (Auth::user()->role->role_name == 'admin')
-                    <a href="{{ url('/admin/pengajuan-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                <a href="{{ url('/admin/pengajuan-kerjasama/add') }}" class="btn btn-info" style="background-color: #018797; border-color: #018797;"><i class="fas fa-plus"></i> &nbsp;Add New</a>
                 @elseif (Auth::user()->role->role_name == 'pic')
-                    <a href="{{ url('/pic/pengajuan-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                <a href="{{ url('/pic/pengajuan-kerjasama/add') }}" class="btn btn-info" style="background-color: #018797; border-color: #018797;"><i class="fas fa-plus"></i> &nbsp;Add New</a>
                 @endif
             </div>
             <div class="card-body">

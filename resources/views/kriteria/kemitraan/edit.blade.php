@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary mb-1">Submit</button>
+                                <button type="submit" style="background-color: #018797; border-color: #018797;" class="btn btn-primary mb-1">Submit</button>
                             </div>
                         </div>
                     </div>

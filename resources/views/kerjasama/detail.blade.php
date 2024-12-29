@@ -14,7 +14,7 @@
                             <i class="fas fa-user" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
                             <p class="font-weight">Tanggal Pengajuan</p>
-                            <p class="text-muted">19-11-2024</p>
+                            <p class="text-black">19-11-2024</p>
                             <span class="badge bg-success">Mengajukan</span>
                             </div>
                     </div>
@@ -32,7 +32,7 @@
                             <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
                             <p class="font-weight">Tanggal Review legal</p>
-                            <p class="text-muted">20-11-2024</p>
+                            <p class="text-black">20-11-2024</p>
                             <span class="badge bg-success">Diterima</span>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                             <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
                             <p class="font-weight">Tanggal Disetujui Wadir 4</p>
-                            <p class="text-muted">20-11-2024</p>
+                            <p class="text-black">20-11-2024</p>
                             <span class="badge bg-success">Diterima</span>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                             <i class="fas fa-check-circle" style="font-size:48px; color:#28a745;"></i>
                             <br><br>
                             <p class="font-weight">Tanggal Diterima Direktur</p>
-                            <p class="text-muted">20-11-2024</p>
+                            <p class="text-black">20-11-2024</p>
                             <span class="badge bg-success">Diterima</span>
                             </div>
                           </div>

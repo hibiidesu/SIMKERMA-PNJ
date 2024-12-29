@@ -6,7 +6,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ url('/admin/user/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+            <a href="{{ url('/admin/user/add') }}" class="btn btn-info" style="background-color: #018797; border-color: #018797;">
+            <i class="fas fa-plus"></i> &nbsp;Add New
+            </a>
             </div>
             <div class="card-body">
                 <div class="message form">
@@ -40,7 +42,7 @@
                             <td>{{ $item->role->role_name }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ url('/admin/user/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('/admin/user/edit/'. $item->id) }}" class="btn btn-primary" style="background-color: #018797; border-color: #018797;">Edit</a>
                                     @if ($item->status == 0)
                                         <a href="{{ url('/admin/user/activate/'. $item->id) }}" class="btn btn-success ms-2">Aktifkan</a>
                                     @else

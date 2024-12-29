@@ -19,10 +19,10 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 d-flex justify-content-start">
-                                    <a class="btn btn-info" href="/">Kembali</a>
+                                <a class="btn" style="background-color: #018797; color: white;" href="/">Kembali</a>
                                 </div>
                                 <div class="col-6 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary mb-1">Submit</button>
+                                <button type="submit" class="btn" style="background-color: #018797; color: white;" mb-1>Submit</button>
                                 </div>
                             </div>
 

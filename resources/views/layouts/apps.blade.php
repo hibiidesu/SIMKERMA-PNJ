@@ -48,11 +48,11 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link btn btn-info px-4 text-white fw-bold me-2" href="{{ route('tracking') }}">Track Pengajuan</a>
+                            <a class="nav-link btn btn-info px-4 text-white fw-bold me-2" href="{{ route('tracking') }}" style="background-color: #018797; color: white;">Track Pengajuan</a>
                         </li>
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link btn btn-info px-4 text-white fw-bold" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link btn btn-info px-4 text-white fw-bold" href="{{ route('login') }}" style="background-color: #018797; color: white;">{{ __('Login') }}</a>
                                 </li>
                             @endif
 

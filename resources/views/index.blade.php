@@ -295,11 +295,16 @@
         </div>
     </div>
 </div>
-<div class="bg-info">
+<div style="background-color: #018797; color: white; text-align: center; padding: 15px 0;">
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center small align-items-center text-white pt-3">
-                <p>Copyright © <a href="https://www.pnj.ac.id/" target="_blank" class="text-white fw-bold text-decoration-none">Politeknik Negeri Jakarta</a></p>
+            <div class="col-12 small align-items-center">
+                <p>
+                    Copyright © 
+                    <a href="https://www.pnj.ac.id/" target="_blank" style="color: white; font-weight: bold; text-decoration: none;">
+                        Politeknik Negeri Jakarta
+                    </a>
+                </p>
             </div>
         </div>
     </div>
