@@ -12,7 +12,7 @@
 - PIC PNJ : {{ $kerjasama->pic_pnj }} <br>
 - Status: Menunggu Review Legal<br>
 
-@component('mail::button', ['url' => env('APP_URL').'/'.$path.'/review/detail/'.$kerjasama->id, 'color::success'])
+@component('mail::button', ['url' => config('app.url').'/'.$path.'/review/detail/'.$kerjasama->id, 'color::success'])
 Lihat Pengajuan
 @endcomponent
 

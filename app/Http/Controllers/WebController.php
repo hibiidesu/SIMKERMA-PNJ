@@ -115,52 +115,53 @@ class WebController extends Controller
     {
         switch ($request->filter) {
             case 0:
-                $sql = Kerjasama::selectRaw('unit.id as unit_id, unit.name as label, count(*) as data')
-                    ->where('step', 7)
-                    ->join('unit', DB::raw("CAST(unit.id as varchar)"), '=', 'kerjasamas.jurusan')
-                    ->where('jurusan', '<>', '')
-                    ->groupBy('label', 'unit_id')
-                    ->get();
-                $more = Kerjasama::selectRaw('kerjasamas.jurusan as label, count(*) as data')
-                    ->where('step', 7)
-                    ->where('jurusan', 'like', '%,%')
-                    ->groupBy('jurusan')
-                    ->get();
+                $query = Kerjasama::where('step', 7);
                 break;
             case 1:
-                $sql = Kerjasama::selectRaw('unit.id as unit_id, unit.name as label, count(*) as data')
-                    ->where('step', 7)
-                    ->join('unit', DB::raw("CAST(unit.id as varchar)"), '=', 'kerjasamas.jurusan')
-                    ->where('jurusan', '<>', '')
-                    ->whereDate('tanggal_selesai', '>=', Carbon::now())
-                    ->groupBy('label', 'unit_id')
-                    ->get();
-                $more = Kerjasama::selectRaw('kerjasamas.jurusan as label, count(*) as data')
-                    ->where('step', 7)
-                    ->whereDate('tanggal_selesai', '>=', Carbon::now())
-                    ->where('jurusan', 'like', '%,%')
-                    ->groupBy('jurusan')
-                    ->get();
+                $query = Kerjasama::where('step', 7)->whereDate('tanggal_selesai', '>=', Carbon::now());
                 break;
             case 2:
-                $sql = Kerjasama::selectRaw('unit.id as unit_id, unit.name as label, count(*) as data')
-                    ->where('step', 7)
-                    ->join('unit', DB::raw("CAST(unit.id as varchar)"), '=', 'kerjasamas.jurusan')
-                    ->whereDate('tanggal_selesai', '<', Carbon::now())
-                    ->where('jurusan', '<>', '')
-                    ->groupBy('label', 'unit_id')
-                    ->get();
-                $more = Kerjasama::selectRaw('kerjasamas.jurusan as label, count(*) as data')
-                    ->where('step', 7)
-                    ->where('jurusan', 'like', '%,%')
-                    ->whereDate('tanggal_selesai', '<', Carbon::now())
-                    ->groupBy('jurusan')
-                    ->get();
+                $query = Kerjasama::where('step', 7)->whereDate('tanggal_selesai', '<', Carbon::now());
                 break;
         }
+
+        $kerjasamas = $query->get();
+
+        $unitCounts = [];
+        foreach ($kerjasamas as $kerjasama) {
+            $jurusanIds = explode(',', $kerjasama->jurusan);
+            foreach ($jurusanIds as $jurusanId) {
+                if (!empty($jurusanId)) {
+                    if (!isset($unitCounts[$jurusanId])) {
+                        $unitCounts[$jurusanId] = 0;
+                    }
+                    $unitCounts[$jurusanId]++;
+                }
+            }
+        }
+
+        $units = DB::table('unit')->whereIn('id', array_keys($unitCounts))->get();
+
+        $result = $units->map(function ($unit) use ($unitCounts) {
+            return [
+                'unit_id' => $unit->id,
+                'label' => $unit->name,
+                'data' => $unitCounts[$unit->id] ?? 0
+            ];
+        });
+
+        $more = $kerjasamas->filter(function ($kerjasama) {
+            return strpos($kerjasama->jurusan, ',') !== false;
+        })->map(function ($kerjasama) {
+            return [
+                'label' => $kerjasama->jurusan,
+                'data' => 1
+            ];
+        })->values();
+
         return response()->json([
             'more' => $more,
-            'result' => $sql,
+            'result' => $result,
         ]);
     }
     public function chartByJenisKerjasama(Request $request)
