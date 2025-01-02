@@ -9,7 +9,7 @@
                 <form id="trackForm">
                     <div class="input-group mb-3">
                         <input type="text" id="tracker_id" class="form-control" name="tracker_id" required placeholder="Masukan ID Pengajuan">
-                        <button type="submit" class="btn btn-primary">Cari</button>
+                        <button type="submit" class="btn btn-custom">Cari</button>
                     </div>
                 </form>
                 <div id="response" class="mt-4"></div>

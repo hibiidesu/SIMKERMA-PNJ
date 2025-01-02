@@ -14,15 +14,15 @@
                     </div>
                     @if (Auth::user()->role->role_name == 'admin')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/admin/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
+                            <a href="{{ url('/admin/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-custom"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
                         </div>
                     @elseif (Auth::user()->role->role_name == 'pemimpin')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/direktur/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
+                            <a href="{{ url('/direktur/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-custom"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
                         </div>
                     @elseif (Auth::user()->role->role_name == 'pic')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/pic/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-primary"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
+                            <a href="{{ url('/pic/kerjasama/detail/'. $data->kerjasama_id) }}" class="btn btn-custom"><i class="fas fa-eye"></i> Lihat Kerja Sama</a>
                         </div>
                     @endif
 

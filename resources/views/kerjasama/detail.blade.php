@@ -155,14 +155,14 @@
                     </div>
                     @if (Auth::user()->role->role_name == 'admin')
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/admin/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ url('/admin/kerjasama/edit/'. $data->id) }}" class="btn btn-custom">Edit</a>
                             <button class="btn btn-danger" onclick="konfirmasiHapus('{{ $data->id }}')">
                                 <i class="fa fa-trash"></i> Hapus
                             </button>
                         </div>
                     @elseif (Auth::user()->role->role_name == 'pic' && $data->user_id == Auth::user()->id)
                         <div class="order-md-1 order-0 col-12 col-md-4 text-md-end mb-md-0 mb-3">
-                            <a href="{{ url('/pic/kerjasama/edit/'. $data->id) }}" class="btn btn-primary">Edit</a>
+                            <a href="{{ url('/pic/kerjasama/edit/'. $data->id) }}" class="btn btn-custom">Edit</a>
                         </div>
                     @endif
 

@@ -30,7 +30,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama diajukan</strong></div>
+                        <div class="card-header text-center"><strong><i class="fa-solid fa-book"></i><br>Total kerjasama diajukan</strong></div>
                         <div class="card-body">
                             <h5 class="card-title text-center" id="totalKerjasama">0</h5>
                         </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama yang sedang berlangsung</strong></div>
+                        <div class="card-header text-center"><strong><i class="fa-solid fa-handshake"></i><br>Total kerjasama yang sedang berlangsung</strong></div>
                         <div class="card-body">
                             <h5 class="card-title text-center" id="kerjasamaBerlangsung">0</h5>
                         </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card text-white bg-info mb-3">
-                        <div class="card-header text-center"><strong>Total kerjasama yang sudah selesai</strong></div>
+                        <div class="card-header text-center"><strong><i class="fa-solid fa-check"></i><br>Total kerjasama yang sudah selesai</strong></div>
                         <div class="card-body">
                             <h5 class="card-title text-center" id="kerjasamaSelesai">0</h5>
                         </div>

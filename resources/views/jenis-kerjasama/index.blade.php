@@ -47,7 +47,7 @@
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ url('/admin/jenis-kerjasama/edit/' . $item->id) }}"
-                                                class="btn btn-primary">Edit</a>
+                                                class="btn btn-custom">Edit</a>
                                         </div>
                                     </td>
                                 </tr>

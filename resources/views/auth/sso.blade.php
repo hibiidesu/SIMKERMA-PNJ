@@ -73,7 +73,7 @@
                             </span>
                         @enderror
                     </div>
-                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Register</button>
+                    <button class="btn btn-custom btn-block btn-lg shadow-lg mt-5">Register</button>
                 </form>
             </div>
         </div>

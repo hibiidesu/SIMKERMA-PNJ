@@ -45,7 +45,7 @@
                             <td>{{ $item->kriteria_mitra }}</td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <a href="{{ url('/admin/kriteria/mitra/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('/admin/kriteria/mitra/edit/'. $item->id) }}" class="btn btn-custom">Edit</a>
                                     <form action="{{ url('/admin/kriteria/mitra/delete/' . $item->id) }}" method="POST" class="delete-form">
                                         @csrf
                                         @method('DELETE')
