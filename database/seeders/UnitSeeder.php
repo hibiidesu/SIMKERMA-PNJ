@@ -18,21 +18,21 @@ class UnitSeeder extends Seeder
     public function run()
     {
         $data = [
-            "PNJ",
+            "PNJ", //1
             "Pasca Sarjana",
             "Teknik Manufaktur",
-            "TIK",
-            "TM",
-            "AK",
-            "AN",
-            "TGP",
-            "TS",
-            "TE",
-            "LSP",
-            "Perpus PNJ",
-            "WD 3",
-            "UNIT TRAINING CENTER (PNJ)",
-            "TMD",
+            "Teknik Informatik dan Komputer", // 4
+            "Teknik Mesin", // 5
+            "Akuntansi", // 6
+            "Administrasi Niaga", // 7
+            "Teknik Grafika dan Penerbitan", // 8
+            "Teknik Sipil", // 9
+            "Teknk Elektro", // 10
+            "LSP", // 11
+            "Perpus PNJ", //12
+            "WD 3", // 13
+            "UNIT TRAINING CENTER (PNJ)", // 14
+            "Bahasa Inggris untuk Komunikasi Bisnis dan Profesional", // 15
         ];
         Unit::truncate(); //kosongkan table
         \DB::table('unit')->insert([

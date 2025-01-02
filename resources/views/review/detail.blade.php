@@ -433,6 +433,7 @@
         <div class="card shadow-sm">
             <div class="card-header">
                 <div class="card-title fw-bold text-dark">Action</div>
+                <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
             </div>
             <div class="card-body">
                 <form class="form form-vertical" method="post" action="{{ url('/legal/review/tolak') }}" enctype="multipart/form-data">
@@ -467,6 +468,7 @@
         <div class="card shadow-sm">
             <div class="card-header">
                 <div class="card-title fw-bold text-dark">Action</div>
+                <div class="form-text text-muted">Abaikan jika anda menyetujui kerja sama ini</div>
             </div>
             <div class="card-body">
                 @if(Auth::user()->role->role_name=="direktur")
