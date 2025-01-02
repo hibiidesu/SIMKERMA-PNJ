@@ -215,7 +215,6 @@ class KerjasamaController extends Controller
                 'kriteria_kemitraan_id' => 'required',
                 'perjanjian' => 'required',
                 'jurusan' => 'required',
-                'prodi' => 'required',
                 'pic_pnj' => 'required',
                 'alamat_perusahaan' => 'required',
                 'pic_industri' => 'required',
