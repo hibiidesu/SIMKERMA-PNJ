@@ -156,13 +156,15 @@
                             <td>{{ $loop->index + 1 }}</td>
                             <td>{{ $item->mitra }}</td>
                             @if (Auth::user()->role->role_name == 'admin')
-                            <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a></td>
                             @elseif (Auth::user()->role->role_name == 'pemimpin')
-                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a></td>
                             @elseif (Auth::user()->role->role_name == 'direktur')
-                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/direktur/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a></td>
                             @elseif (Auth::user()->role->role_name == 'pic')
-                            <td> <a href="{{ url('/pic/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a>   </td>
+                            <td> <a href="{{ url('/pic/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a></td>
+                            @elseif (Auth::user()->role->role_name == 'legal')
+                            <td> <a href="{{ url('/legal/kerjasama/detail/'. $item->id) }}" >{{ $item->kerjasama }}</a></td>
                             @endif
                             <td>{{ $item->nomor }}</td>
                             <td>
@@ -183,7 +185,9 @@
                                 @endif
                             </td>
                             <td>
-                                @if ($item->sifat == 'Nasional')
+                                @if ($item->sifat == 'Lokal')
+                                    <span class="badge bg-warning text-dark mt-lg-0 mt-2">{{ $item->sifat }}</span>
+                                @elseif ($item->sifat == 'Nasional')
                                     <span class="badge bg-info text-dark mt-lg-0 mt-2">{{ $item->sifat }}</span>
                                 @elseif ($item->sifat == 'Internasional')
                                     <span class="badge bg-primary mt-lg-0 mt-2">{{ $item->sifat }}</span>
