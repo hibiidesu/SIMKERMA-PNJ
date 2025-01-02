@@ -235,7 +235,7 @@
                                             class="text-danger">*</span></label>
                                     <input type="file" id="file" class="form-control" name="file" required
                                         accept="application/pdf">
-                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB</small>
+                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 25MB</small>
                                 </div>
                             </div>
                             <hr>

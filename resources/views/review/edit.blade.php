@@ -201,7 +201,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="file">Surat Kerja sama</label>
                                     <input type="file" id="file" class="form-control" name="file"">
-                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Upload surat kerjasama baru untuk mengganti surat kerjasama yang lama</small><br>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 25MB<br>Upload surat kerjasama baru untuk mengganti surat kerjasama yang lama</small><br>
 
                                     @if ($data->file)
                                         <iframe src="{{ asset('surat_kerjasama/'.$data->file) }}" frameborder="0" class="w-100" height="580px"></iframe>

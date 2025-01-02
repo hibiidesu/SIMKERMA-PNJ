@@ -51,7 +51,7 @@
                                                 {{ $template->template_surat ?: 'Null' }}</label>
                                             <input type="file" id="template_surat" class="form-control"
                                                 name="template_surat">
-                                            <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
+                                            <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 25MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
                                         </div>
                                     </div>
                                     @if ($template->template_surat)

@@ -24,12 +24,12 @@ class ImplementationAgreementController extends Controller
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'nama_mitra' => 'required',
-            'dokumen_agreement' => 'required|mimes:pdf,doc,docx|max:10240',
+            'dokumen_agreement' => 'required|mimes:pdf,doc,docx|max:51200',
         ], [
             'nama_mitra.required' => 'Nama Mitra wajib diisi',
             'dokumen_agreement.required' => 'Dokumen Agreement wajib diisi',
             'dokumen_agreement.mimes' => 'Format Dokumen Agreement harus PDF, DOC, atau DOCX',
-            'dokumen_agreement.size' => 'Dokumen Agreement maksimal 10MB',
+            'dokumen_agreement.size' => 'Dokumen Agreement maksimal 50MB',
         ]);
 
         if ($validator->fails()) {
@@ -78,13 +78,13 @@ class ImplementationAgreementController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:implementation_agreements,id',
             'nama_mitra' => 'required',
-            'dokumen_agreement' => 'nullable|mimes:pdf,doc,docx|max:10240',
+            'dokumen_agreement' => 'nullable|mimes:pdf,doc,docx|max:51200',
         ], [
             'id.required' => 'ID Implementation Agreement harus diisi',
             'id.exists' => 'ID Implementation Agreement tidak ditemukan',
             'nama_mitra.required' => 'Nama Mitra harus diisi',
             'dokumen_agreement.mimes' => 'Format file yang diperbolehkan hanya PDF',
-            'dokumen_agreement.max' => 'File yang diupload terlalu besar. Maksimal ukuran file 10MB',
+            'dokumen_agreement.max' => 'File yang diupload terlalu besar. Maksimal ukuran file 50MB',
         ]);
 
         if ($validator->fails()) {

@@ -155,7 +155,7 @@ class ReviewController extends Controller
             'jabatan_pic_industri' => 'required',
             'telp_industri' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/',
             'email' => 'nullable|email',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:25600',
         ], [
             'telp_industri.regex' => 'Format nomor telepon tidak valid',
             'file.max' => 'Ukuran file tidak boleh lebih dari 10 MB',
@@ -322,7 +322,7 @@ class ReviewController extends Controller
     $validator = Validator::make($request->all(), [
         'id' => 'required|exists:kerjasamas,id',
         'catatan' => 'required|string',
-        'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+        'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:25600',
         'nomor' => 'nullable|string|max:255',
     ], [
         'id.required' => 'ID kerjasama harus diisi.',
@@ -555,7 +555,7 @@ class ReviewController extends Controller
         // dd($request);
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:kerjasamas,id',
-            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:25600',
         ], [
             'id.required' => 'ID kerjasama harus diisi.',
             'id.exists' => 'ID kerjasama tidak valid.',
@@ -819,7 +819,7 @@ class ReviewController extends Controller
             'jabatan_pic_industri' => 'required',
             'telp_industri' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/',
             'email' => 'nullable|email',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:10240',
+            'file' => 'required|file|mimes:pdf,doc,docx|max:25600',
         ], [
             'telp_industri.regex' => 'Format nomor telepon tidak valid',
             'file.max' => 'Ukuran file tidak boleh lebih dari 2MB',
