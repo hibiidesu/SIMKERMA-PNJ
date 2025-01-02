@@ -30,19 +30,19 @@
 
                 @if (Request::get('filter'))
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                        <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
+                        <a href="{{ url('admin/kerjasama/export'.str_replace(url('/admin/kerjasama'), '', URL::full())) }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
                     {{-- @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pemimpin/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('pemimpin/kerjasama/export'.str_replace(url('/pemimpin/kerjasama'), '', URL::full())) }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                        <a href="{{ url('pic/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
+                        <a href="{{ url('pic/kerjasama/export'.str_replace(url('/pic/kerjasama'), '', URL::full())) }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
                     @endif
                 @else
                     @if (Auth::check() && Auth::user()->role->role_name == 'admin')
-                        <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
+                        <a href="{{ url('admin/kerjasama/export') }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Export Excel</a>
                     {{-- @elseif (Auth::check() && Auth::user()->role->role_name == 'pemimpin')
-                        <a href="{{ url('pemimpin/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
+                        <a href="{{ url('pemimpin/kerjasama/export') }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a>
                     @elseif (Auth::check() && Auth::user()->role->role_name == 'pic')
-                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-primary" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
+                        <a href="{{ url('pic/kerjasama/export') }}" class="btn btn-custom" style="float: right;"><i class="fas fa-file-excel"></i> Generate Excel</a> --}}
                     @endif
                 @endif
 
@@ -112,7 +112,7 @@
                         </div>
                         <div class="col-md-4 col-lg-2 d-flex align-items-end">
                             <div class="form-group">
-                                <button class="btn btn-primary" type="submit" name="filter" value="true">Terapkan</button>
+                                <button class="btn btn-custom" type="submit" name="filter" value="true">Terapkan</button>
                                 @if (Request::get('filter'))
                                     @php
                                         $resetUrl = match (Auth::user()->role->role_name) {
@@ -243,7 +243,7 @@
                                 @endif
                             </td>
                             {{-- <td>
-                                <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" class="btn btn-primary">Detail</a>
+                                <a href="{{ url('/admin/kerjasama/detail/'. $item->id) }}" class="btn btn-custom">Detail</a>
                             </td> --}}
                         </tr>
                         @endforeach

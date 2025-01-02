@@ -25,7 +25,7 @@
                                 <td>{{ $item->nama_mitra }}</td>
                                 <td class="gap-2">
                                     <a href="{{ url('admin/agreement/detail/'.$item->id) }}" class="btn btn-info">Lihat</a>
-                                    <a href="{{ url('admin/agreement/edit/'.$item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('admin/agreement/edit/'.$item->id) }}" class="btn btn-custom">Edit</a>
                                     <button class="btn btn-danger delete-btn" data-id="{{ $item->id }}">Delete</button>
                                 </td>
                             </tr>

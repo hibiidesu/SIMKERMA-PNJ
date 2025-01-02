@@ -39,7 +39,7 @@
                             </span>
                         @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Send Password Reset Link</button>
+                    <button type="submit" class="btn btn-custom btn-block btn-lg shadow-lg mt-5">Send Password Reset Link</button>
                 </form>
                 <div class="text-center mt-5 text-lg fs-4">
                     <p class='text-gray-600'>Remember your account? <a href="{{ url('/login') }}" class="font-bold">Log in</a>.

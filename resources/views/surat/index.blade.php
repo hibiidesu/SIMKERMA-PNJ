@@ -58,7 +58,7 @@
                                                 <a href="{{ url('/admin/template/download/' . $item->id) }}"
                                                     class="btn btn-success">Download</a>
                                                 <a href="{{ url('/admin/template/edit/' . $item->id) }}"
-                                                    class="btn btn-primary">Edit</a>
+                                                    class="btn btn-custom">Edit</a>
                                                 <a href="#" class="btn btn-danger"
                                                     onclick="confirmDelete({{ $item->id }})">Delete</a>
 

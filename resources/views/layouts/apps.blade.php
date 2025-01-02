@@ -15,6 +15,7 @@
     <link href="https://fonts.googleapis.com/css?family=Viga" rel="stylesheet">
     @yield('styles')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9e76bc90bb.js" crossorigin="anonymous"></script>
     <style>
         body {
             background-color: #fff !important

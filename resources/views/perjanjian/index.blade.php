@@ -45,7 +45,7 @@
                             <td>{{ $item->pks }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ url('/admin/perjanjian-kerjasama/edit/'. $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ url('/admin/perjanjian-kerjasama/edit/'. $item->id) }}" class="btn btn-custom">Edit</a>
                                 </div>
                             </td>
                         </tr>

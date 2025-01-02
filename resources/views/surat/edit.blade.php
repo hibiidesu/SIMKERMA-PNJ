@@ -66,7 +66,7 @@
                                         </div>
                                     @endif
                                     <div class="col-12 d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary mb-1">Update</button>
+                                        <button type="submit" class="btn btn-custom mb-1">Update</button>
                                     </div>
                                 </div>
                             </div>

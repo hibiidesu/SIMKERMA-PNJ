@@ -50,7 +50,7 @@
                                     <td>
                                         <div class="d-flex">
                                             <a href="{{ url('/admin/user/edit/' . $item->id) }}"
-                                                class="btn btn-primary">Edit</a>
+                                                class="btn btn-custom">Edit</a>
                                             @if ($item->status == 0)
                                                 <a href="{{ url('/admin/user/activate/' . $item->id) }}"
                                                     class="btn btn-success ms-2">Aktifkan</a>

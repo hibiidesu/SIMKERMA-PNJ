@@ -350,7 +350,7 @@
                     <p> {{ $data->catatan}} </p>
                     @if ((Auth::user()->role->role_name == 'admin' )&& ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
                     <form id="hapus" action="{{url('/admin/pengajuan-kerjasama/delete/'. $data->id)}}">
-                        <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary action-btn">Edit</a>
+                        <a href="{{ url('/admin/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-custom action-btn">Edit</a>
                         <button class="btn btn-danger delete-btn action-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
                        </form>
                     @endif
@@ -407,7 +407,7 @@
                     <p> {{ $data->catatan}} </p>
                     @if (Auth::user()->role->role_name == 'pic' && ($data->step == '2' || $data->step == '4' || $data->step == '6' || $data->step == '0'))
                     <form id="hapus" action="{{url('/pic/pengajuan-kerjasama/delete/'. $data->id)}}">
-                        <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-primary action-btn">Edit</a>
+                        <a href="{{ url('/pic/pengajuan-kerjasama/edit/'. $data->id) }}" class="btn btn-custom action-btn">Edit</a>
                         <button class="btn btn-danger delete-btn"  type="button"><i class="fa fa-trash"></i> Hapus</button>
                        </form>
                     @endif
