@@ -156,7 +156,7 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
 
-                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Unit<span
+                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Jurusan / Unit<span
                                             class="text-danger">*</span></label>
                                     <select class="choices-2 form-select" multiple="multiple" id="jurusan"
                                         name="jurusan[]" multiple required>

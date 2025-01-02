@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <a href="{{ url('/admin/jenis-kerjasama/add') }}" class="btn btn-info"><i class="fas fa-plus"></i>
-                        &nbsp;Add New</a>
+                        &nbsp;Tambah Baru</a>
                 </div>
                 <div class="card-body">
                     <div class="message form">

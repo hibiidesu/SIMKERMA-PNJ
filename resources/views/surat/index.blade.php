@@ -16,8 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     @if (Auth::user()->role_id == 1)
-                        <a href="{{ url('/admin/template/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add
-                            New</a>
+                        <a href="{{ url('/admin/template/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Tambah Baru</a>
                     @endif
                 </div>
                 <div class="card-body">
@@ -60,7 +59,7 @@
                                                 <a href="{{ url('/admin/template/edit/' . $item->id) }}"
                                                     class="btn btn-custom">Edit</a>
                                                 <a href="#" class="btn btn-danger"
-                                                    onclick="confirmDelete({{ $item->id }})">Delete</a>
+                                                    onclick="confirmDelete({{ $item->id }})">Hapus</a>
 
                                             </div>
                                         @endif

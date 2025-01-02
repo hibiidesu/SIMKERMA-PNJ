@@ -17,7 +17,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h4 class="card-title">Edit Surat</h4>
-                        <button class="btn btn-danger" onclick="confirmDelete({{ $template->id }})">Delete</button>
+                        <button class="btn btn-danger" onclick="confirmDelete({{ $template->id }})">Hapus</button>
                     </div>
                     <form id='kForm' class="form form-vertical" method="post"
                         action="{{ route('template.update', $template->id) }}" enctype="multipart/form-data">

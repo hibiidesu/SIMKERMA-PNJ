@@ -138,7 +138,7 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Jurusan / Unit <span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="jurusan">Jurusan / Unit<span class="text-danger">*</span></label>
                                     <?php
                                         $explodedUnit = explode(',', $data->jurusan);
                                     ?>
