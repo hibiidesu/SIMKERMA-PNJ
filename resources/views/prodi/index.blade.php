@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Prodi')
+@section('heading', 'Program Studi')
 
 @section('content')
 <section class="row">
@@ -34,7 +34,7 @@
                     <thead>
                         <tr>
                             <th width="3%">No</th>
-                            <th>Prodi Name</th>
+                            <th>Nama Program Studi</th>
                             <th>Unit</th>
                             <th>Action</th>
                         </tr>
