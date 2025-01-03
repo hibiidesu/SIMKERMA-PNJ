@@ -162,6 +162,15 @@ Route::middleware(['isAdmin'])->prefix('admin')->group(function () {
         Route::get('/delete/{id}', [App\Http\Controllers\ImplementationAgreementController::class, 'destroy']);
 
     });
+    Route::prefix('bidang-kerjasama')->group(function(){
+        Route::get('/', [App\Http\Controllers\BidangKerjasamaController::class,'index']);
+        Route::get('/add', [App\Http\Controllers\BidangKerjasamaController::class,'create']);
+        Route::post('/store', [App\Http\Controllers\BidangKerjasamaController::class,'store']);
+        Route::get('/edit/{id}', [App\Http\Controllers\BidangKerjasamaController::class,'edit']);
+        Route::post('/update/', [App\Http\Controllers\BidangKerjasamaController::class,'update']);
+        Route::get('/delete/{id}', [App\Http\Controllers\BidangKerjasamaController::class,'destroy']);
+
+    });
 });
 
 //route untuk direktur
