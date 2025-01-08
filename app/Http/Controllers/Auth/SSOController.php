@@ -22,7 +22,6 @@ class SSOController extends Controller
     {
         try {
             $socialiteUser = Socialite::driver('pnj')->user();
-
             if ($socialiteUser) {
                 $email = $socialiteUser->getEmail();
                 $userDb = User::where("email", $email)->first();
@@ -34,7 +33,7 @@ class SSOController extends Controller
                     return view("auth.sso", [
                         "data" => $socialiteUser,
                     ]);
-                    return redirect()->route('login')->with('error', 'Email tidak terdaftar di database, silahkan menghubungi admin untuk mendaftarkan akun anda.');
+                    // return redirect()->route('login')->with('error', 'Email tidak terdaftar di database, silahkan menghubungi admin untuk mendaftarkan akun anda.');
                 }
             } else {
                 return redirect()->route('login')->with('error', 'Tidak dapat mendapatkan data user Google.');
@@ -67,11 +66,10 @@ class SSOController extends Controller
             'password' => Hash::make($request->password),
             'role_id' => 4,
             'email_verified_at' => Carbon::now(),
-            'status' => 1,
+            'status' => 0,
         ]);
         if ($user) {
-            Auth::login($user);
-            return redirect()->route("checkrole");
+            return redirect()->route("login")->with('info', 'Pendaftaran akun berhasil silahkan hubungi Sekertaris Wadir 4 untuk aktivasi akun');
         } else {
             return redirect()->route("login")->with('error', 'Gagal membuat user, silahkan coba lagi');
         }
