@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\pengajuanBaru;
+use App\Mail\pengajuanBaruMitra;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
@@ -207,7 +208,7 @@ class ReviewController extends Controller
                 'file' => $nama_file,
                 'step' => 1,
             ]);
-
+            Mail::to(auth::user()->email)->send(new pengajuanBaruMitra($kerjasama));
             // Buat persetujuan untuk setiap pemimpin
             $LegalUsers = User::where('role_id', 3)->get();
             foreach ($LegalUsers as $legal) {
