@@ -13,8 +13,13 @@ class bidangKerjasama extends Model
         'nama_bidang'
     ];
 
-    public function kerjasama(){
-        return $this->belongsTo('App\Models\kerjasama');
+    public function kerjasama()
+    {
+        return $this->hasMany('App\Models\Kerjasama');
+    }
+    public function repository()
+    {
+        return $this->hasMany('App\Models\Repository');
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\bidangKerjasama;
 use Illuminate\Database\Seeder;
 use App\Models\Jenis_kerjasama;
 
@@ -23,7 +24,8 @@ class DatabaseSeeder extends Seeder
             KriteriaMitraSeeder::class,
             KriteriaKemitraanSeeder::class,
             prodiSeeder::class,
-            KerjasamaSeeders::class
+            KerjasamaSeeders::class,
+            BidangSeeders::class,
         ]);
     }
 }
