@@ -77,7 +77,7 @@ $(document).ready(function() {
                                 <p class="card-text mt-3">
                                     <strong>Nomor:</strong> ${data.nomor}<br>
                                     <strong>Periode:</strong> ${data.tanggal_mulai} s/d ${data.tanggal_selesai}<br>
-                                    <strong>Jenis:</strong> ${data.jenis_kerjasama}<br>
+                                    <strong>Jenis:</strong> ${data.bidang_kerjasama}<br>
                                     <strong>Sifat:</strong> ${data.sifat}
                                 </p>
                                 <div class="mt-3">

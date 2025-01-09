@@ -232,7 +232,7 @@ class KerjasamaController extends Controller
                 'jabatan_pic_industri' => 'required',
                 // 'telp_industri' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 // 'email' => 'required|email',
-                'file' => 'file|mimes:pdf,doc,docx|max:10240',
+                'file' => 'file|mimes:pdf,doc,docx|max:25600',
             ],
             ['telp_industri.regex' => 'Format nomer telpon tidak valid',
             'email.email' => 'Format email tidak valid',
@@ -240,7 +240,7 @@ class KerjasamaController extends Controller
             'tanggal_mulai.after' => 'Tanggal mulai harus lebih awal dibandingkan tanggal selesai',
             'tanggal_selesai.after' => 'Tanggal selesai harus lebih awal dibandingkan tanggal mulai',
             'telp_industri.regex' => 'Format nomer telpon harus angka dan spasi, plus, minus, titik, atau koma',
-            'file.max' => 'File maksimal 10MB',
+            'file.max' => 'File maksimal 25MB',
             ]
         );
 

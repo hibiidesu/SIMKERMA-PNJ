@@ -146,7 +146,7 @@
                             <th>Kriteria Mitra</th> --}}
                             <th>Jenis Kerja Sama</th>
                             <th>Jenis Perjanjian</th>
-                            <th>Unit</th>
+                            <th>Jurusan / Unit</th>
                             <th>Prodi</th>
                         </tr>
                     </thead>

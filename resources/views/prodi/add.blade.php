@@ -23,7 +23,7 @@
                         <div class="row">
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="unit_id">Unit<span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="unit_id">Jurusan / Unit<span class="text-danger">*</span></label>
                                     <select class="form-select" required id="unit_id" name="unit_id">
                                         <option value="">-</option>
                                         @foreach ($unit as $item)

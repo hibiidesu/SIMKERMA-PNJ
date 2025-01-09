@@ -26,7 +26,7 @@
                                 <td class="gap-2">
                                     <a href="{{ url('admin/agreement/detail/'.$item->id) }}" class="btn btn-info">Lihat</a>
                                     <a href="{{ url('admin/agreement/edit/'.$item->id) }}" class="btn btn-custom">Edit</a>
-                                    <button class="btn btn-danger delete-btn" data-id="{{ $item->id }}">Delete</button>
+                                    <button class="btn btn-danger delete-btn" data-id="{{ $item->id }}">Hapus</button>
                                 </td>
                             </tr>
 

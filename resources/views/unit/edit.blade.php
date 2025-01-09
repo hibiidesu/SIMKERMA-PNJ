@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Unit')
+@section('heading', 'Jurusan / Unit')
 
 @section('content')
     <section class="row">
@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-12 mb-2">
                                     <div class="form-group">
-                                        <label class="mb-2 fw-bold text-capitalize" for="name">jenis kerja sama <span
+                                        <label class="mb-2 fw-bold text-capitalize" for="name">Jurusan / Unit<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" id="name" class="form-control" name="name" required
                                             value="{{ $data->name }}">

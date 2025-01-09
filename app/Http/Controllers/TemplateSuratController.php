@@ -42,12 +42,12 @@ class TemplateSuratController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_surat' => 'required',
-            'template_surat' => 'required|file|mimes:pdf,docx|max:10240', // Validate for PDF or DOCX, max size 10MB
+            'template_surat' => 'required|file|mimes:pdf,docx|max:25600', // Validate for PDF or DOCX, max size 25MB
         ], [
             'nama_surat.required' => 'Nama surat wajib diisi',
             'template_surat.required' => 'File template surat wajib diisi',
             'template_surat.mimes' => 'File template surat harus berformat PDF atau DOCX',
-            'template_surat.max' => 'File template surat terlalu besar, maksimal 10MB',
+            'template_surat.max' => 'File template surat terlalu besar, maksimal 25MB',
         ]);
         if ($validator->fails()) {
             return redirect()->back()
@@ -135,11 +135,11 @@ class TemplateSuratController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_surat' => 'required',
-            'template_surat' => 'nullable|file|mimes:pdf,docx|max:10240', // Validate for PDF or DOCX, max size 10MB
+            'template_surat' => 'nullable|file|mimes:pdf,docx|max:25600', // Validate for PDF or DOCX, max size 25MB
         ], [
             'nama_surat.required' => 'Nama surat wajib diisi',
             'template_surat.mimes' => 'File template surat harus berformat PDF atau DOCX',
-            'template_surat.max' => 'File template surat terlalu besar, maksimal 10MB',
+            'template_surat.max' => 'File template surat terlalu besar, maksimal 25MB',
         ]);
         if ($validator->fails()) {
             return redirect()->back()

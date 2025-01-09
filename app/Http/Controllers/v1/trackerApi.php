@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kerjasama;
 use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
+use App\Models\bidangKerjasama;
 use App\Models\prodi;
 use App\Models\Unit;
 use App\Models\pks;
@@ -47,7 +48,9 @@ class trackerApi extends Controller
 
     $kriteriaMitraIds = explode(',', $kerjasama->kriteria_mitra_id);
     $kriteriaKemitraanIds = json_decode($kerjasama->kriteria_kemitraan_id);
+    $bidangKerjasamaIds = explode(',', $kerjasama->bidang_kerjasama_id);
     $kriteriaMitra = kriteria_mitra::whereIn('id', $kriteriaMitraIds)->get();
+    $bidangKerjasama = bidangKerjasama::whereIn('id', $bidangKerjasamaIds)->get();
     $kriteriaKemitraan = kriteria_kemitraan::whereIn('id', $kriteriaKemitraanIds)->get();
     $pksIds = explode(',', $kerjasama->pks);
     $pks = pks::whereIn('id', $pksIds)->get();
@@ -64,7 +67,7 @@ class trackerApi extends Controller
         'tanggal_selesai' => $kerjasama->tanggal_selesai,
         'nomor' => $kerjasama->nomor,
         'kegiatan' => $kerjasama->kegiatan,
-        'jenis_kerjasama' => $kerjasama->jenis_kerjasama->jenis_kerjasama,
+        'bidang_kerjasama' => $bidangKerjasama->pluck('nama_bidang'),
         'kriteria_mitra' => $kriteriaMitra->pluck('kriteria_mitra'),
         'kriteria_kemitraan' => $kriteriaKemitraan->pluck('kriteria_kemitraan'),
         'sifat' => $kerjasama->sifat,

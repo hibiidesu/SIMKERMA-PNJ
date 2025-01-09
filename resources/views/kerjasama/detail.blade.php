@@ -212,7 +212,7 @@
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="fw-bold">Jurusan / Unit :</div>
+                        <div class="fw-bold">Jurusan / Unit:</div>
                         <div class="ps-2">
                             @if($unit != "")
                                 @foreach ($unit as $item)
