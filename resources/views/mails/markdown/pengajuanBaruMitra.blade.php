@@ -3,7 +3,7 @@
 # Pengajuan {{ $kerjasama->kerjasama }} Sedang Menunggu Untuk Di Review. <br>
 **Detail Pengajuan:** <br>
 
-
+- ID Pengajuan : {{ $kerjasama->id }} <br>
 - Judul: {{ $kerjasama->kerjasama }} <br>
 - Tanggal Pengajuan: {{ $kerjasama->tanggal_pengajuan }} <br>
 - Tanggal Kegiatan : {{ $kerjasama->tanggal_mulai }} Sampai {{ $kerjasama->tanggal_selesai }} <br>

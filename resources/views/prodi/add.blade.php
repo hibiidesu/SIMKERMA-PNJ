@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Prodi')
+@section('heading', 'Tambah Program Studi')
 
 @section('styles')
 @endsection

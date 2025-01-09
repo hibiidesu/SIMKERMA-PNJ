@@ -50,10 +50,10 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ Request::is('admin/jenis-kerjasama') || Request::is('admin/jenis-kerjasama/*') ? 'active' : '' }}">
-                    <a href="{{ url('admin/jenis-kerjasama') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ Request::is('admin/bidang Kerjasama') || Request::is('admin/jenis-kerjasama/*') ? 'active' : '' }}">
+                    <a href="{{ url('admin/bidang-kerjasama') }}" class='sidebar-link'>
                         <i class="fas fa-layer-group"></i>
-                        <span class="text-capitalize">jenis kerja sama</span>
+                        <span class="text-capitalize">Bidang Kerjasama</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ Request::is('admin/perjanjian-kerjasama') || Request::is('admin/perjanjian-kerjasama/*') ? 'active' : '' }}">
@@ -84,7 +84,7 @@
                             <li class="sidebar-item {{ Request::is('admin/prodi') || Request::is('admin/prodi/*') ? 'active' : '' }}">
                                 <a href="{{ url('admin/prodi') }}" class='sidebar-link'>
                                     <i class="fas fa-house-user"></i>
-                                    <span class="text-capitalize">Prodi</span>
+                                    <span class="text-capitalize">Program Studi</span>
                                 </a>
                             </li>
                         </ul>
