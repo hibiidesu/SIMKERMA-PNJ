@@ -96,7 +96,7 @@
             <div class="card shadow-sm" id="chart-by-jenis-kerjasama">
                 <div class="card-header text-center">
                     <h5 class="card-title mb-0">
-                        Data Kerja Sama <br> Berdasarkan Jenis Kerja Sama
+                        Data Kerja Sama <br> Berdasarkan Bidang Kerja Sama
                     </h5>
                 </div>
                 <div class="card-body">
@@ -146,7 +146,7 @@
             <div class="card shadow-sm" id="chart-by-jenis-year">
                 <div class="card-header text-center">
                     <h5 class="card-title mb-0">
-                        Data Kerja Sama Baru Setiap Tahun-nya <br> Berdasarkan Jenis Kerja Sama
+                        Data Kerja Sama Baru Setiap Tahun-nya <br> Berdasarkan Bidang Kerja Sama
                     </h5>
                 </div>
                 <div class="card-body">
