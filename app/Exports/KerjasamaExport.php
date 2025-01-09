@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Unit;
 use App\Models\prodi;
 use App\Models\Kerjasama;
+use App\Models\bidangKerjasama;
 use App\Models\kriteria_kemitraan;
 use App\Models\kriteria_mitra;
 use Maatwebsite\Excel\Events\AfterSheet;
@@ -35,7 +36,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
     $kerjasama = Kerjasama::where('step', 7)->orderBy('id', 'desc');
     if (count($this->request) > 0) {
         if ($this->request['type'] && $this->request['type'] != 'all') {
-            $kerjasama = $kerjasama->where('jenis_kerjasama_id', ($this->request['type'] - 1));
+            $kerjasama = $kerjasama->where('bidang_kerjasama_id', ($this->request['type'] - 1));
         }
 
         if ($this->request['sifat'] && $this->request['sifat'] != 'all') {
@@ -61,12 +62,14 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
         $prodi = [];
         $k_mitra = [];
         $k_kemitraan = [];
+        $bidKerjasama = [];
 
         if ($data->jurusan) {
             $jurusanIds = explode(',', $data->jurusan);
             $prodiIds = explode(',', $data->prodi);
             $k_mitraId = explode(',', $data->kriteria_mitra_id);
             $k_kemitraanId = explode(',', $data->kriteria_kemitraan_id);
+            $bidKerjasamaId = explode(',', $data->bidang_kerjasama_id);
 
             foreach ($jurusanIds as $id) {
                 $unit = Unit::find($id);
@@ -101,12 +104,24 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                     }
                 }
             }
+
+            foreach ($bidKerjasamaId as $id) {
+                $id = trim($id);
+                if (is_numeric($id)) {
+                    $bidangKerjasama = bidangKerjasama::find($id);
+                    if ($bidangKerjasama) {
+                        $bidKerjasama[] = $bidangKerjasama->nama_bidang;
+                    }
+                }
+            }
+
         }
 
         $jurusanString = implode(', '.chr(10), $jurusan);
         $prodiString = implode(', '.chr(10), $prodi);
         $kMitraString = implode(', '.chr(10), $k_mitra);
         $kKemitraanString = implode(', '.chr(10), $k_kemitraan);
+        $bidKerjasamaString = implode(', '.chr(10), $bidKerjasama);
 
         $arr[] = [
             $index + 1,
@@ -119,7 +134,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
             $data->sifat ?? 'KOSONG',
             $jurusanString ?? 'KOSONG',
             $prodiString ?? 'KOSONG',
-            $data->jenis_kerjasama->jenis_kerjasama ?? 'KOSONG',
+            $bidKerjasamaString ?? 'KOSONG',
             $data->tanggal_mulai ?? 'KOSONG',
             $data->tanggal_selesai ?? 'KOSONG',
             $data->pic_pnj ?? 'KOSONG',
@@ -147,7 +162,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
             "Sifat",
             "Jurusan",
             "Program Studi",
-            "Jenis Kerjasama",
+            "Bidang Kerjasama",
             "Tanggal Mulai",
             "Tanggal Selesai",
             "PIC PNJ",
@@ -194,7 +209,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                 ],
                 'fill' => [
                     'fillType' => Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => '4472C4'],
+                    'startColor' => ['rgb' => '016d7a'],
                 ],
                 'borders' => [
                     'allBorders' => [
@@ -224,7 +239,7 @@ class KerjasamaExport implements FromArray, WithHeadings, ShouldAutoSize, WithEv
                 ],
             ]);
 
-            $wrapColumns = ['D', 'E', 'I', 'J'];
+            $wrapColumns = ['D', 'E', 'I', 'J', 'K'];
             foreach ($wrapColumns as $column) {
                 $columnRange = $column . '2:' . $column . $event->sheet->getHighestRow();
                 $event->sheet->getDelegate()->getStyle($columnRange)->getAlignment()->setWrapText(true);

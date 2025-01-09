@@ -225,7 +225,7 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="email">Email</label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="email">Email PIC Industri</label>
                                     <input type="email" id="email" class="form-control" name="email"
                                         value="{{ old('email') }}">
                                 </div>
