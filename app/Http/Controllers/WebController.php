@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\pengajuanBaru;
 use App\Models\Jenis_kerjasama;
+use App\Models\bidangKerjasama;
 use App\Models\Kerjasama;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -166,40 +167,50 @@ class WebController extends Controller
     }
     public function chartByJenisKerjasama(Request $request)
     {
-        $sqlLabels = Kerjasama::select('jenis_kerjasama_id', 'jenis_kerjasama as label')
-            ->where('step', 7)
-            ->leftJoin('jenis_kerjasamas', 'jenis_kerjasamas.id', '=', 'kerjasamas.jenis_kerjasama_id')
-            ->groupBy('jenis_kerjasama_id', 'label')
+        $sqlLabels = Kerjasama::select('kerjasamas.bidang_kerjasama_id', 'bidang_kerjasamas.nama_bidang as label')
+            ->where('kerjasamas.step', 7)
+            ->leftJoin('bidang_kerjasamas', function ($join) {
+                $join->on(DB::raw('CAST(bidang_kerjasamas.id AS TEXT)'), '=', 'kerjasamas.bidang_kerjasama_id');
+            })
+            ->groupBy('kerjasamas.bidang_kerjasama_id', 'bidang_kerjasamas.nama_bidang')
             ->orderBy('label', 'asc')
             ->get();
+
         switch ($request->filter) {
             case 0:
-                $sql = Kerjasama::selectRaw('jenis_kerjasama_id, count(*) as data, jenis_kerjasama as label')
-                    ->where('step', 7)
-                    ->leftJoin('jenis_kerjasamas', 'jenis_kerjasamas.id', '=', 'kerjasamas.jenis_kerjasama_id')
-                    ->groupBy('jenis_kerjasama_id', 'label')
+                $sql = Kerjasama::selectRaw('kerjasamas.bidang_kerjasama_id, count(*) as data, bidang_kerjasamas.nama_bidang as label')
+                    ->where('kerjasamas.step', 7)
+                    ->leftJoin('bidang_kerjasamas', function ($join) {
+                        $join->on(DB::raw('CAST(bidang_kerjasamas.id AS TEXT)'), '=', 'kerjasamas.bidang_kerjasama_id');
+                    })
+                    ->groupBy('kerjasamas.bidang_kerjasama_id', 'bidang_kerjasamas.nama_bidang')
                     ->orderBy('label', 'asc')
                     ->get();
                 break;
             case 1:
-                $sql = Kerjasama::selectRaw('jenis_kerjasama_id, count(*) as data, jenis_kerjasama as label')
-                    ->where('step', 7)
-                    ->leftJoin('jenis_kerjasamas', 'jenis_kerjasamas.id', '=', 'kerjasamas.jenis_kerjasama_id')
-                    ->whereDate('tanggal_selesai', '>=', Carbon::now())
-                    ->groupBy('jenis_kerjasama_id', 'label')
+                $sql = Kerjasama::selectRaw('kerjasamas.bidang_kerjasama_id, count(*) as data, bidang_kerjasamas.nama_bidang as label')
+                    ->where('kerjasamas.step', 7)
+                    ->leftJoin('bidang_kerjasamas', function ($join) {
+                        $join->on(DB::raw('CAST(bidang_kerjasamas.id AS TEXT)'), '=', 'kerjasamas.bidang_kerjasama_id');
+                    })
+                    ->whereDate('kerjasamas.tanggal_selesai', '>=', Carbon::now())
+                    ->groupBy('kerjasamas.bidang_kerjasama_id', 'bidang_kerjasamas.nama_bidang')
                     ->orderBy('label', 'asc')
                     ->get();
                 break;
             case 2:
-                $sql = Kerjasama::selectRaw('jenis_kerjasama_id, count(*) as data, jenis_kerjasama as label')
-                    ->where('step', 7)
-                    ->leftJoin('jenis_kerjasamas', 'jenis_kerjasamas.id', '=', 'kerjasamas.jenis_kerjasama_id')
-                    ->whereDate('tanggal_selesai', '<', Carbon::now())
-                    ->groupBy('jenis_kerjasama_id', 'label')
+                $sql = Kerjasama::selectRaw('kerjasamas.bidang_kerjasama_id, count(*) as data, bidang_kerjasamas.nama_bidang as label')
+                    ->where('kerjasamas.step', 7)
+                    ->leftJoin('bidang_kerjasamas', function ($join) {
+                        $join->on(DB::raw('CAST(bidang_kerjasamas.id AS TEXT)'), '=', 'kerjasamas.bidang_kerjasama_id');
+                    })
+                    ->whereDate('kerjasamas.tanggal_selesai', '<', Carbon::now())
+                    ->groupBy('kerjasamas.bidang_kerjasama_id', 'bidang_kerjasamas.nama_bidang')
                     ->orderBy('label', 'asc')
                     ->get();
                 break;
         }
+
         return response()->json([
             'labels' => $sqlLabels,
             'result' => $sql,
@@ -226,12 +237,15 @@ class WebController extends Controller
     }
     public function chartByJenisYear()
     {
-        $sql = Kerjasama::selectRaw('count(*) as data, extract(year from tanggal_mulai) as year, jenis_kerjasama as label')
-            ->where('step', 7)
-            ->leftJoin('jenis_kerjasamas', 'jenis_kerjasamas.id', '=', 'kerjasamas.jenis_kerjasama_id')
-            ->groupBy('year', 'label')
+        $sql = Kerjasama::selectRaw('count(*) as data, extract(year from tanggal_mulai) as year, bidang_kerjasamas.nama_bidang as label')
+            ->where('kerjasamas.step', 7)
+            ->leftJoin('bidang_kerjasamas', function ($join) {
+                $join->on(DB::raw('CAST(bidang_kerjasamas.id AS TEXT)'), '=', 'kerjasamas.bidang_kerjasama_id');
+            })
+            ->groupBy('year', 'bidang_kerjasamas.nama_bidang')
             ->orderBy('year', 'asc')
             ->get();
+
         $sqlYear = Kerjasama::selectRaw('count(*) as data, extract(year from tanggal_mulai) as year')
             ->where('step', 7)
             ->groupBy('year')

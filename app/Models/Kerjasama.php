@@ -77,6 +77,10 @@ class Kerjasama extends Model
     {
         return $this->belongsTo('App\Models\kriteria_mitra');
     }
+    public function bidangKerjasama(){
+        return $this->hasOne('App\Models\bidangKerjasama');
+    }
+
     public function bidangKerjasamas(){
         return $this->belongsTo('App\Models\bidangKerjasama', 'bidang_kerjasama_id');
     }
