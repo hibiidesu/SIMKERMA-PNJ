@@ -23,13 +23,13 @@ class CreateRepositoriesTable extends Migration
             $table->date("tanggal_selesai");
             $table->string("nomor");
             $table->text("kegiatan");
-            $table->string("jenis_kerjasama_id");
+            $table->string("bidang_kerjasama_id");
             $table->string("kriteria_mitra_id");
             $table->string("kriteria_kemitraan_id");
             $table->string("sifat");
             $table->string("pks");
             $table->string("jurusan");
-            $table->string("prodi");
+            $table->string("prodi")->nullable();
             $table->string("pic_pnj")->nullable();
             $table->text("alamat_perusahaan")->nullable();
             $table->string("pic_industri")->nullable();

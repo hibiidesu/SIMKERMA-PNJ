@@ -14,12 +14,15 @@ class Repository extends Model
         'user_id',
         'tanggal_mulai',
         'tanggal_selesai',
+        'kriteria_mitra_id',
+        'kriteria_kemitraan_id',
         'nomor',
         'kegiatan',
         'sifat',
-        'jenis_kerjasama_id',
+        'bidang_kerjasama_id',
         'pks',
         'jurusan',
+        'prodi',
         'pic_pnj',
         'alamat_perusahaan',
         'pic_industri',
@@ -35,7 +38,7 @@ class Repository extends Model
     }
     public function jenis_kerjasama()
     {
-        return $this->belongsTo('App\Models\Jenis_kerjasama', 'jenis_kerjasama_id');
+        return $this->belongsTo('App\Models\bidangKerjasama', 'jenis_kerjasama_id');
     }
     public function user()
     {

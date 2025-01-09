@@ -73,12 +73,12 @@
                         </div>
                         <div class="col-md-4 col-lg-2">
                             <div class="form-group">
-                                <label for="type" class="form-label">Jenis Kerja Sama</label>
+                                <label for="type" class="form-label">Bidang Kerjasama</label>
                                 <select class="form-select" required id="type" name="type">
                                     <option value="all">Semua</option>
-                                    @foreach ($jenisKerjasama as $item)
+                                    @foreach ($bidangKerjasama as $item)
                                         <option value="{{ $item->id + 1 }}" {{ Request::get('type') == $item->id + 1 ? 'selected' : '' }}>
-                                            {{ $item->jenis_kerjasama }}
+                                            {{ $item->nama_bidang }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -213,7 +213,13 @@
 
                             </td> --}}
 
-                            <td>{{ $item->jenis_kerjasama->jenis_kerjasama }}</td>
+                            <td> @foreach (explode(',', $item->bidang_kerjasama_id) as $x)
+                                @if ($loop->index + 1 < count(explode(',', $item->bidang_kerjasama_id)))
+                                {{ $bidang[$x].', ' }}
+                                @else
+                                {{ $bidang[$x] }}
+                                @endif
+                            @endforeach</td>
                             <td>
                                 @foreach (explode(',', $item->pks) as $x)
                                     @if ($loop->index + 1 < count(explode(',', $item->pks)))

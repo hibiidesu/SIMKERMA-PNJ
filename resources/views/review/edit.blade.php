@@ -88,11 +88,13 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="jenis_kerjasama_id">Jenis Kerja sama <span class="text-danger">*</span></label>
-                                    <select class="form-select" required id="jenis_kerjasama_id" name="jenis_kerjasama_id">
-                                        <option value="">-</option>
-                                        @foreach ($jenisKerjasama as $item)
-                                        <option value="{{ $item->id }}" {{ $data->jenis_kerjasama_id == $item->id ? 'selected' : '' }}>{{ $item->jenis_kerjasama }}</option>
+                                    <?php
+                                    $explodeBidang = explode(',', $data->bidang_kerjasama_id)
+                                    ?>
+                                    <label class="mb-2 fw-bold text-capitalize" for="bidang_kerjasama_id">Bidang Kerjasama <span class="text-danger">*</span></label>
+                                    <select class="choices-3 form-select" required id="bidang_kerjasama_id" name="bidang_kerjasama_id[]" multiple>
+                                        @foreach ($bidangKerjasama as $item)
+                                        <option value="{{ $item->id }}" {{ in_array($item->id, $explodeBidang)? 'selected' : '' }}>{{ $item->id }}. {{ $item->nama_bidang }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -116,7 +118,7 @@
                                 ?>
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]">
+                                    <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
                                         @foreach ($kriteria_kemitraan as $item)
                                         <option value="{{ $item->id }}" {{ in_array($item->id, $explodeKemitraan)? 'selected' : '' }}>{{ $item->kriteria_kemitraan }}</option>
                                         @endforeach

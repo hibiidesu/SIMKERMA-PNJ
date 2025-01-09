@@ -125,14 +125,14 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="jenis_kerjasama_id">Jenis Kerja sama <span class="text-danger">*</span></label>
-                                    <select class="form-select" required id="jenis_kerjasama_id" name="jenis_kerjasama_id">
+                                    <label class="mb-2 fw-bold text-capitalize" for="bidang_kerjasama_id">Bidang Kerjasama<span class="text-danger">*</span></label>
+                                    <select class="choices-3 form-select" required id="bidang_kerjasama_id" name="bidang_kerjasama_id[]" multiple='multiple' multiple>
 
-                                        <option value="">-</option>
-                                        @foreach ($jenisKerjasama as $item)
+                                        <option value="">Pilih Bidang Kerjasama</option>
+                                        @foreach ($bidangKerjasama as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ old('jenis_kerjasama_id') && old('jenis_kerjasama_id') == $item->id ? 'selected' : '' }}>
-                                                {{ $item->jenis_kerjasama }}</option>
+                                                {{ old('bidang_kerjasama_id') && old('bidang_kerjasama_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->nama_bidang }}</option>
                                         @endforeach
                                     </select>
                                 </div>

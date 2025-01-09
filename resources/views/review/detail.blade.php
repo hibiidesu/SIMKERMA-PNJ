@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Review Kerja Sama')
+@section('heading', 'Review Kerja Sama '. $data->kerjasama.' '. $data->mitra)
 @section('content')
 <section class="row">
     <div class="col-12">
@@ -184,8 +184,16 @@
                 </p>
                 <div class="my-3">
                     <div class="d-flex">
-                        <div class="fw-bold">Jenis Kerja sama :</div>
-                        <div class="ps-2">{{ $data->jenis_kerjasama->jenis_kerjasama }}</div>
+                        <div class="fw-bold">Bidang Kerjasama :</div>
+                        <div class="ps-2">
+                            @foreach ($bidang as $item)
+                                @if ($loop->index < count($bidang) - 1)
+                                    {{ $item->nama_bidang }},&nbsp;
+                                 @else
+                                    {{ $item->nama_bidang }}
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <div class="d-flex">
                         <div class="fw-bold">Jenis Perjanjian :</div>

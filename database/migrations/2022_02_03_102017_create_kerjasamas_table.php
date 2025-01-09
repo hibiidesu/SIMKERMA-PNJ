@@ -21,13 +21,13 @@ class CreateKerjasamasTable extends Migration
             $table->date("tanggal_selesai")->nullable();
             $table->string("nomor")->nullable();
             $table->text("kegiatan")->nullable();
-            $table->integer("jenis_kerjasama_id");
+            $table->string("bidang_kerjasama_id");
             $table->string("kriteria_mitra_id");
             $table->string("kriteria_kemitraan_id");
             $table->string("sifat");
             $table->string("pks");
             $table->string("jurusan");
-            $table->string("prodi");
+            $table->string("prodi")->nullable();
             $table->string("pic_pnj");
             $table->text("alamat_perusahaan");
             $table->string("pic_industri");

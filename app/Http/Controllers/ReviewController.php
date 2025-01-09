@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\pengajuanBaru;
 use App\Mail\pengajuanBaruMitra;
+use App\Models\bidangKerjasama;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Jenis_kerjasama;
 use App\Models\Kerjasama;
@@ -13,6 +14,7 @@ use App\Models\log_persetujuan;
 use App\Models\pks;
 use App\Models\Unit;
 use App\Models\User;;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Persetujuan;
@@ -66,7 +68,7 @@ class ReviewController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get(),
             ]);
-        } else if(Auth::user()->role_id == 4) { // PIC
+        } else if (Auth::user()->role_id == 4) { // PIC
             return view('review/index', [
                 'perjanjian' => $perjanjian,
                 'data' => Kerjasama::where('user_id', '=', Auth::user()->id)->orderBy('step', 'asc')->get(),
@@ -81,7 +83,7 @@ class ReviewController extends Controller
 
     public function create()
     {
-        if(Auth::user()->role_id == 2){
+        if (Auth::user()->role_id == 2) {
 
             return view('review/add', [
                 'users' => User::where('role_id', '=', '2')->get(),
@@ -90,10 +92,10 @@ class ReviewController extends Controller
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
                 'perjanjian' => pks::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
-        } else if(Auth::user()->role_id == 3){
+        } else if (Auth::user()->role_id == 3) {
 
             return view('review/add', [
                 'users' => User::where('role_id', '=', '3')->get(),
@@ -102,10 +104,10 @@ class ReviewController extends Controller
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
                 'perjanjian' => pks::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
-        } else if(Auth::user()->role_id == 5){
+        } else if (Auth::user()->role_id == 5) {
 
             return view('review/add', [
                 'users' => User::where('role_id', '=', '5')->get(),
@@ -114,9 +116,9 @@ class ReviewController extends Controller
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
                 'perjanjian' => pks::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
         } else {
             return view('review/add', [
                 'users' => User::where('role_id', '=', '4')->get(),
@@ -125,10 +127,10 @@ class ReviewController extends Controller
                 'unit' => Unit::all(),
                 'prodi' => Prodi::all(),
                 'perjanjian' => pks::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
         }
-
     }
 
     /**
@@ -139,6 +141,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'mitra' => 'required',
             'kerjasama' => 'required',
@@ -147,7 +150,7 @@ class ReviewController extends Controller
             'sifat' => 'required',
             'kriteria_kemitraan_id' => 'required',
             'kriteria_mitra_id' => 'required',
-            'jenis_kerjasama_id' => 'required',
+            'bidang_kerjasama_id' => 'required',
             'perjanjian' => 'required',
             'jurusan' => 'required',
             'pic_pnj' => 'required',
@@ -169,8 +172,8 @@ class ReviewController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if ($request->telp_industri) {
@@ -194,7 +197,7 @@ class ReviewController extends Controller
                 'kriteria_kemitraan_id' => implode(',', $request->kriteria_kemitraan_id),
                 'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
                 'user_id' => Auth::user()->id,
-                'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
+                'bidang_kerjasama_id' => implode(',', $request->bidang_kerjasama_id),
                 'pks' => implode(',', $request->perjanjian),
                 'jurusan' => implode(',', $request->jurusan),
                 'prodi' => implode(',', $prodi),
@@ -222,7 +225,7 @@ class ReviewController extends Controller
             }
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
-            }  else {
+            } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan legal');
 
                 Mail::to($pemimpin->email)->send(new pengajuanBaru(
@@ -236,17 +239,15 @@ class ReviewController extends Controller
             }
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
-            }  else {
+            } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil ditambahkan dan menunggu persetujuan pemimpin');
             }
-
         } else {
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
             }
-
         }
     }
 
@@ -270,7 +271,7 @@ class ReviewController extends Controller
                 ->where('step', '=', '3')
                 ->get()
                 ->first();
-        } else if (Auth::user()->role_id == 5 ) {
+        } else if (Auth::user()->role_id == 5) {
 
             $data = Kerjasama::where('target_reviewer_id', 'like', '%' . Auth::user()->id . '%')
                 ->where('id', '=', $id)
@@ -280,7 +281,6 @@ class ReviewController extends Controller
                 ->where('step', '=', '5')
                 ->get()
                 ->first();
-
         } else {
             $data = Kerjasama::findOrFail($id);
         }
@@ -290,18 +290,18 @@ class ReviewController extends Controller
 
             if ($data->jurusan != '') {
                 $unit = Unit::whereIn('id', explode(',', $data->jurusan))->get();
-
             }
             if ($data->prodi != '') {
                 $prodi = Prodi::whereIn('id', explode(',', $data->prodi))->get();
             }
             $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
-
+            $bidang = bidangKerjasama::whereIn('id', explode(',', $data->bidang_kerjasama_id))->get();
             return view('review/detail', [
                 'prodi' => $prodi,
                 'unit' => $unit,
                 'prodi' => $prodi,
                 'perjanjian' => $perjanjian,
+                'bidang' => $bidang,
                 'data' => $data,
             ]);
         } else {
@@ -318,85 +318,85 @@ class ReviewController extends Controller
     }
 
     public function tolakLegal(Request $request)
-{
-    // dd($request);
-    $validator = Validator::make($request->all(), [
-        'id' => 'required|exists:kerjasamas,id',
-        'catatan' => 'required|string',
-        'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
-        'nomor' => 'nullable|string|max:255',
-    ], [
-        'id.required' => 'ID kerjasama harus diisi.',
-        'catatan.required' => 'Catatan harus diisi.',
-        'dokumen.mimes' => 'Format file yang diperbolehkan hanya PDF, DOC, atau DOCX.',
-        'dokumen.max' => 'Ukuran file tidak boleh lebih dari 10 MB.',
-        'nomor.max' => 'Nomor tidak boleh lebih dari 255 karakter.',
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back()
-                         ->withErrors($validator)
-                         ->withInput();
-    }
-
-    $kerjasama = Kerjasama::find($request->id);
-    if (!$kerjasama) {
-        return redirect('/legal/review')->with('error', 'Kerjasama not found.');
-    }
-
-    DB::beginTransaction();
-
-    try {
-        $updateData = [
-            'catatan' => $request->catatan,
-            'step' => '2',
-            'reviewer_id' => Auth::id(),
-        ];
-
-
-        if ($request->hasFile('dokumen')) {
-            $file = $request->file('dokumen');
-            $file_name = time() . '.' . $file->getClientOriginalName();
-
-            // Delete the old file if it exists
-            if ($kerjasama->file && Storage::disk('surat_kerjasama')->exists($kerjasama->file)) {
-                Storage::disk('surat_kerjasama')->delete($kerjasama->file);
-            }
-
-            // Store the new file
-            Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
-
-            // Update the kerjasama record with the new file name
-            $kerjasama->update([
-                'file' => $file_name,
-            ]);
-        }
-        if ($request->has('nomor') && !is_null($request->nomor)) {
-            $updateData['nomor'] = $request->nomor;
-        } else {
-            $updateData['nomor'] = $kerjasama->nomor;
-        }
-
-
-        $kerjasama->update($updateData);
-
-        log_persetujuan::create([
-            'kerjasama_id' => $kerjasama->id,
-            'user_id' => Auth::id(),
-            'role_id' => Auth::user()->role_id,
-            'step' => 2,
+    {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|exists:kerjasamas,id',
+            'catatan' => 'required|string',
+            'dokumen' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
+            'nomor' => 'nullable|string|max:255',
+        ], [
+            'id.required' => 'ID kerjasama harus diisi.',
+            'catatan.required' => 'Catatan harus diisi.',
+            'dokumen.mimes' => 'Format file yang diperbolehkan hanya PDF, DOC, atau DOCX.',
+            'dokumen.max' => 'Ukuran file tidak boleh lebih dari 10 MB.',
+            'nomor.max' => 'Nomor tidak boleh lebih dari 255 karakter.',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-        Mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama, $request->catatan));
+        $kerjasama = Kerjasama::find($request->id);
+        if (!$kerjasama) {
+            return redirect('/legal/review')->with('error', 'Kerjasama not found.');
+        }
 
-        DB::commit();
-        return redirect('/legal/review')->with('success', 'Data berhasil ditolak');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return redirect('/legal/review')->with('error', 'An error occurred: ' . $e->getMessage());
+        DB::beginTransaction();
+
+        try {
+            $updateData = [
+                'catatan' => $request->catatan,
+                'step' => '2',
+                'reviewer_id' => Auth::id(),
+            ];
+
+
+            if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $file_name = time() . '.' . $file->getClientOriginalName();
+
+                // Delete the old file if it exists
+                if ($kerjasama->file && Storage::disk('surat_kerjasama')->exists($kerjasama->file)) {
+                    Storage::disk('surat_kerjasama')->delete($kerjasama->file);
+                }
+
+                // Store the new file
+                Storage::disk('surat_kerjasama')->put($file_name, file_get_contents($file));
+
+                // Update the kerjasama record with the new file name
+                $kerjasama->update([
+                    'file' => $file_name,
+                ]);
+            }
+            if ($request->has('nomor') && !is_null($request->nomor)) {
+                $updateData['nomor'] = $request->nomor;
+            } else {
+                $updateData['nomor'] = $kerjasama->nomor;
+            }
+
+
+            $kerjasama->update($updateData);
+
+            log_persetujuan::create([
+                'kerjasama_id' => $kerjasama->id,
+                'user_id' => Auth::id(),
+                'role_id' => Auth::user()->role_id,
+                'step' => 2,
+            ]);
+
+
+            Mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama, $request->catatan));
+
+            DB::commit();
+            return redirect('/legal/review')->with('success', 'Data berhasil ditolak');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect('/legal/review')->with('error', 'An error occurred: ' . $e->getMessage());
+        }
     }
-}
 
 
     public function tolakWadir(Request $request)
@@ -418,7 +418,7 @@ class ReviewController extends Controller
                 'role_id' => Auth::user()->role_id,
                 'step' => 4
             ]);
-            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
+            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama, $request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
             return redirect('/pemimpin/review')->with('success', 'Data berhasil ditolak');
         } else {
@@ -446,14 +446,14 @@ class ReviewController extends Controller
                 'role_id' => Auth::user()->role_id,
                 'step' => 6
             ]);
-            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama,$request->catatan));
+            mail::to($kerjasama->user->email)->send(new \App\Mail\tolakPengajuan($kerjasama, $request->catatan));
             // mail::to($kerjasama->email)->send(new \App\Mail\tolakPengajuanMitra($kerjasama,$request->catatan));
-            if(Auth::user()->role_id == 1){
+            if (Auth::user()->role_id == 1) {
                 return redirect('/admin/review')->with('success', 'Data berhasil ditolak');
             }
             return redirect('/direktur/review')->with('success', 'Data berhasil ditolak');
         } else {
-            if(Auth::user()->role_id == 1){
+            if (Auth::user()->role_id == 1) {
                 return redirect('/admin/review')->with('error', 'Data gagal ditolak');
             }
             return redirect('/direktur/review')->with('error', 'Data gagal ditolak');
@@ -539,20 +539,21 @@ class ReviewController extends Controller
             ]);
             mail::to($kerjasama->user->email)->send(new \App\Mail\terimaPengajuan($kerjasama));
             mail::to($kerjasama->email)->send(new \App\Mail\terimaPengajuanMitra($kerjasama));
-            if(Auth::user()->role_id == 1){
+            if (Auth::user()->role_id == 1) {
                 return redirect('/admin/review')->with('success', 'Data berhasil diterima');
             }
 
             return redirect('/direktur/review')->with('success', 'Data berhasil diterima');
         } else {
-            if (Auth::user()->role_id == 1){
+            if (Auth::user()->role_id == 1) {
                 return redirect('/admin/review')->with('error', 'Data gagal diterima');
             }
 
             return redirect('/direktur/review')->with('error', 'Data gagal diterima');
         }
     }
-    public function dokumenAkhirAdmin(Request $request){
+    public function dokumenAkhirAdmin(Request $request)
+    {
         // dd($request);
         $validator = Validator::make($request->all(), [
             'id' => 'required|exists:kerjasamas,id',
@@ -584,7 +585,6 @@ class ReviewController extends Controller
             ]);
         }
         return redirect('admin/pengajuan-kerjasama')->with('success', 'Dokumen Tanda Tangan Berhasil Di rubah');
-
     }
 
 
@@ -600,9 +600,9 @@ class ReviewController extends Controller
                 'data' => Kerjasama::findOrFail($id),
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
         } else if (Auth::user()->role_id == 3) {
             return view('review/edit', [
                 'users' => User::where('role_id', '=', '3')->get(),
@@ -612,9 +612,9 @@ class ReviewController extends Controller
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
         } else if (Auth::user()->role_id == 5) {
             return view('review/edit', [
                 'users' => User::where('role_id', '=', '5')->get(),
@@ -624,11 +624,10 @@ class ReviewController extends Controller
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
-        }
-         else if (Auth::user()->role_id == 1) {
+        } else if (Auth::user()->role_id == 1) {
             return view('review/edit', [
                 'users' => User::where('role_id', '=', '1')->get(),
                 'perjanjian' => pks::all(),
@@ -637,11 +636,10 @@ class ReviewController extends Controller
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
-        }
-        else if (Auth::user()->role_id == 4) {
+        } else if (Auth::user()->role_id == 4) {
             return view('review/edit', [
                 'users' => User::where('role_id', '=', '1')->get(),
                 'perjanjian' => pks::all(),
@@ -650,9 +648,9 @@ class ReviewController extends Controller
                 'kriteria_mitra' => kriteria_mitra::all(),
                 'kriteria_kemitraan' => kriteria_kemitraan::all(),
                 'data' => Kerjasama::findOrFail($id),
+                'bidangKerjasama' => bidangKerjasama::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
             ]);
-
         }
     }
 
@@ -668,7 +666,7 @@ class ReviewController extends Controller
                 'nomor' => 'required',
                 'kegiatan' => 'nullable',
                 'sifat' => 'required',
-                'jenis_kerjasama_id' => 'required',
+                'bidang_kerjasama_id' => 'required',
                 'perjanjian' => 'required',
                 'jurusan' => 'required',
                 'pic_pnj' => 'required',
@@ -701,12 +699,13 @@ class ReviewController extends Controller
                     'kegiatan' => $request->kegiatan,
                     'sifat' => $request->sifat,
                     'user_id' => Auth::user()->id,
-                    'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                    'kriteria_mitra_id' => $request->kriteria_mitra_id,
-                    'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
-                    'pks' => implode(',', $request->perjanjian),
-                    'jurusan' => implode(',', $request->jurusan),
-                    'prodi' => implode(',', $prodi),
+                    'bidang_kerjasama_id' => is_array($request->bidang_kerjasama_id) ? implode(',', $request->bidang_kerjasama_id) : $request->bidang_kerjasama_id,
+                    'kriteria_mitra_id' => is_array($request->kriteria_mitra_id) ? implode(',', $request->kriteria_mitra_id) : $request->kriteria_mitra_id,
+                    'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',', $request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id,
+                    'pks' => is_array($request->perjanjian) ? implode(',', $request->perjanjian) : $request->perjanjian,
+                    'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
+                    'jurusan' => is_array($request->jurusan) ? implode(',', $request->jurusan) : $request->jurusan,
+                    'prodi' => is_array($prodi) ? implode(',', $prodi) : $prodi,
                     'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                     'pic_pnj' => $request->pic_pnj,
                     'alamat_perusahaan' => $request->alamat_perusahaan,
@@ -725,7 +724,6 @@ class ReviewController extends Controller
                     $redirectRoute = Auth::user()->role_id == 4 ? '/pic/pengajuan-kerjasama' : '/admin/pengajuan-kerjasama';
                     return redirect($redirectRoute)->with('error', 'Data gagal diubah');
                 }
-
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dipindahkan');
             }
@@ -738,9 +736,9 @@ class ReviewController extends Controller
                 'nomor' => $request->nomor,
                 'kegiatan' => $request->kegiatan,
                 'sifat' => $request->sifat,
-                'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                'kriteria_mitra_id' => is_array($request->kriteria_mitra_id) ? implode(',',$request->kriteria_mitra_id) : $request->kriteria_mitra_id ,
-                'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',',$request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id ,
+                'bidang_kerjasama_id' => is_array($request->bidang_kerjasama_id) ? implode(',', $request->bidang_kerjasama_id) : $request->bidang_kerjasama_id,
+                'kriteria_mitra_id' => is_array($request->kriteria_mitra_id) ? implode(',', $request->kriteria_mitra_id) : $request->kriteria_mitra_id,
+                'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',', $request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id,
                 'pks' => is_array($request->perjanjian) ? implode(',', $request->perjanjian) : $request->perjanjian,
                 'target_reviewer_id' => $request->target_reviewer ? implode(',', $request->target_reviewer) : null,
                 'jurusan' => is_array($request->jurusan) ? implode(',', $request->jurusan) : $request->jurusan,
@@ -762,7 +760,6 @@ class ReviewController extends Controller
                 return redirect($redirectRoute)->with('error', 'Data gagal diubah');
             }
         }
-
     }
 
     public function delete($id)
@@ -774,19 +771,18 @@ class ReviewController extends Controller
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil dihapus');
             }
-
         } else {
             if (Auth::user()->role->role_name == 'pic') {
                 return redirect('/pic/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
             } else {
                 return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal dihapus');
             }
-
         }
     }
 
-    public function  record(){
-        if(Auth::user()->role_id == 1){
+    public function  record()
+    {
+        if (Auth::user()->role_id == 1) {
             return view('review/record', [
                 'users' => User::where('role_id', '=', '1')->get(),
                 'kriteria_mitra' => kriteria_mitra::all(),
@@ -795,13 +791,15 @@ class ReviewController extends Controller
                 'prodi' => Prodi::all(),
                 'perjanjian' => pks::all(),
                 'jenisKerjasama' => Jenis_kerjasama::all(),
+                'bidangKerjasama' => bidangKerjasama::all(),
             ]);
         } else {
             return error('Anda Tidak Memiliki Hak Akses');
         }
     }
 
-    public function store_record(Request $request){
+    public function store_record(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'mitra' => 'required',
             'kerjasama' => 'required',
@@ -811,7 +809,7 @@ class ReviewController extends Controller
             'sifat' => 'required',
             'kriteria_kemitraan_id' => 'required',
             'kriteria_mitra_id' => 'required',
-            'jenis_kerjasama_id' => 'required',
+            'bidang_kerjasama_id' => 'required',
             'perjanjian' => 'required',
             'jurusan' => 'required',
             'pic_pnj' => 'required',
@@ -833,8 +831,8 @@ class ReviewController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         if ($request->telp_industri) {
@@ -858,7 +856,7 @@ class ReviewController extends Controller
                 'kriteria_kemitraan_id' => implode(',', $request->kriteria_kemitraan_id),
                 'kriteria_mitra_id' => implode(',', $request->kriteria_mitra_id),
                 'user_id' => Auth::user()->id,
-                'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
+                'bidang_kerjasama_id' =>  implode(',', $request->bidang_kerjasama_id),
                 'pks' => implode(',', $request->perjanjian),
                 'jurusan' => implode(',', $request->jurusan),
                 'prodi' => implode(',', $prodi),
@@ -883,7 +881,8 @@ class ReviewController extends Controller
                     'user_id' => Auth::user()->id,
                     'role_id' => 3,
                     'step' => 3
-            ]);}
+                ]);
+            }
 
             $update = $kerjasama->update([
                 'step' => '5',
@@ -895,7 +894,8 @@ class ReviewController extends Controller
                     'user_id' => Auth::user()->id,
                     'role_id' => 2,
                     'step' => 5
-            ]);}
+                ]);
+            }
             $update = $kerjasama->update([
                 'step' => '7',
                 'reviewer_id' => Auth::user()->id,
@@ -906,14 +906,14 @@ class ReviewController extends Controller
                     'user_id' => Auth::user()->id,
                     'role_id' => 5,
                     'step' => 7
-            ]);}
+                ]);
+            }
 
             if (Auth::user()->role->role_name == 'admin') {
                 return redirect('/admin/pengajuan-kerjasama')->with('success', 'Data berhasil direkam');
-            }  else {
+            } else {
                 return redirect('/login')->with('error', 'Anda tidak memiliki hak akses');
             }
-
         } else {
             return redirect('/admin/pengajuan-kerjasama')->with('error', 'Data gagal ditambahkan');
         }

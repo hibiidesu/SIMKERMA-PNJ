@@ -33,7 +33,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Nama Mitra<span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="mitra" class="form-control" name="mitra" required
-                                        value="{{ old('mitra') }}">
+                                        value="{{ old('mitra') }}" placeholder="Masukan nama Mitra yang bekerja sama">
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -41,7 +41,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Kerja sama <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="kerjasama" class="form-control" name="kerjasama" required
-                                        value="{{ old('kerjasama') }}">
+                                        value="{{ old('kerjasama') }}" placeholder="Masukan Judul Kerjasama">
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
@@ -63,15 +63,15 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="nomor">nomor <span
-                                            class="text-danger">*</span></label>
+                                            class="text-danger"></span></label>
                                     <input type="text" id="nomor" class="form-control" name="nomor"
-                                        value="{{ old('nomor') }}">
+                                        value="{{ old('nomor') }}" placeholder="Nomor Surat Bisa di Lewat">
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kegiatan">kegiatan</label>
-                                    <textarea id="kegiatan" class="form-control" name="kegiatan" rows="3">{{ old('kegiatan') }}</textarea>
+                                    <textarea id="kegiatan" class="form-control" name="kegiatan" rows="3" placeholder="Jelaskan kegiatan secara ringkas">{{ old('kegiatan') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -106,7 +106,7 @@
 
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
                                     <select class="form-select" required id="kriteria_mitra_id" name="kriteria_mitra_id[]">
-                                        <option value="">-</option>
+                                        <option value="">Pilih Kriteria Mitra</option>
                                         @foreach ($kriteria_mitra as $item)
                                         <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
                                         @endforeach
@@ -117,6 +117,7 @@
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
                                     <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                        <option value="">Pilih Kriteria Kemitraan</option>
                                         @foreach ($kriteria_kemitraan as $item)
                                         <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
                                         @endforeach
@@ -125,14 +126,14 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="jenis_kerjasama_id">Jenis Kerja sama <span class="text-danger">*</span></label>
-                                    <select class="form-select" required id="jenis_kerjasama_id" name="jenis_kerjasama_id">
+                                    <label class="mb-2 fw-bold text-capitalize" for="bidang_kerjasama_id">Bidang Kerjasama<span class="text-danger">*</span></label>
+                                    <select class="choices-3 form-select" required id="bidang_kerjasama_id" name="bidang_kerjasama_id[]" multiple='multiple' multiple>
 
-                                        <option value="">-</option>
-                                        @foreach ($jenisKerjasama as $item)
+                                        <option value="">Pilih Bidang Kerjasama</option>
+                                        @foreach ($bidangKerjasama as $item)
                                             <option value="{{ $item->id }}"
-                                                {{ old('jenis_kerjasama_id') && old('jenis_kerjasama_id') == $item->id ? 'selected' : '' }}>
-                                                {{ $item->jenis_kerjasama }}</option>
+                                                {{ old('bidang_kerjasama_id') && old('bidang_kerjasama_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->nama_bidang }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -144,7 +145,7 @@
 
                                     <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
                                     <select class="form-select" id="perjanjian" name="perjanjian[]" required>
-                                        <option value="">-</option>
+                                        <option value="">Pilih Dokumen Perjanjian</option>
                                         @foreach ($perjanjian as $item)
                                             <option value="{{ $item->id }}"
                                                 {{ old('perjanjian') && in_array($item->id, old('perjanjian')) ? 'selected' : '' }}>
@@ -189,14 +190,7 @@
                                     <input type="hidden" name="pic_pnj" value="{{ auth::user()->name }}">
                                 </div>
                             </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="alamat_perusahaan">Alamat Perusahaan
-                                        <span class="text-danger">*</span></label>
-                                    <input type="text" id="alamat_perusahaan" class="form-control"
-                                        name="alamat_perusahaan" required value="{{ old('alamat_perusahaan') }}">
-                                </div>
-                            </div>
+
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_industri">Nama PIC Industri/PT
@@ -213,7 +207,14 @@
                                         name="jabatan_pic_industri" required value="{{ old('jabatan_pic_industri') }}">
                                 </div>
                             </div>
-
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="alamat_perusahaan">Alamat Perusahaan
+                                        <span class="text-danger">*</span></label>
+                                    <input type="text" id="alamat_perusahaan" class="form-control"
+                                        name="alamat_perusahaan" required value="{{ old('alamat_perusahaan') }}">
+                                </div>
+                            </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="telp_industri">Telp. PIC

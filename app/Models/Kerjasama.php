@@ -20,7 +20,7 @@ class Kerjasama extends Model
         'sifat',
         'kriteria_kemitraan_id',
         'kriteria_mitra_id',
-        'jenis_kerjasama_id',
+        'bidang_kerjasama_id',
         'kriteria_mitra_id',
         'kriteria_kemitraan_id',
         'pks',

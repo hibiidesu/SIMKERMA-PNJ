@@ -13,6 +13,7 @@ use App\Models\Unit;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KerjasamaExport;
+use App\Models\bidangKerjasama;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -40,6 +41,7 @@ class KerjasamaController extends Controller
         $kriteria_kemitraan = [];
         $kriteria_mitra = [];
         $prodi = [];
+        $bidang = [];
         foreach (Kriteria_kemitraan::all() as $item) {
             $kriteria_kemitraan[$item->id] = $item->kriteria_kemitraan;
         }
@@ -59,10 +61,12 @@ class KerjasamaController extends Controller
         foreach (prodi::all() as $item) {
             $prodi[$item->id] = $item->name;
         }
-
+        foreach (bidangKerjasama::all() as $item) {
+            $bidang[$item->id] = $item->nama_bidang;
+        }
         $data = Kerjasama::orderBy('id', 'desc')->where('step', 7);
         if ($request->has('type') && $request->type != 'all') {
-            $data = $data->where('jenis_kerjasama_id', ($request->type - 1));
+            $data = $data->where('bidang_kerjasama_id', ($request->type - 1));
         }
         if ($request->has('k_mitra') && $request->k_mitra != 'all') {
             if (is_array($request->k_mitra)) {
@@ -115,8 +119,9 @@ class KerjasamaController extends Controller
             'kriteria_kemitraan_filter' => kriteria_kemitraan::all(),
             'kriteria_kemitraan' => $kriteria_kemitraan,
             'kriteria_mitra' => $kriteria_mitra,
-            'jenisKerjasama' => Jenis_kerjasama::all(),
+            'bidangKerjasama' => bidangKerjasama::all(),
             'perjanjian' => $perjanjian,
+            'bidang'=>$bidang,
             'data' => $data->get()
         ]);
     }
@@ -138,6 +143,7 @@ class KerjasamaController extends Controller
     {
         $data = Kerjasama::findOrFail($id);
         $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
+        $bidang = bidangKerjasama::whereIn('id', explode(',',$data->bidang_kerjasama_id))->get();
         $unit = "";
         $prodi = "";
         if ($data->jurusan != '') {
@@ -150,6 +156,7 @@ class KerjasamaController extends Controller
             'unit' => $unit,
             'prodi' => $prodi,
             'perjanjian' => $perjanjian,
+            'bidang'=>$bidang,
             'data' => $data,
         ]);
     }
@@ -157,6 +164,7 @@ class KerjasamaController extends Controller
     {
         $data = Repository::findOrFail($id);
         $perjanjian = pks::whereIn('id', explode(',', $data->pks))->get();
+        $bidang = bidangKerjasama::whereIn('id', explode(',',$data->bidang_kerjasama_id))->get();
         $unit = "";
         $prodi= "";
         if ($data->jurusan != '') {
@@ -169,6 +177,7 @@ class KerjasamaController extends Controller
             'unit' => $unit,
             'prodi' => $prodi,
             'perjanjian' => $perjanjian,
+            'bidang'=>$bidang,
             'data' => $data,
         ]);
     }
@@ -188,6 +197,7 @@ class KerjasamaController extends Controller
             'kriteria_mitra' => kriteria_mitra::all(),
             'kriteria_kemitraan' => kriteria_kemitraan::all(),
             'data' => Kerjasama::findOrFail($id),
+            'bidangKerjasama'=> bidangKerjasama::all(),
             'jenisKerjasama' => Jenis_kerjasama::all(),
         ]);
     }
@@ -201,6 +211,7 @@ class KerjasamaController extends Controller
      */
     public function update(Request $request, Kerjasama $kerjasama)
     {
+
         $validator = Validator::make($request->all(), [
                 'id' => 'required',
                 'mitra' => 'required',
@@ -210,7 +221,7 @@ class KerjasamaController extends Controller
                 'nomor' => 'nullable',
                 'kegiatan' => 'nullable',
                 'sifat' => 'required',
-                'jenis_kerjasama_id' => 'required',
+                'bidang_kerjasama_id' => 'required',
                 'kriteria_mitra_id' => 'required',
                 'kriteria_kemitraan_id' => 'required',
                 'perjanjian' => 'required',
@@ -260,12 +271,12 @@ class KerjasamaController extends Controller
             'nomor' => $kerjasama->nomor,
             'kegiatan' => $kerjasama->kegiatan,
             'sifat' => $kerjasama->sifat,
-            'jenis_kerjasama_id' => $kerjasama->jenis_kerjasama_id,
-            'kriteria_mitra_id' => $kerjasama->kriteria_mitra_id,
-            'kriteria_kemitraan_id' => $kerjasama->kriteria_kemitraan_id,
+            'bidang_kerjasama_id' => is_array($kerjasama->bidang_kerjasama_id) ? implode(',', $kerjasama->bidang_kerjasama_id) : $kerjasama->bidang_kerjasama_id,
+            'kriteria_kemitraan_id' => is_array($kerjasama->kriteria_kemitraan_id) ? implode(',', $kerjasama->kriteria_kemitraan_id) : $kerjasama->kriteria_kemitraan_id,
+            'kriteria_mitra_id' =>  is_array($kerjasama->kriteria_mitra_id) ? implode(',', $kerjasama->kriteria_mitra_id) : $kerjasama->kriteria_mitra_id,
             'pks' => $kerjasama->pks,
             'jurusan' => $kerjasama->jurusan,
-            'prodi' => $kerjasama->prodi,
+            'prodi' => is_array($kerjasama->prodi) ? implode(',', $kerjasama->prodi) : $kerjasama->prodi,
             'pic_pnj' => $kerjasama->pic_pnj,
             'alamat_perusahaan' => $kerjasama->alamat_perusahaan,
             'pic_industri' => $kerjasama->pic_industri,
@@ -288,12 +299,12 @@ class KerjasamaController extends Controller
                         'nomor' => $request->nomor,
                         'kegiatan' => $request->kegiatan,
                         'sifat' => $request->sifat,
-                        'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                        'kriteria_mitra_id' => $request->kriteria_mitra_id,
-                        'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
+                        'bidang_kerjasama_id' => is_array($request->bidang_kerjasama_id) ? implode(',', $request->bidang_kerjasama_id) : $request->bidang_kerjasama_id,
+                        'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',', $request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id,
+                        'kriteria_mitra_id' =>  is_array($request->kriteria_mitra_id) ? implode(',', $request->kriteria_mitra_id) : $request->kriteria_mitra_id,
                         'pks' => implode(',', $request->perjanjian),
                         'jurusan' => implode(',', $request->jurusan),
-                        'prodi' => implode(',', $request->prodi),
+                        'prodi' => is_array($request->prodi) ? implode(',', $request->prodi) : $request->prodi,
                         'pic_pnj' => $request->pic_pnj,
                         'alamat_perusahaan' => $request->alamat_perusahaan,
                         'pic_industri' => $request->pic_industri,
@@ -320,12 +331,12 @@ class KerjasamaController extends Controller
                     'nomor' => $request->nomor,
                     'kegiatan' => $request->kegiatan,
                     'sifat' => $request->sifat,
-                    'jenis_kerjasama_id' => $request->jenis_kerjasama_id,
-                    'kriteria_mitra_id' => $request->kriteria_mitra_id,
-                    'kriteria_kemitraan_id' => $request->kriteria_kemitraan_id,
+                    'bidang_kerjasama_id' => is_array($request->bidang_kerjasama_id) ? implode(',', $request->bidang_kerjasama_id) : $request->bidang_kerjasama_id,
+                    'kriteria_mitra_id' => is_array($request->kriteria_mitra_id) ? implode(',', $request->kriteria_mitra_id) : $request->kriteria_mitra_id,
+                    'kriteria_kemitraan_id' => is_array($request->kriteria_kemitraan_id) ? implode(',', $request->kriteria_kemitraan_id) : $request->kriteria_kemitraan_id,
                     'pks' => implode(',', $request->perjanjian),
                     'jurusan' => implode(',', $request->jurusan),
-                    'prodi' => implode(',', $request->prodi),
+                    'prodi' => is_array($request->prodi) ? implode(',', $request->prodi) : $request->prodi,
                     'pic_pnj' => $request->pic_pnj,
                     'alamat_perusahaan' => $request->alamat_perusahaan,
                     'pic_industri' => $request->pic_industri,
