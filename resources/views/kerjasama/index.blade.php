@@ -144,7 +144,7 @@
                             <th>Sifat</th>
                             {{-- <th>Kriteria Kemitraan</th>
                             <th>Kriteria Mitra</th> --}}
-                            <th>Jenis Kerja Sama</th>
+                            <th>Bidang Kerja Sama</th>
                             <th>Jenis Perjanjian</th>
                             <th>Jurusan / Unit</th>
                             <th>Prodi</th>

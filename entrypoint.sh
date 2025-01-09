@@ -73,17 +73,10 @@ if [ ! -f "$FIRST_RUN_FILE" ]; then
     chown -R www-data:www-data /var/www
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-    echo "Running migrations..."
-    php artisan migrate --force
+    echo "Running migrations and seeding..."
+    php artisan migrate:fresh --seed --force
     if [ $? -ne 0 ]; then
         echo "ERROR: Database migration failed"
-        exit 1
-    fi
-
-    echo "Running seeders..."
-    php artisan db:seed --force
-    if [ $? -ne 0 ]; then
-        echo "ERROR: Database seeding failed"
         exit 1
     fi
 

@@ -2,7 +2,7 @@
 @section('heading', 'Rekam Kerja Sama')
 
 @section('styles')
-<link rel="stylesheet" href="{{ asset('admin/vendors/choices.js/choices.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/vendors/choices.js/choices.min.css') }}">
 @endsection
 @section('content')
     <section class="row">
@@ -19,8 +19,8 @@
             <div class="card">
                 <div class="card-body">
                     @if (Auth::user()->role->role_name == 'admin')
-                        <form id="kForm" class="form form-vertical" method="post" action="{{ url('/admin/pengajuan-kerjasama/store-record') }}"
-                            enctype="multipart/form-data">
+                        <form id="kForm" class="form form-vertical" method="post"
+                            action="{{ url('/admin/pengajuan-kerjasama/store-record') }}" enctype="multipart/form-data">
                         @elseif (Auth::user()->role->role_name == 'pic')
                             <form id="kForm" class="form form-vertical" method="post"
                                 action="{{ url('/pic/pengajuan-kerjasama/store') }}" enctype="multipart/form-data">
@@ -33,7 +33,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Nama Mitra<span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="mitra" class="form-control" name="mitra" required
-                                        value="{{ old('mitra') }}">
+                                        value="{{ old('mitra') }}" placeholder="Masukan nama Mitra yang bekerja sama">
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -41,7 +41,7 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="kerjasama">Kerja sama <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="kerjasama" class="form-control" name="kerjasama" required
-                                        value="{{ old('kerjasama') }}">
+                                        value="{{ old('kerjasama') }}" placeholder="Masukan Judul Kerjasama">
                                 </div>
                             </div>
                             <div class="col-6 mb-2">
@@ -65,13 +65,14 @@
                                     <label class="mb-2 fw-bold text-capitalize" for="nomor">nomor <span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="nomor" class="form-control" name="nomor" required
-                                        value="{{ old('nomor') }}">
+                                        value="{{ old('nomor') }}" placeholder="Nomor Surat Bisa WAJIB DIISI">
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="kegiatan">kegiatan</label>
-                                    <textarea id="kegiatan" class="form-control" name="kegiatan" rows="3">{{ old('kegiatan') }}</textarea>
+                                    <textarea id="kegiatan" class="form-control" name="kegiatan" rows="3"
+                                        placeholder="Jelaskan kegiatan secara ringkas">{{ old('kegiatan') }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
@@ -104,29 +105,40 @@
                             <div class="col-12 mb-2">
                                 <div class="form-group">
 
-                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra <span class="text-danger">*</span></label>
-                                    <select class="form-select" required id="kriteria_mitra_id" name="kriteria_mitra_id[]">
-                                        <option value="">-</option>
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_mitra_id">Kriteria Mitra
+                                        <span class="text-danger">*</span></label>
+                                    <select class="form-select" required id="kriteria_mitra_id"
+                                        name="kriteria_mitra_id[]">
+                                        <option value="">Pilih Kriteria Mitra</option>
                                         @foreach ($kriteria_mitra as $item)
-                                        <option value="{{ $item->id }}" {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_mitra }}</option>
+                                            <option value="{{ $item->id }}"
+                                                {{ old('kriteria_mitra_id') && old('kriteria_mitra_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->id }}. {{ $item->kriteria_mitra }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria Kemitraan <span class="text-danger">*</span></label>
-                                    <select class="choices form-select" multiple="multiple" required id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                    <label class="mb-2 fw-bold text-capitalize" for="kriteria_kemitraan_id">Kriteria
+                                        Kemitraan <span class="text-danger">*</span></label>
+                                    <select class="choices form-select" multiple="multiple" required
+                                        id="kriteria_kemitraan_id" name="kriteria_kemitraan_id[]" multiple>
+                                        <option value="">Pilih Kriteria Kemitraan</option>
                                         @foreach ($kriteria_kemitraan as $item)
-                                        <option value="{{ $item->id }}" {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>{{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
+                                            <option value="{{ $item->id }}"
+                                                {{ old('kriteria_kemitraan_id') && old('kriteria_kemitraan_id') == $item->id ? 'selected' : '' }}>
+                                                {{ $item->id }}. {{ $item->kriteria_kemitraan }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="bidang_kerjasama_id">Bidang Kerjasama<span class="text-danger">*</span></label>
-                                    <select class="choices-3 form-select" required id="bidang_kerjasama_id" name="bidang_kerjasama_id[]" multiple='multiple' multiple>
+                                    <label class="mb-2 fw-bold text-capitalize" for="bidang_kerjasama_id">Bidang
+                                        Kerjasama<span class="text-danger">*</span></label>
+                                    <select class="choices-3 form-select" required id="bidang_kerjasama_id"
+                                        name="bidang_kerjasama_id[]" multiple='multiple' multiple>
 
                                         <option value="">Pilih Bidang Kerjasama</option>
                                         @foreach ($bidangKerjasama as $item)
@@ -142,9 +154,10 @@
 
 
 
-                                    <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span class="text-danger">*</span></label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="perjanjian">Jenis Perjanjian <span
+                                            class="text-danger">*</span></label>
                                     <select class="form-select" id="perjanjian" name="perjanjian[]" required>
-                                        <option value="">-</option>
+                                        <option value="">Pilih Dokumen Perjanjian</option>
                                         @foreach ($perjanjian as $item)
                                             <option value="{{ $item->id }}"
                                                 {{ old('perjanjian') && in_array($item->id, old('perjanjian')) ? 'selected' : '' }}>
@@ -189,14 +202,7 @@
                                     <input type="hidden" name="pic_pnj" value="{{ auth::user()->name }}">
                                 </div>
                             </div>
-                            <div class="col-12 mb-2">
-                                <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="alamat_perusahaan">Alamat Perusahaan
-                                        <span class="text-danger">*</span></label>
-                                    <input type="text" id="alamat_perusahaan" class="form-control"
-                                        name="alamat_perusahaan" required value="{{ old('alamat_perusahaan') }}">
-                                </div>
-                            </div>
+
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="pic_industri">Nama PIC Industri/PT
@@ -213,7 +219,14 @@
                                         name="jabatan_pic_industri" required value="{{ old('jabatan_pic_industri') }}">
                                 </div>
                             </div>
-
+                            <div class="col-12 mb-2">
+                                <div class="form-group">
+                                    <label class="mb-2 fw-bold text-capitalize" for="alamat_perusahaan">Alamat Perusahaan
+                                        <span class="text-danger">*</span></label>
+                                    <input type="text" id="alamat_perusahaan" class="form-control"
+                                        name="alamat_perusahaan" required value="{{ old('alamat_perusahaan') }}">
+                                </div>
+                            </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
                                     <label class="mb-2 fw-bold text-capitalize" for="telp_industri">Telp. PIC
@@ -224,7 +237,7 @@
                             </div>
                             <div class="col-12 mb-2">
                                 <div class="form-group">
-                                    <label class="mb-2 fw-bold text-capitalize" for="email">Email</label>
+                                    <label class="mb-2 fw-bold text-capitalize" for="email">Email PIC Industri</label>
                                     <input type="email" id="email" class="form-control" name="email"
                                         value="{{ old('email') }}">
                                 </div>
@@ -235,7 +248,7 @@
                                             class="text-danger">*</span></label>
                                     <input type="file" id="file" class="form-control" name="file" required
                                         accept="application/pdf">
-                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 25MB</small>
+                                    <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 25MB</small>
                                 </div>
                             </div>
                             <hr>
@@ -250,107 +263,106 @@
             </div>
         </div>
     </section>
-<script>
-    $(document).ready(function() {
-        // Inisialisasi Choices.js untuk prodi
-        const prodiElement = document.getElementById('prodi');
-        const prodiChoice = new Choices(prodiElement, {
-            removeItemButton: true,
-            searchEnabled: true
-        });
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi Choices.js untuk prodi
+            const prodiElement = document.getElementById('prodi');
+            const prodiChoice = new Choices(prodiElement, {
+                removeItemButton: true,
+                searchEnabled: true
+            });
 
-        // Handler untuk perubahan unit
-        $('#jurusan').on('change', function() {
-            const selectedUnits = $(this).val();
+            // Handler untuk perubahan unit
+            $('#jurusan').on('change', function() {
+                const selectedUnits = $(this).val();
 
-            prodiChoice.clearStore();
-            prodiChoice.setChoices([{
-                value: '',
-                label: '--- Memuat data prodi... ---',
-                disabled: true
-            }]);
-
-            if (selectedUnits && selectedUnits.length > 0) {
-                $.ajax({
-                    url: `/api/prodi/find/${selectedUnits.join(',')}`,
-                    method: 'GET',
-                    dataType: 'json',
-                    beforeSend: function() {
-                        $('#prodi-loading').show();
-                    },
-                    success: function(response) {
-                        if (response.status === 'success' && response.data.length > 0) {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices(
-                                response.data.map(prodi => ({
-                                    value: prodi.id.toString(),
-                                    label: prodi.name
-                                })),
-                                'value',
-                                'label',
-                                false
-                            );
-                        } else {
-                            prodiChoice.clearStore();
-                            prodiChoice.setChoices([{
-                                value: '',
-                                label: 'Tidak ada prodi tersedia',
-                                disabled: true
-                            }]);
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('Error:', xhr);
-                        prodiChoice.clearStore();
-                        prodiChoice.setChoices([{
-                            value: '',
-                            label: 'Terjadi kesalahan saat mengambil data',
-                            disabled: true
-                        }]);
-                    },
-                    complete: function() {
-                        $('#prodi-loading').hide();
-                    }
-                });
-            } else {
                 prodiChoice.clearStore();
                 prodiChoice.setChoices([{
                     value: '',
+                    label: '--- Memuat data prodi... ---',
                     disabled: true
                 }]);
-            }
-        });
-    });
 
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.getElementById('kForm');
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            Swal.fire({
-                title: 'Loading...',
-                html: 'Memproses data ke server...',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                },
+                if (selectedUnits && selectedUnits.length > 0) {
+                    $.ajax({
+                        url: `/api/prodi/find/${selectedUnits.join(',')}`,
+                        method: 'GET',
+                        dataType: 'json',
+                        beforeSend: function() {
+                            $('#prodi-loading').show();
+                        },
+                        success: function(response) {
+                            if (response.status === 'success' && response.data.length > 0) {
+                                prodiChoice.clearStore();
+                                prodiChoice.setChoices(
+                                    response.data.map(prodi => ({
+                                        value: prodi.id.toString(),
+                                        label: prodi.name
+                                    })),
+                                    'value',
+                                    'label',
+                                    false
+                                );
+                            } else {
+                                prodiChoice.clearStore();
+                                prodiChoice.setChoices([{
+                                    value: '',
+                                    label: 'Tidak ada prodi tersedia',
+                                    disabled: true
+                                }]);
+                            }
+                        },
+                        error: function(xhr) {
+                            console.error('Error:', xhr);
+                            prodiChoice.clearStore();
+                            prodiChoice.setChoices([{
+                                value: '',
+                                label: 'Terjadi kesalahan saat mengambil data',
+                                disabled: true
+                            }]);
+                        },
+                        complete: function() {
+                            $('#prodi-loading').hide();
+                        }
+                    });
+                } else {
+                    prodiChoice.clearStore();
+                    prodiChoice.setChoices([{
+                        value: '',
+                        disabled: true
+                    }]);
+                }
             });
-
-            // Submit the form
-            this.submit();
         });
-    });
-</script>
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('kForm');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                Swal.fire({
+                    title: 'Loading...',
+                    html: 'Memproses data ke server...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                // Submit the form
+                this.submit();
+            });
+        });
+    </script>
 
 @endsection
 
 @section('scripts')
-<script src="{{ asset('admin/vendors/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('admin/vendors/choices.js/choices.min.js') }}"></script>
-<script src="{{ asset('admin/js/pages/form-element-select.js') }}"></script>
+    <script src="{{ asset('admin/vendors/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/vendors/choices.js/choices.min.js') }}"></script>
+    <script src="{{ asset('admin/js/pages/form-element-select.js') }}"></script>
 @endsection
