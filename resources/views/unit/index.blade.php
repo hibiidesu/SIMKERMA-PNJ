@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <a href="{{ url('/admin/unit/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                    <a href="{{ url('/admin/unit/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Tambah Baru</a>
                 </div>
                 <div class="card-body">
                     <div class="message form">
@@ -34,7 +34,7 @@
                         <thead>
                             <tr>
                                 <th width="3%">No</th>
-                                <th>Unit Name</th>
+                                <th>Jurusan / Unit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

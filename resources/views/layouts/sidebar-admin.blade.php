@@ -78,7 +78,7 @@
                             <li class="sidebar-item {{ Request::is('admin/unit') || Request::is('admin/unit/*') ? 'active' : '' }}">
                                 <a href="{{ url('admin/unit') }}" class='sidebar-link'>
                                     <i class="fas fa-sign"></i>
-                                    <span class="text-capitalize">Unit</span>
+                                    <span class="text-capitalize">Jurusan / Unit</span>
                                 </a>
                             </li>
                             <li class="sidebar-item {{ Request::is('admin/prodi') || Request::is('admin/prodi/*') ? 'active' : '' }}">

@@ -6,7 +6,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ url('/admin/kriteria/kemitraan/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Add New</a>
+                <a href="{{ url('/admin/kriteria/kemitraan/add') }}" class="btn btn-info"><i class="fas fa-plus"></i> &nbsp;Tambah Baru</a>
             </div>
             <div class="card-body">
             <div class="message form">

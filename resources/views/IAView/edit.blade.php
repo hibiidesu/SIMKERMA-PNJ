@@ -46,7 +46,7 @@
                                     <input type="file" id="dokumen_agreement" class="form-control" name="dokumen_agreement">
                                     @if($ia->dokumen_agreement)
                                         <p class="mt-2">Dokumen saat ini: {{ $ia->dokumen_agreement }}</p><br>
-                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 10MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
+                                        <small class="text-muted">Jenis file: PDF,DO,DOCX<br>Max: 50MB<br>Biarkan kosong jika tidak ingin mengganti file</small>
                                     @endif
                                 </div>
                             </div>

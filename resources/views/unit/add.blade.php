@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('heading', 'Unit')
+@section('heading', 'Jurusan / Unit')
 
 @section('styles')
 @endsection
